@@ -1,23 +1,20 @@
 imgui_newframe();
 
 
-imgui_begin("Test");
+if (open) {
+	var ret = imgui_begin("Test",open);
 
-imgui_text("Hello GameMaker!");
-
-if (imgui_button("Button!")) {
-	show_message("HOWDY!");
+	var expanded = ret[0];
+	open = ret[1];
+	if (expanded) {
+		imgui_text("Expanded: " + string(expanded));
+		imgui_text("Opened: " + string(open));
+	}
+	
+	imgui_end();
 }
 
-imgui_end();
 
-
-
-
-imgui_begin("Window 2");
-
-imgui_button("BOOBS");
-imgui_button("NO BOOBS");
-imgui_button("SO MANY BOOBS");
-
-imgui_end();
+if (!open and keyboard_check_pressed(vk_f1)) {
+	open = true;
+}

@@ -1,7 +1,9 @@
 {
   "resources": [
+    {"id":{"name":"TestStruct","path":"scripts/TestStruct/TestStruct.yy",},"order":4,},
     {"id":{"name":"Obj_ImGuiExample","path":"objects/Obj_ImGuiExample/Obj_ImGuiExample.yy",},"order":2,},
-    {"id":{"name":"Ext_imgui","path":"extensions/Ext_imgui/Ext_imgui.yy",},"order":3,},
+    {"id":{"name":"IMGUI","path":"scripts/IMGUI/IMGUI.yy",},"order":1,},
+    {"id":{"name":"Ext_imgui","path":"extensions/Ext_imgui/Ext_imgui.yy",},"order":0,},
     {"id":{"name":"Room1","path":"rooms/Room1/Room1.yy",},"order":1,},
   ],
   "Options": [
@@ -20,7 +22,9 @@
   "RoomOrder": [
     {"name":"Room1","path":"rooms/Room1/Room1.yy",},
   ],
-  "Folders": [],
+  "Folders": [
+    {"folderPath":"folders/IMGUI.yy","order":5,"resourceVersion":"1.0","name":"IMGUI","tags":[],"resourceType":"GMFolder",},
+  ],
   "AudioGroups": [
     {"targets":461609314234257646,"resourceVersion":"1.0","name":"audiogroup_default","resourceType":"GMAudioGroup",},
   ],

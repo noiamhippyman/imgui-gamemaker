@@ -17,35 +17,41 @@
   "installdir": "",
   "files": [
     {"filename":"imgui_gamemaker.dll","origname":"","init":"","final":"","kind":1,"uncompress":false,"functions":[
-        {"externalName":"imgui_setup","kind":1,"help":"imgui_setup(hwnd,device,context)","hidden":false,"returnType":2,"argCount":0,"args":[
+        {"externalName":"imgui_setup","kind":1,"help":"_imgui_setup(hwnd,device,context)","hidden":false,"returnType":2,"argCount":0,"args":[
             1,
             1,
             1,
-          ],"resourceVersion":"1.0","name":"imgui_setup","tags":[],"resourceType":"GMExtensionFunction",},
-        {"externalName":"imgui_cleanup","kind":1,"help":"imgui_cleanup(hwnd)","hidden":false,"returnType":2,"argCount":0,"args":[
+          ],"resourceVersion":"1.0","name":"_imgui_setup","tags":[],"resourceType":"GMExtensionFunction",},
+        {"externalName":"imgui_cleanup","kind":1,"help":"_imgui_cleanup(hwnd)","hidden":false,"returnType":2,"argCount":0,"args":[
             1,
-          ],"resourceVersion":"1.0","name":"imgui_cleanup","tags":[],"resourceType":"GMExtensionFunction",},
+          ],"resourceVersion":"1.0","name":"_imgui_cleanup","tags":[],"resourceType":"GMExtensionFunction",},
         {"externalName":"imgui_newframe","kind":1,"help":"imgui_newframe()","hidden":false,"returnType":2,"argCount":0,"args":[],"resourceVersion":"1.0","name":"imgui_newframe","tags":[],"resourceType":"GMExtensionFunction",},
         {"externalName":"imgui_render","kind":1,"help":"imgui_render()","hidden":false,"returnType":2,"argCount":0,"args":[],"resourceVersion":"1.0","name":"imgui_render","tags":[],"resourceType":"GMExtensionFunction",},
-        {"externalName":"imgui_begin","kind":1,"help":"imgui_begin(label)","hidden":false,"returnType":2,"argCount":0,"args":[
+        {"externalName":"imgui_begin","kind":1,"help":"_imgui_begin(label,open)","hidden":false,"returnType":2,"argCount":0,"args":[
             1,
-          ],"resourceVersion":"1.0","name":"imgui_begin","tags":[],"resourceType":"GMExtensionFunction",},
+            2,
+          ],"resourceVersion":"1.0","name":"_imgui_begin","tags":[],"resourceType":"GMExtensionFunction",},
         {"externalName":"imgui_text","kind":1,"help":"imgui_text(label)","hidden":false,"returnType":2,"argCount":0,"args":[
             1,
           ],"resourceVersion":"1.0","name":"imgui_text","tags":[],"resourceType":"GMExtensionFunction",},
-        {"externalName":"imgui_button","kind":1,"help":"imgui_button(label)","hidden":false,"returnType":2,"argCount":0,"args":[
+        {"externalName":"imgui_button","kind":1,"help":"_imgui_button(label)","hidden":false,"returnType":2,"argCount":0,"args":[
             1,
-          ],"resourceVersion":"1.0","name":"imgui_button","tags":[],"resourceType":"GMExtensionFunction",},
+          ],"resourceVersion":"1.0","name":"_imgui_button","tags":[],"resourceType":"GMExtensionFunction",},
         {"externalName":"imgui_end","kind":1,"help":"imgui_end()","hidden":false,"returnType":2,"argCount":0,"args":[],"resourceVersion":"1.0","name":"imgui_end","tags":[],"resourceType":"GMExtensionFunction",},
+        {"externalName":"imgui_send_buffers","kind":1,"help":"_imgui_send_buffers(vec_buff,bool_buff)","hidden":false,"returnType":2,"argCount":0,"args":[
+            1,
+            1,
+          ],"resourceVersion":"1.0","name":"_imgui_send_buffers","tags":[],"resourceType":"GMExtensionFunction",},
       ],"constants":[],"ProxyFiles":[],"copyToTargets":-1,"order":[
-        {"name":"imgui_setup","path":"extensions/Ext_imgui/Ext_imgui.yy",},
-        {"name":"imgui_cleanup","path":"extensions/Ext_imgui/Ext_imgui.yy",},
+        {"name":"_imgui_setup","path":"extensions/Ext_imgui/Ext_imgui.yy",},
+        {"name":"_imgui_cleanup","path":"extensions/Ext_imgui/Ext_imgui.yy",},
         {"name":"imgui_newframe","path":"extensions/Ext_imgui/Ext_imgui.yy",},
         {"name":"imgui_render","path":"extensions/Ext_imgui/Ext_imgui.yy",},
-        {"name":"imgui_begin","path":"extensions/Ext_imgui/Ext_imgui.yy",},
+        {"name":"_imgui_begin","path":"extensions/Ext_imgui/Ext_imgui.yy",},
         {"name":"imgui_text","path":"extensions/Ext_imgui/Ext_imgui.yy",},
-        {"name":"imgui_button","path":"extensions/Ext_imgui/Ext_imgui.yy",},
+        {"name":"_imgui_button","path":"extensions/Ext_imgui/Ext_imgui.yy",},
         {"name":"imgui_end","path":"extensions/Ext_imgui/Ext_imgui.yy",},
+        {"name":"_imgui_send_buffers","path":"extensions/Ext_imgui/Ext_imgui.yy",},
       ],"resourceVersion":"1.0","name":"","tags":[],"resourceType":"GMExtensionFile",},
   ],
   "classname": "",
@@ -74,8 +80,8 @@
   "androidPermissions": [],
   "copyToTargets": -1,
   "parent": {
-    "name": "usage_example",
-    "path": "usage_example.yyp",
+    "name": "IMGUI",
+    "path": "folders/IMGUI.yy",
   },
   "resourceVersion": "1.0",
   "name": "Ext_imgui",

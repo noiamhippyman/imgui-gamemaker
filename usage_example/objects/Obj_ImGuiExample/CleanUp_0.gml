@@ -1,1 +1,1 @@
-imgui_cleanup(hwnd);
+imgui_cleanup();
