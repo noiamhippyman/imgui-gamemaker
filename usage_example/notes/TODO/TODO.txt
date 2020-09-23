@@ -1,0 +1,5 @@
+GetFont()/PushFont()/PopFont() - figure out way to load and store fonts to use these
+
+give access to ImGui::GetIO
+
+figure out ImTextureID for anything related to Images/Textures/Sprites 

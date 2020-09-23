@@ -104,6 +104,7 @@ fn_export double imgui_render() {
 
 }
 
+
 // Demo, Debug, Information
 fn_export double imgui_show_demo_window(double open) {
 	bool _open = gm_double_to_bool(open);
@@ -429,26 +430,457 @@ fn_export double imgui_set_scroll_from_pos_y(double local_y, double center_y_rat
 
 
 // Parameter Stacks (Shared)
+fn_export double imgui_push_style_color(double id, double r, double g, double b, double a) {
+	ImVec4 col(r, g, b, a);
+	ImGui::PushStyleColor((ImGuiCol)id, col);
+	return 0.0;
+}
+
+fn_export double imgui_pop_style_color(double count) {
+	ImGui::PopStyleColor(count);
+	return 0.0;
+}
+
+fn_export double imgui_push_style_var_f(double id, double val) {
+	ImGui::PushStyleVar((ImGuiCol)id, val);
+	return 0.0;
+}
+
+fn_export double imgui_push_style_var_f2(double id, double x, double y) {
+	ImVec2 val(x, y);
+	ImGui::PushStyleVar((ImGuiCol)id, val);
+	return 0.0;
+}
+
+fn_export double imgui_pop_style_var(double count) {
+	ImGui::PopStyleVar(count);
+	return 0.0;
+}
+
+fn_export double imgui_get_style_color_vec4(double id) {
+	ImVec4 color = ImGui::GetStyleColorVec4((ImGuiCol)id);
+
+	gm_vec_buffer[0] = color.x;
+	gm_vec_buffer[1] = color.y;
+	gm_vec_buffer[2] = color.z;
+	gm_vec_buffer[3] = color.w;
+
+	return 0.0;
+}
+
+fn_export double imgui_get_font_size() {
+	return ImGui::GetFontSize();
+}
+
+fn_export double imgui_get_font_tex_uv_white_pixel() {
+	ImVec2 ret = ImGui::GetFontTexUvWhitePixel();
+	
+	gm_vec_buffer[0] = ret.x;
+	gm_vec_buffer[1] = ret.y;
+
+	return 0.0;
+}
+
+fn_export double imgui_get_color_u32_id(double id, double alpha_mul) {
+	return ImGui::GetColorU32((ImGuiCol)id, alpha_mul);
+}
+
+fn_export double imgui_get_color_u32_f4(double r, double g, double b, double a) {
+	ImVec4 col(r, g, b, a);
+	return ImGui::GetColorU32(col);
+}
+
 
 // Parameter Stacks (Current Window)
+fn_export double imgui_push_item_width(double item_width) {
+	ImGui::PushItemWidth(item_width);
+	return 0.0;
+}
 
-// Cursor / Layout
-// - By "cursor" we mean the current output position.
-// - The typical widget behavior is to output themselves at the current cursor position, then move the cursor one line down.
-// - You can call SameLine() between widgets to undo the last carriage return and output at the right of the preceding widget.
-// - Attention! We currently have inconsistencies between window-local and absolute positions we will aim to fix with future API:
-//    Window-local coordinates:   SameLine(), GetCursorPos(), SetCursorPos(), GetCursorStartPos(), GetContentRegionMax(), GetWindowContentRegion*(), PushTextWrapPos()
-//    Absolute coordinate:        GetCursorScreenPos(), SetCursorScreenPos(), all ImDrawList:: functions.
+fn_export double imput_pop_item_width() {
+	ImGui::PopItemWidth();
+	return 0.0;
+}
+
+fn_export double imgui_set_next_item_width(double item_width) {
+	ImGui::SetNextItemWidth(item_width);
+	return 0.0;
+}
+
+fn_export double imgui_calc_item_width() {
+	return ImGui::CalcItemWidth();
+}
+
+fn_export double imgui_push_text_wrap_pos(double wrap_local_pos_x) {
+	ImGui::PushTextWrapPos(wrap_local_pos_x);
+	return 0.0;
+}
+
+fn_export double imgui_pop_text_wrap_pos() {
+	ImGui::PopTextWrapPos();
+	return 0.0;
+}
+
+fn_export double imgui_push_allow_keyboard_focus(double allow_keyboard_focus) {
+	bool allow = gm_double_to_bool(allow_keyboard_focus);
+	ImGui::PushAllowKeyboardFocus(allow);
+	return 0.0;
+}
+
+fn_export double imgui_pop_allow_keyboard_focus() {
+	ImGui::PopAllowKeyboardFocus();
+	return 0.0;
+}
+
+fn_export double imgui_push_button_repeat(double repeat) {
+	bool r = gm_double_to_bool(repeat);
+	ImGui::PushButtonRepeat(r);
+	return 0.0;
+}
+
+fn_export double imgui_pop_button_repeat() {
+	ImGui::PopButtonRepeat();
+	return 0.0;
+}
+
+
+// Cursor/Layout
+fn_export double imgui_separator() {
+	ImGui::Separator();
+	return 0.0;
+}
+
+fn_export double imgui_same_line(double offset_from_start_x, double spacing) {
+	ImGui::SameLine(offset_from_start_x, spacing);
+	return 0.0;
+}
+
+fn_export double imgui_new_line() {
+	ImGui::NewLine();
+	return 0.0;
+}
+
+fn_export double imgui_spacing() {
+	ImGui::Spacing();
+	return 0.0;
+}
+
+fn_export double imgui_dummy(double width, double height) {
+	ImVec2 size(width, height);
+	ImGui::Dummy(size);
+	return 0.0;
+}
+
+fn_export double imgui_indent(double indent_w) {
+	ImGui::Indent(indent_w);
+	return 0.0;
+}
+
+fn_export double imgui_unindent(double indent_w) {
+	ImGui::Unindent(indent_w);
+	return 0.0;
+}
+
+fn_export double imgui_begin_group() {
+	ImGui::BeginGroup();
+	return 0.0;
+}
+
+fn_export double imgui_end_group() {
+	ImGui::EndGroup();
+	return 0.0;
+}
+
+fn_export double imgui_get_cursor_pos() {
+	ImVec2 pos = ImGui::GetCursorPos();
+
+	gm_vec_buffer[0] = pos.x;
+	gm_vec_buffer[0] = pos.y;
+
+	return 0.0;
+}
+
+fn_export double imgui_get_cursor_pos_x() {
+	return ImGui::GetCursorPosX();
+}
+
+fn_export double imgui_get_cursor_pos_y() {
+	return ImGui::GetCursorPosY();
+}
+
+fn_export double imgui_set_cursor_pos(double x, double y) {
+	ImVec2 pos(x, y);
+	ImGui::SetCursorPos(pos);
+	return 0.0;
+}
+
+fn_export double imgui_set_cursor_pos_x(double x) {
+	ImGui::SetCursorPosX(x);
+	return 0.0;
+}
+
+fn_export double imgui_set_cursor_pos_y(double y) {
+	ImGui::SetCursorPosY(y);
+	return 0.0;
+}
+
+fn_export double imgui_get_cursor_start_pos() {
+	ImVec2 pos = ImGui::GetCursorStartPos();
+
+	gm_vec_buffer[0] = pos.x;
+	gm_vec_buffer[1] = pos.y;
+
+	return 0.0;
+}
+
+fn_export double imgui_get_cursor_screen_pos() {
+	ImVec2 pos = ImGui::GetCursorScreenPos();
+
+	gm_vec_buffer[0] = pos.x;
+	gm_vec_buffer[1] = pos.y;
+
+	return 0.0;
+}
+
+fn_export double imgui_set_cursor_screen_pos(double x, double y) {
+	ImVec2 pos(x, y);
+	ImGui::SetCursorScreenPos(pos);
+	return 0.0;
+}
+
+fn_export double imgui_align_text_to_frame_padding() {
+	ImGui::AlignTextToFramePadding();
+	return 0.0;
+}
+
+fn_export double imgui_get_text_line_height() {
+	return ImGui::GetTextLineHeight();
+}
+
+fn_export double imgui_get_text_line_height_with_spacing() {
+	return ImGui::GetTextLineHeightWithSpacing();
+}
+
+fn_export double imgui_get_frame_height() {
+	return ImGui::GetFrameHeight();
+}
+
+fn_export double imgui_get_frame_height_with_spacing() {
+	return ImGui::GetFrameHeightWithSpacing();
+}
+
+
+// ID stack/scopes
+fn_export double imgui_push_id_str(const char* str_id) {
+	ImGui::PushID(str_id);
+	return 0.0;
+}
+
+fn_export double imgui_push_id_begin_end(const char* str_id_begin, const char* str_id_end) {
+	ImGui::PushID(str_id_begin, str_id_end);
+	return 0.0;
+}
+
+fn_export double imgui_push_id(double id) {
+	ImGui::PushID(id);
+	return 0.0;
+}
+
+fn_export double imgui_pop_id() {
+	ImGui::PopID();
+	return 0.0;
+}
+
+fn_export double imgui_get_id_str(const char* str_id) {
+	return ImGui::GetID(str_id);
+}
+
+fn_export double imgui_get_id_begin_end(const char* str_id_begin, const char* str_id_end) {
+	return ImGui::GetID(str_id_begin, str_id_end);
+}
+
+
+// Widgets: Text
+fn_export double imgui_text_unformatted(const char* text, const char* text_end = NULL) {
+	ImGui::TextUnformatted(text, text_end);
+	return 0.0;
+}
 
 fn_export double imgui_text(const char* text) {
 	ImGui::Text(text);
 	return 0.0;
 }
 
+fn_export double imgui_text_colored(double imu32_color, const char* text) {
+	ImVec4 col = ImGui::ColorConvertU32ToFloat4((ImU32)imu32_color);
+	ImGui::TextColored(col, text);
+	return 0.0;
+}
+
+fn_export double imgui_text_disabled(const char* text) {
+	ImGui::TextDisabled(text);
+	return 0.0;
+}
+
+fn_export double imgui_text_wrapped(const char* text) {
+	ImGui::TextWrapped(text);
+	return 0.0;
+}
+
+fn_export double imgui_label_text(const char* label, const char* text) {
+	ImGui::LabelText(label,text);
+	return 0.0;
+}
+
+fn_export double imgui_bullet_text(const char* text) {
+	ImGui::BulletText(text);
+	return 0.0;
+}
+
+
+// Widgets: Main
 fn_export double imgui_button(const char* label, double width, double height) {
 	ImVec2 size(width, height);
-	return (double)ImGui::Button(label,size);
+	return gm_bool_to_double(ImGui::Button(label,size));
 }
+
+fn_export double imgui_small_button(const char* label) {
+	return gm_bool_to_double(ImGui::SmallButton(label));
+}
+
+fn_export double imgui_invisible_button(const char* str_id, double width, double height, double flags) {
+	ImVec2 size(width, height);
+	return gm_bool_to_double(ImGui::InvisibleButton(str_id, size, (ImGuiButtonFlags)flags));
+}
+
+fn_export double imgui_checkbox(const char* label, double checked) {
+	bool v = gm_double_to_bool(checked);
+	bool changed = ImGui::Checkbox(label, &v);
+
+	gm_bool_buffer[0] = changed;
+	gm_bool_buffer[1] = v;
+
+	return 0.0;
+}
+
+fn_export double imgui_checkbox_flags(const char* label, double flags, double flags_value) {
+	unsigned int _flags = (unsigned int)flags;
+	bool changed = ImGui::CheckboxFlags(label, &_flags, flags_value);
+
+	gm_bool_buffer[0] = changed;
+	gm_bool_buffer[1] = _flags;
+
+	return 0.0;
+}
+
+fn_export double imgui_radio_button(const char* label, double active) {
+	bool _active = gm_double_to_bool(active);
+	return gm_bool_to_double(ImGui::RadioButton(label, _active));
+}
+
+fn_export double imgui_radio_button_int(const char* label, double v, double v_button) {
+	int iv = (int)v;
+	int iv_button = (int)v_button;
+	bool changed = ImGui::RadioButton(label, &iv, iv_button);
+
+	gm_bool_buffer[0] = changed;
+	gm_bool_buffer[1] = iv;
+
+	return 0.0;
+}
+
+fn_export double imgui_progress_bar(double fraction, double width, double height, const char* overlay = NULL) {
+	ImVec2 size(width, height);
+	ImGui::ProgressBar(fraction, size, overlay);
+	return 0.0;
+}
+
+fn_export double imgui_bullet() {
+	ImGui::Bullet();
+	return 0.0;
+}
+
+
+// Widgets: Combo Box
+
+
+// Widgets: Drag Sliders
+
+
+// Widgets: Regular Sliders
+
+
+// Widgets: Input with Keyboard
+
+
+// Widgets: Color Editor/Picker
+
+
+// Widgets: Trees
+
+
+// Widgets: Selectables
+
+
+// Widgets: List Boxes
+
+
+// Widgets: Data Plotting
+
+
+// Widgets: Value() Helpers
+
+
+// Widgets: Menus
+
+
+// Tooltips
+
+
+// Popups, Modals
+
+
+// Columns
+
+
+// Tab Bars, Tabs
+
+
+// Logging/Capture
+
+
+// Drag and Drop
+
+
+// Clipping
+
+
+// Focus, Activation
+
+
+// Item/Widgets Utilities
+
+
+// Miscellaneous Utilities
+
+
+// Text Utilities
+
+
+// Color Utilities
+
+
+// Input Utilities: Keyboard
+
+
+// Input Utilities: Mouse
+
+
+// Clipboard Utilities
+
+
+// Settings/.INI Utilities
+
 
 //fn_export double buffer_fiddle(void* buffer) {
 //	float* _b = (float*)buffer;

@@ -114,3 +114,98 @@ function imgui_get_window_content_region_max() {
 	
 	return ret_array;
 }
+
+function imgui_get_style_color_vec4(imguicol) {
+	_imgui_get_style_color_vec4(imguicol);
+	
+	var ret_array = [
+		buffer_peek(global.imgui_vec_buffer,0,buffer_f32),
+		buffer_peek(global.imgui_vec_buffer,4,buffer_f32),
+		buffer_peek(global.imgui_vec_buffer,8,buffer_f32),
+		buffer_peek(global.imgui_vec_buffer,12,buffer_f32)
+	];
+	
+	return ret_array;
+}
+
+function imgui_get_font_tex_uv_white_pixel() {
+	_imgui_get_font_tex_uv_white_pixel();
+	
+	var ret_array = [
+		buffer_peek(global.imgui_vec_buffer,0,buffer_f32),
+		buffer_peek(global.imgui_vec_buffer,4,buffer_f32)
+	];
+	
+	return ret_array;
+}
+
+function imgui_get_cursor_pos() {
+	_imgui_get_cursor_pos();
+	
+	var ret_array = [
+		buffer_peek(global.imgui_vec_buffer,0,buffer_f32),
+		buffer_peek(global.imgui_vec_buffer,4,buffer_f32)
+	];
+	
+	return ret_array;
+}
+
+function imgui_get_cursor_start_pos() {
+	_imgui_get_cursor_start_pos();
+	
+	var ret_array = [
+		buffer_peek(global.imgui_vec_buffer,0,buffer_f32),
+		buffer_peek(global.imgui_vec_buffer,4,buffer_f32)
+	];
+	
+	return ret_array;
+}
+
+function imgui_get_cursor_screen_pos() {
+	_imgui_get_cursor_screen_pos();
+	
+	var ret_array = [
+		buffer_peek(global.imgui_vec_buffer,0,buffer_f32),
+		buffer_peek(global.imgui_vec_buffer,4,buffer_f32)
+	];
+	
+	return ret_array;
+}
+
+function imgui_text_colored(r,g,b,a,text) {
+	var color = imgui_get_color_u32_f4(r,g,b,a);
+	_imgui_text_colored(color,text);
+}
+
+function imgui_checkbox(label,checked) {
+	_imgui_checkbox(label,checked);
+		
+	var ret_array = [
+		buffer_peek(global.imgui_bool_buffer,0,buffer_u8),
+		buffer_peek(global.imgui_bool_buffer,1,buffer_u8)
+	];
+	
+	return ret_array;
+}
+
+function imgui_checkbox_flags(label,flags,flags_value) {
+	_imgui_checkbox_flags(label,flags,flags_value);
+		
+	var ret_array = [
+		buffer_peek(global.imgui_bool_buffer,0,buffer_u8),
+		buffer_peek(global.imgui_bool_buffer,1,buffer_u8)
+	];
+	
+	return ret_array;
+}
+
+function imgui_radio_button_int(label,v,v_button) {
+	_imgui_radio_button_int(label,v,v_button);
+		
+	var ret_array = [
+		buffer_peek(global.imgui_bool_buffer,0,buffer_u8),
+		buffer_peek(global.imgui_bool_buffer,1,buffer_u8)
+	];
+	
+	return ret_array;
+}
