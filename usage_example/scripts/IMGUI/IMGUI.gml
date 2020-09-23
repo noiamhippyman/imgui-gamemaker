@@ -38,12 +38,78 @@ function imgui_cleanup() {
 	buffer_delete(global.imgui_bool_buffer);
 }
 
-function imgui_begin(label, open) {
-	_imgui_begin(label,open);
+function imgui_begin(label, open, flags) {
+	_imgui_begin(label,open,flags);
 		
 	var ret_array = [
 		buffer_peek(global.imgui_bool_buffer,0,buffer_u8),
 		buffer_peek(global.imgui_bool_buffer,1,buffer_u8)
+	];
+	
+	return ret_array;
+}
+
+function imgui_get_window_pos() {
+	_imgui_get_window_pos();
+	
+	var ret_array = [
+		buffer_peek(global.imgui_vec_buffer,0,buffer_f32),
+		buffer_peek(global.imgui_vec_buffer,4,buffer_f32)
+	];
+	
+	return ret_array;
+}
+
+function imgui_get_window_size() {
+	_imgui_get_window_size();
+	
+	var ret_array = [
+		buffer_peek(global.imgui_vec_buffer,0,buffer_f32),
+		buffer_peek(global.imgui_vec_buffer,4,buffer_f32)
+	];
+	
+	return ret_array;
+}
+
+function imgui_get_content_region_max() {
+	_imgui_get_content_region_max();
+	
+	var ret_array = [
+		buffer_peek(global.imgui_vec_buffer,0,buffer_f32),
+		buffer_peek(global.imgui_vec_buffer,4,buffer_f32)
+	];
+	
+	return ret_array;
+}
+
+function imgui_get_content_region_avail() {
+	_imgui_get_content_region_avail();
+	
+	var ret_array = [
+		buffer_peek(global.imgui_vec_buffer,0,buffer_f32),
+		buffer_peek(global.imgui_vec_buffer,4,buffer_f32)
+	];
+	
+	return ret_array;
+}
+
+function imgui_get_window_content_region_min() {
+	_imgui_get_window_content_region_min();
+	
+	var ret_array = [
+		buffer_peek(global.imgui_vec_buffer,0,buffer_f32),
+		buffer_peek(global.imgui_vec_buffer,4,buffer_f32)
+	];
+	
+	return ret_array;
+}
+
+function imgui_get_window_content_region_max() {
+	_imgui_get_window_content_region_max();
+	
+	var ret_array = [
+		buffer_peek(global.imgui_vec_buffer,0,buffer_f32),
+		buffer_peek(global.imgui_vec_buffer,4,buffer_f32)
 	];
 	
 	return ret_array;
