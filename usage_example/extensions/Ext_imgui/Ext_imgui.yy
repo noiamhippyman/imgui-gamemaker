@@ -41,7 +41,7 @@
             2,
           ],"resourceVersion":"1.0","name":"imgui_button","tags":[],"resourceType":"GMExtensionFunction",},
         {"externalName":"imgui_end","kind":1,"help":"imgui_end()","hidden":false,"returnType":2,"argCount":0,"args":[],"resourceVersion":"1.0","name":"imgui_end","tags":[],"resourceType":"GMExtensionFunction",},
-        {"externalName":"imgui_send_buffers","kind":1,"help":"_imgui_send_buffers(vec_buff,bool_buff)","hidden":false,"returnType":2,"argCount":0,"args":[
+        {"externalName":"imgui_send_buffers","kind":1,"help":"_imgui_send_buffers(send_buff,ret_buff)","hidden":false,"returnType":2,"argCount":0,"args":[
             1,
             1,
           ],"resourceVersion":"1.0","name":"_imgui_send_buffers","tags":[],"resourceType":"GMExtensionFunction",},
@@ -293,8 +293,7 @@
             1,
             1,
           ],"resourceVersion":"1.0","name":"imgui_get_id_begin_end","tags":[],"resourceType":"GMExtensionFunction",},
-        {"externalName":"imgui_text_unformatted","kind":1,"help":"imgui_text_unformatted(text,text_end)","hidden":false,"returnType":2,"argCount":0,"args":[
-            1,
+        {"externalName":"imgui_text_unformatted","kind":1,"help":"imgui_text_unformatted(text)","hidden":false,"returnType":2,"argCount":0,"args":[
             1,
           ],"resourceVersion":"1.0","name":"imgui_text_unformatted","tags":[],"resourceType":"GMExtensionFunction",},
         {"externalName":"imgui_text_colored","kind":1,"help":"_imgui_text_colored(imu32_color,text)","hidden":false,"returnType":2,"argCount":0,"args":[
@@ -348,6 +347,12 @@
             1,
           ],"resourceVersion":"1.0","name":"imgui_progress_bar","tags":[],"resourceType":"GMExtensionFunction",},
         {"externalName":"imgui_bullet","kind":1,"help":"imgui_bullet()","hidden":false,"returnType":2,"argCount":0,"args":[],"resourceVersion":"1.0","name":"imgui_bullet","tags":[],"resourceType":"GMExtensionFunction",},
+        {"externalName":"imgui_begin_combo","kind":1,"help":"imgui_begin_combo(label,preview_value,flags)","hidden":false,"returnType":2,"argCount":0,"args":[
+            1,
+            1,
+            2,
+          ],"resourceVersion":"1.0","name":"imgui_begin_combo","tags":[],"resourceType":"GMExtensionFunction",},
+        {"externalName":"imgui_end_combo","kind":1,"help":"imgui_end_combo()","hidden":false,"returnType":2,"argCount":0,"args":[],"resourceVersion":"1.0","name":"imgui_end_combo","tags":[],"resourceType":"GMExtensionFunction",},
       ],"constants":[],"ProxyFiles":[],"copyToTargets":144150411102650606,"order":[
         {"name":"_imgui_send_buffers","path":"extensions/Ext_imgui/Ext_imgui.yy",},
         {"name":"_imgui_setup","path":"extensions/Ext_imgui/Ext_imgui.yy",},
@@ -470,6 +475,8 @@
         {"name":"_imgui_radio_button_int","path":"extensions/Ext_imgui/Ext_imgui.yy",},
         {"name":"imgui_progress_bar","path":"extensions/Ext_imgui/Ext_imgui.yy",},
         {"name":"imgui_bullet","path":"extensions/Ext_imgui/Ext_imgui.yy",},
+        {"name":"imgui_begin_combo","path":"extensions/Ext_imgui/Ext_imgui.yy",},
+        {"name":"imgui_end_combo","path":"extensions/Ext_imgui/Ext_imgui.yy",},
       ],"resourceVersion":"1.0","name":"","tags":[],"resourceType":"GMExtensionFile",},
   ],
   "classname": "",

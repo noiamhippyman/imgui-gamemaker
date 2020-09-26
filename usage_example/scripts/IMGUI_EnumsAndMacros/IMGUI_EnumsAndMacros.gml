@@ -1,3 +1,8 @@
+#macro IMGUI_RETURN_BUFFER_SIZE 4
+#macro IMGUI_RETURN_BUFFER_TYPE buffer_f32
+#macro IMGUI_SEND_BUFFER_SIZE 1024
+#macro IMGUI_SEND_BUFFER_TYPE buffer_f32
+
 // Flags for imgui_begin
 enum ImGuiWindowFlags {
     None                   = 0,

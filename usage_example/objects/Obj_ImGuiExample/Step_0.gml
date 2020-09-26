@@ -1,6 +1,8 @@
 imgui_newframe();
 
 imgui_begin("IMGUI " + imgui_get_version(),true,ImGuiWindowFlags.NoCollapse);
+var f = (current_time / 1000) mod 2;
+imgui_progress_bar(f/2,0,0,0);
 if (imgui_button("Demo Window",0,0)) show_demo_window = !show_demo_window;
 if (imgui_button("About Window",0,0)) show_about_window = !show_about_window;
 if (imgui_button("Metrics Window",0,0)) show_metrics_window = !show_metrics_window;

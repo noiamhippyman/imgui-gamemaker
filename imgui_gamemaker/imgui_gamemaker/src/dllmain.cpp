@@ -8,16 +8,9 @@
 
 #define fn_export extern "C" __declspec(dllexport)
 
-float* gm_vec_buffer; // used to return vec2/vec3/vec4
-unsigned char* gm_bool_buffer; // used to return booleans
 
-bool gm_double_to_bool(double d) {
-	return (d > 0.0);
-}
-
-double gm_bool_to_double(bool b) {
-	return b ? 1.0 : 0.0;
-}
+float* gm_send_buffer; // used to send arrays of data from GM to C++
+float* gm_return_buffer; // used to return arrays of data from C++ to GM
 
 
 extern IMGUI_IMPL_API LRESULT ImGui_ImplWin32_WndProcHandler(HWND hWnd, UINT msg, WPARAM wParam, LPARAM lParam);
@@ -34,9 +27,10 @@ LRESULT CALLBACK ImGuiGMSSubclassProc(HWND hWnd, UINT uMsg, WPARAM wParam,
 
 
 // Main
-fn_export double imgui_send_buffers(void* vec_buffer, void* bool_buffer) {
-	gm_vec_buffer = (float*)vec_buffer;
-	gm_bool_buffer = (unsigned char*)bool_buffer;
+fn_export double imgui_send_buffers(void* send_buffer, void* return_buffer) {
+	gm_send_buffer = (float*)send_buffer;
+	gm_return_buffer = (float*)return_buffer;
+	
 	return 0.0;
 }
 
@@ -107,21 +101,21 @@ fn_export double imgui_render() {
 
 // Demo, Debug, Information
 fn_export double imgui_show_demo_window(double open) {
-	bool _open = gm_double_to_bool(open);
+	bool _open = (bool)open;
 	ImGui::ShowDemoWindow((bool*)&_open);
-	return gm_bool_to_double(_open);
+	return (double)(_open);
 }
 
 fn_export double imgui_show_about_window(double open) {
-	bool _open = gm_double_to_bool(open);
+	bool _open = (bool)open;
 	ImGui::ShowAboutWindow((bool*)&_open);
-	return gm_bool_to_double(_open);
+	return (double)(_open);
 }
 
 fn_export double imgui_show_metrics_window(double open) {
-	bool _open = gm_double_to_bool(open);
+	bool _open = (bool)open;
 	ImGui::ShowMetricsWindow((bool*)&_open);
-	return gm_bool_to_double(_open);
+	return (double)(_open);
 }
 
 fn_export double imgui_show_style_editor() {
@@ -130,7 +124,7 @@ fn_export double imgui_show_style_editor() {
 }
 
 fn_export double imgui_show_style_selector(const char* label) {
-	return gm_bool_to_double(ImGui::ShowStyleSelector(label));
+	return (double)(ImGui::ShowStyleSelector(label));
 }
 
 fn_export double imgui_show_font_selector(const char* label) {
@@ -167,14 +161,11 @@ fn_export double imgui_style_colors_light() {
 
 // Windows
 fn_export double imgui_begin(const char* name, double open, double flags) {
-	bool _open = gm_double_to_bool(open);
+	bool _open = (bool)open;
 	bool expanded = ImGui::Begin(name,&_open,(ImGuiWindowFlags)flags);
-	
-	//bool* b = (bool*)gm_bool_buffer;
-	//b[0] = expanded;
-	//b[1] = _open;
-	gm_bool_buffer[0] = expanded;
-	gm_bool_buffer[1] = _open;
+
+	gm_return_buffer[0] = (float)expanded;
+	gm_return_buffer[1] = (float)_open;
 	
 	return 0.0;
 }
@@ -191,7 +182,7 @@ fn_export double imgui_begin_child(double id, double width, double height, doubl
 
 	bool expanded = ImGui::BeginChild((ImGuiID)id, size, border, (ImGuiWindowFlags)flags);
 
-	return gm_bool_to_double(expanded);
+	return (double)(expanded);
 }
 
 fn_export double imgui_end_child() {
@@ -202,19 +193,19 @@ fn_export double imgui_end_child() {
 
 // Windows Utilities
 fn_export double imgui_is_window_appearing() {
-	return gm_bool_to_double(ImGui::IsWindowAppearing());
+	return (double)(ImGui::IsWindowAppearing());
 }
 
 fn_export double imgui_is_window_collapsed() {
-	return gm_bool_to_double(ImGui::IsWindowCollapsed());
+	return (double)(ImGui::IsWindowCollapsed());
 }
 
 fn_export double imgui_is_window_focused(double flags) {
-	return gm_bool_to_double(ImGui::IsWindowFocused((ImGuiFocusedFlags)flags));
+	return (double)(ImGui::IsWindowFocused((ImGuiFocusedFlags)flags));
 }
 
 fn_export double imgui_is_window_hovered(double flags) {
-	return gm_bool_to_double(ImGui::IsWindowHovered((ImGuiHoveredFlags)flags));
+	return (double)(ImGui::IsWindowHovered((ImGuiHoveredFlags)flags));
 }
 
 fn_export double imgui_get_window_dpi_scale() {
@@ -224,8 +215,8 @@ fn_export double imgui_get_window_dpi_scale() {
 fn_export double imgui_get_window_pos() {
 	ImVec2 pos = ImGui::GetWindowPos();
 
-	gm_vec_buffer[0] = pos.x;
-	gm_vec_buffer[1] = pos.y;
+	gm_return_buffer[0] = pos.x;
+	gm_return_buffer[1] = pos.y;
 
 	return 0.0;
 }
@@ -233,8 +224,8 @@ fn_export double imgui_get_window_pos() {
 fn_export double imgui_get_window_size() {
 	ImVec2 size = ImGui::GetWindowSize();
 
-	gm_vec_buffer[0] = size.x;
-	gm_vec_buffer[1] = size.y;
+	gm_return_buffer[0] = size.x;
+	gm_return_buffer[1] = size.y;
 
 	return 0.0;
 }
@@ -267,7 +258,7 @@ fn_export double imgui_set_next_window_content_size(double width, double height)
 }
 
 fn_export double imgui_set_next_window_collapsed(double collapsed, double cond) {
-	bool col = gm_double_to_bool(collapsed);
+	bool col = (bool)collapsed;
 	ImGui::SetNextWindowCollapsed(col, cond);
 	return 0.0;
 }
@@ -300,7 +291,7 @@ fn_export double imgui_set_window_size(double width, double height, double cond)
 }
 
 fn_export double imgui_set_window_collapsed(double collapsed, double cond) {
-	bool col = gm_double_to_bool(collapsed);
+	bool col = (bool)collapsed;
 	ImGui::SetWindowCollapsed(col, (ImGuiCond)cond);
 	return 0.0;
 }
@@ -328,7 +319,7 @@ fn_export double imgui_set_window_size_named(const char* name, double width, dou
 }
 
 fn_export double imgui_set_window_collapsed_named(const char* name, double collapsed, double cond) {
-	bool col = gm_double_to_bool(collapsed);
+	bool col = (bool)collapsed;
 	ImGui::SetWindowCollapsed(name, col, (ImGuiCond)cond);
 	return 0.0;
 }
@@ -343,8 +334,8 @@ fn_export double imgui_set_window_focus_named(const char* name) {
 fn_export double imgui_get_content_region_max() {
 	ImVec2 region = ImGui::GetContentRegionMax();
 
-	gm_vec_buffer[0] = region.x;
-	gm_vec_buffer[1] = region.y;
+	gm_return_buffer[0] = region.x;
+	gm_return_buffer[1] = region.y;
 
 	return 0.0;
 }
@@ -352,8 +343,8 @@ fn_export double imgui_get_content_region_max() {
 fn_export double imgui_get_content_region_avail() {
 	ImVec2 region = ImGui::GetContentRegionAvail();
 
-	gm_vec_buffer[0] = region.x;
-	gm_vec_buffer[1] = region.y;
+	gm_return_buffer[0] = region.x;
+	gm_return_buffer[1] = region.y;
 
 	return 0.0;
 }
@@ -361,8 +352,8 @@ fn_export double imgui_get_content_region_avail() {
 fn_export double imgui_get_window_content_region_min() {
 	ImVec2 region = ImGui::GetWindowContentRegionMin();
 
-	gm_vec_buffer[0] = region.x;
-	gm_vec_buffer[1] = region.y;
+	gm_return_buffer[0] = region.x;
+	gm_return_buffer[1] = region.y;
 
 	return 0.0;
 }
@@ -370,8 +361,8 @@ fn_export double imgui_get_window_content_region_min() {
 fn_export double imgui_get_window_content_region_max() {
 	ImVec2 region = ImGui::GetWindowContentRegionMax();
 
-	gm_vec_buffer[0] = region.x;
-	gm_vec_buffer[1] = region.y;
+	gm_return_buffer[0] = region.x;
+	gm_return_buffer[1] = region.y;
 
 	return 0.0;
 }
@@ -460,10 +451,10 @@ fn_export double imgui_pop_style_var(double count) {
 fn_export double imgui_get_style_color_vec4(double id) {
 	ImVec4 color = ImGui::GetStyleColorVec4((ImGuiCol)id);
 
-	gm_vec_buffer[0] = color.x;
-	gm_vec_buffer[1] = color.y;
-	gm_vec_buffer[2] = color.z;
-	gm_vec_buffer[3] = color.w;
+	gm_return_buffer[0] = color.x;
+	gm_return_buffer[1] = color.y;
+	gm_return_buffer[2] = color.z;
+	gm_return_buffer[3] = color.w;
 
 	return 0.0;
 }
@@ -475,8 +466,8 @@ fn_export double imgui_get_font_size() {
 fn_export double imgui_get_font_tex_uv_white_pixel() {
 	ImVec2 ret = ImGui::GetFontTexUvWhitePixel();
 	
-	gm_vec_buffer[0] = ret.x;
-	gm_vec_buffer[1] = ret.y;
+	gm_return_buffer[0] = ret.x;
+	gm_return_buffer[1] = ret.y;
 
 	return 0.0;
 }
@@ -522,7 +513,7 @@ fn_export double imgui_pop_text_wrap_pos() {
 }
 
 fn_export double imgui_push_allow_keyboard_focus(double allow_keyboard_focus) {
-	bool allow = gm_double_to_bool(allow_keyboard_focus);
+	bool allow = (bool)allow_keyboard_focus;
 	ImGui::PushAllowKeyboardFocus(allow);
 	return 0.0;
 }
@@ -533,7 +524,7 @@ fn_export double imgui_pop_allow_keyboard_focus() {
 }
 
 fn_export double imgui_push_button_repeat(double repeat) {
-	bool r = gm_double_to_bool(repeat);
+	bool r = (bool)repeat;
 	ImGui::PushButtonRepeat(r);
 	return 0.0;
 }
@@ -594,8 +585,8 @@ fn_export double imgui_end_group() {
 fn_export double imgui_get_cursor_pos() {
 	ImVec2 pos = ImGui::GetCursorPos();
 
-	gm_vec_buffer[0] = pos.x;
-	gm_vec_buffer[0] = pos.y;
+	gm_return_buffer[0] = pos.x;
+	gm_return_buffer[0] = pos.y;
 
 	return 0.0;
 }
@@ -627,8 +618,8 @@ fn_export double imgui_set_cursor_pos_y(double y) {
 fn_export double imgui_get_cursor_start_pos() {
 	ImVec2 pos = ImGui::GetCursorStartPos();
 
-	gm_vec_buffer[0] = pos.x;
-	gm_vec_buffer[1] = pos.y;
+	gm_return_buffer[0] = pos.x;
+	gm_return_buffer[1] = pos.y;
 
 	return 0.0;
 }
@@ -636,8 +627,8 @@ fn_export double imgui_get_cursor_start_pos() {
 fn_export double imgui_get_cursor_screen_pos() {
 	ImVec2 pos = ImGui::GetCursorScreenPos();
 
-	gm_vec_buffer[0] = pos.x;
-	gm_vec_buffer[1] = pos.y;
+	gm_return_buffer[0] = pos.x;
+	gm_return_buffer[1] = pos.y;
 
 	return 0.0;
 }
@@ -701,8 +692,8 @@ fn_export double imgui_get_id_begin_end(const char* str_id_begin, const char* st
 
 
 // Widgets: Text
-fn_export double imgui_text_unformatted(const char* text, const char* text_end = NULL) {
-	ImGui::TextUnformatted(text, text_end);
+fn_export double imgui_text_unformatted(const char* text) {
+	ImGui::TextUnformatted(text, NULL);
 	return 0.0;
 }
 
@@ -741,24 +732,24 @@ fn_export double imgui_bullet_text(const char* text) {
 // Widgets: Main
 fn_export double imgui_button(const char* label, double width, double height) {
 	ImVec2 size(width, height);
-	return gm_bool_to_double(ImGui::Button(label,size));
+	return (double)(ImGui::Button(label,size));
 }
 
 fn_export double imgui_small_button(const char* label) {
-	return gm_bool_to_double(ImGui::SmallButton(label));
+	return (double)(ImGui::SmallButton(label));
 }
 
 fn_export double imgui_invisible_button(const char* str_id, double width, double height, double flags) {
 	ImVec2 size(width, height);
-	return gm_bool_to_double(ImGui::InvisibleButton(str_id, size, (ImGuiButtonFlags)flags));
+	return (double)(ImGui::InvisibleButton(str_id, size, (ImGuiButtonFlags)flags));
 }
 
 fn_export double imgui_checkbox(const char* label, double checked) {
-	bool v = gm_double_to_bool(checked);
+	bool v = (bool)checked;
 	bool changed = ImGui::Checkbox(label, &v);
 
-	gm_bool_buffer[0] = changed;
-	gm_bool_buffer[1] = v;
+	gm_return_buffer[0] = (float)changed;
+	gm_return_buffer[1] = (float)v;
 
 	return 0.0;
 }
@@ -767,15 +758,15 @@ fn_export double imgui_checkbox_flags(const char* label, double flags, double fl
 	unsigned int _flags = (unsigned int)flags;
 	bool changed = ImGui::CheckboxFlags(label, &_flags, flags_value);
 
-	gm_bool_buffer[0] = changed;
-	gm_bool_buffer[1] = _flags;
+	gm_return_buffer[0] = (float)changed;
+	gm_return_buffer[1] = (float)_flags;
 
 	return 0.0;
 }
 
 fn_export double imgui_radio_button(const char* label, double active) {
-	bool _active = gm_double_to_bool(active);
-	return gm_bool_to_double(ImGui::RadioButton(label, _active));
+	bool _active = (bool)active;
+	return (double)(ImGui::RadioButton(label, _active));
 }
 
 fn_export double imgui_radio_button_int(const char* label, double v, double v_button) {
@@ -783,8 +774,8 @@ fn_export double imgui_radio_button_int(const char* label, double v, double v_bu
 	int iv_button = (int)v_button;
 	bool changed = ImGui::RadioButton(label, &iv, iv_button);
 
-	gm_bool_buffer[0] = changed;
-	gm_bool_buffer[1] = iv;
+	gm_return_buffer[0] = (float)changed;
+	gm_return_buffer[1] = (float)iv;
 
 	return 0.0;
 }
@@ -802,9 +793,28 @@ fn_export double imgui_bullet() {
 
 
 // Widgets: Combo Box
+fn_export double imgui_begin_combo(const char* label, const char* preview_value, double flags) {
+	return (double)(ImGui::BeginCombo(label, preview_value, (ImGuiComboFlags)flags));
+}
 
+fn_export double imgui_end_combo() {
+	ImGui::EndCombo();
+	return 0.0;
+}
+
+//fn_export double imgui_combo(const char* label, double current_item, const char* items_separated_by_zeros, double popup_max_height_in_items) {
+//	int i = (int)current_item;
+//
+//	bool changed = ImGui::Combo(label, &i, items_separated_by_zeros, (int)popup_max_height_in_items);
+//
+//	gm_return_buffer[0] = (float)changed;
+//	gm_return_buffer[1] = (float)i;
+//
+//	return 0.0;
+//}
 
 // Widgets: Drag Sliders
+fn_export double imgui_drag_float(const char* label, )
 
 
 // Widgets: Regular Sliders
