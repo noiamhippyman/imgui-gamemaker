@@ -1,7 +1,5 @@
-#macro IMGUI_RETURN_BUFFER_SIZE 4
-#macro IMGUI_RETURN_BUFFER_TYPE buffer_f32
-#macro IMGUI_SEND_BUFFER_SIZE 1024
-#macro IMGUI_SEND_BUFFER_TYPE buffer_f32
+#macro IMGUI_BUFFER_SIZE 8			// how many floats can this buffer hold. Size in bytes is { buffer_sizeof(IMGUI_BUFFER_TYPE) * IMGUI_BUFFER_SIZE }.
+#macro IMGUI_BUFFER_TYPE buffer_f32
 
 // Flags for imgui_begin
 enum ImGuiWindowFlags {
@@ -127,4 +125,15 @@ enum ImGuiCol
     NavWindowingDimBg,     // Darken/colorize entire screen behind the CTRL+TAB window list, when active
     ModalWindowDimBg,      // Darken/colorize entire screen behind a modal window, when one is active
     COUNT
+}
+
+// Flags for DragFloat(), DragInt(), SliderFloat(), SliderInt() etc.
+enum ImGuiSliderFlags
+{
+    None                   = 0,
+    ClampOnInput           = 1 << 4,       // Clamp value to min/max bounds when input manually with CTRL+Click. By default CTRL+Click allows going out of bounds.
+    Logarithmic            = 1 << 5,       // Make the widget logarithmic (linear otherwise). Consider using NoRoundToFormat with this if using a format-string with small amount of digits.
+    NoRoundToFormat        = 1 << 6,       // Disable rounding underlying value to match precision of the display format string (e.g. %.3f values are rounded to those 3 digits)
+    NoInput                = 1 << 7,       // Disable CTRL+Click or Enter key allowing to input text directly into the widget
+    InvalidMask_           = 0x7000000F    // [Internal] We treat using those bits as being potentially a 'float power' argument from the previous API that has got miscast to this enum, and will trigger an assert if needed.
 }
