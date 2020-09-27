@@ -38,3 +38,8 @@ slider_int_vx = 0;
 slider_int_vy = 0;
 slider_int_vz = 0;
 slider_int_vw = 0;
+
+// imgui_input_text variables
+input_text = "Hello there!";
+multiline_input_text = "Hello there multi-lines!";
+input_text_with_hint = "Hello there with hints!";

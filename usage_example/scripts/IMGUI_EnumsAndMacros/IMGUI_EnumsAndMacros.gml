@@ -1,5 +1,5 @@
-#macro IMGUI_BUFFER_SIZE 8			// how many floats can this buffer hold. Size in bytes is { buffer_sizeof(IMGUI_BUFFER_TYPE) * IMGUI_BUFFER_SIZE }.
-#macro IMGUI_BUFFER_TYPE buffer_f32
+#macro IMGUI_BUFFER_SIZE 4096			// how many floats can this buffer hold. Size in bytes is { buffer_sizeof(IMGUI_BUFFER_TYPE) * IMGUI_BUFFER_SIZE }.
+//#macro IMGUI_BUFFER_TYPE buffer_f32
 
 // Flags for imgui_begin
 enum ImGuiWindowFlags {

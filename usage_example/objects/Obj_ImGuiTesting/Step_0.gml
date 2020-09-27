@@ -140,6 +140,21 @@ if (open) {
 			slider_int_vx = ret[1];
 		}
 		
+		ret = imgui_input_text("Input Text",input_text,0)
+		if (ret[0]) {
+			input_text = ret[1];
+		}
+		
+		ret = imgui_input_text_multiline("Multiline Input Text",multiline_input_text,400,200,0);
+		if (ret[0]) {
+			multiline_input_text = ret[1];
+		}
+		
+		ret = imgui_input_text_with_hint("Hint Input Text","Hinty Hint",input_text_with_hint,0);
+		if (ret[0]) {
+			input_text_with_hint = ret[1];
+		}
+		
 	}
 	imgui_end();
 }

@@ -3,12 +3,15 @@
 #pragma comment(lib, "comctl32.lib")
 
 #include "../imgui/imgui.h"
+#include "../imgui/imgui_stdlib.h"
 #include "../imgui/imgui_impl_dx11.h"
 #include "../imgui/imgui_impl_win32.h"
 
 #define fn_export extern "C" __declspec(dllexport)
 
-float* gm_buffer; // used to return arrays of data from C++ to GM
+void* gm_buffer; // used to return arrays of data from C++ to GM
+
+//char* gm_string; // used to return a string when multiple things need to be returned
 
 
 extern IMGUI_IMPL_API LRESULT ImGui_ImplWin32_WndProcHandler(HWND hWnd, UINT msg, WPARAM wParam, LPARAM lParam);
@@ -26,7 +29,7 @@ LRESULT CALLBACK ImGuiGMSSubclassProc(HWND hWnd, UINT uMsg, WPARAM wParam,
 
 // Main
 fn_export double extension_assign_buffer(void* buffer_ptr) {
-	gm_buffer = (float*)buffer_ptr;
+	gm_buffer = buffer_ptr;
 	
 	return 0.0;
 }
@@ -161,8 +164,10 @@ fn_export double imgui_begin(const char* name, double open, double flags) {
 	bool _open = (bool)open;
 	bool expanded = ImGui::Begin(name,&_open,(ImGuiWindowFlags)flags);
 
-	gm_buffer[0] = (float)expanded;
-	gm_buffer[1] = (float)_open;
+	float* fbuffer = (float*)gm_buffer;
+
+	fbuffer[0] = (float)expanded;
+	fbuffer[1] = (float)_open;
 	
 	return 0.0;
 }
@@ -212,8 +217,10 @@ fn_export double imgui_get_window_dpi_scale() {
 fn_export double imgui_get_window_pos() {
 	ImVec2 pos = ImGui::GetWindowPos();
 
-	gm_buffer[0] = pos.x;
-	gm_buffer[1] = pos.y;
+	float* fbuffer = (float*)gm_buffer;
+
+	fbuffer[0] = pos.x;
+	fbuffer[1] = pos.y;
 
 	return 0.0;
 }
@@ -221,8 +228,10 @@ fn_export double imgui_get_window_pos() {
 fn_export double imgui_get_window_size() {
 	ImVec2 size = ImGui::GetWindowSize();
 
-	gm_buffer[0] = size.x;
-	gm_buffer[1] = size.y;
+	float* fbuffer = (float*)gm_buffer;
+
+	fbuffer[0] = size.x;
+	fbuffer[1] = size.y;
 
 	return 0.0;
 }
@@ -331,8 +340,10 @@ fn_export double imgui_set_window_focus_named(const char* name) {
 fn_export double imgui_get_content_region_max() {
 	ImVec2 region = ImGui::GetContentRegionMax();
 
-	gm_buffer[0] = region.x;
-	gm_buffer[1] = region.y;
+	float* fbuffer = (float*)gm_buffer;
+
+	fbuffer[0] = region.x;
+	fbuffer[1] = region.y;
 
 	return 0.0;
 }
@@ -340,8 +351,10 @@ fn_export double imgui_get_content_region_max() {
 fn_export double imgui_get_content_region_avail() {
 	ImVec2 region = ImGui::GetContentRegionAvail();
 
-	gm_buffer[0] = region.x;
-	gm_buffer[1] = region.y;
+	float* fbuffer = (float*)gm_buffer;
+
+	fbuffer[0] = region.x;
+	fbuffer[1] = region.y;
 
 	return 0.0;
 }
@@ -349,8 +362,10 @@ fn_export double imgui_get_content_region_avail() {
 fn_export double imgui_get_window_content_region_min() {
 	ImVec2 region = ImGui::GetWindowContentRegionMin();
 
-	gm_buffer[0] = region.x;
-	gm_buffer[1] = region.y;
+	float* fbuffer = (float*)gm_buffer;
+
+	fbuffer[0] = region.x;
+	fbuffer[1] = region.y;
 
 	return 0.0;
 }
@@ -358,8 +373,10 @@ fn_export double imgui_get_window_content_region_min() {
 fn_export double imgui_get_window_content_region_max() {
 	ImVec2 region = ImGui::GetWindowContentRegionMax();
 
-	gm_buffer[0] = region.x;
-	gm_buffer[1] = region.y;
+	float* fbuffer = (float*)gm_buffer;
+
+	fbuffer[0] = region.x;
+	fbuffer[1] = region.y;
 
 	return 0.0;
 }
@@ -448,10 +465,12 @@ fn_export double imgui_pop_style_var(double count) {
 fn_export double imgui_get_style_color_vec4(double id) {
 	ImVec4 color = ImGui::GetStyleColorVec4((ImGuiCol)id);
 
-	gm_buffer[0] = color.x;
-	gm_buffer[1] = color.y;
-	gm_buffer[2] = color.z;
-	gm_buffer[3] = color.w;
+	float* fbuffer = (float*)gm_buffer;
+
+	fbuffer[0] = color.x;
+	fbuffer[1] = color.y;
+	fbuffer[2] = color.z;
+	fbuffer[3] = color.w;
 
 	return 0.0;
 }
@@ -462,9 +481,11 @@ fn_export double imgui_get_font_size() {
 
 fn_export double imgui_get_font_tex_uv_white_pixel() {
 	ImVec2 ret = ImGui::GetFontTexUvWhitePixel();
+
+	float* fbuffer = (float*)gm_buffer;
 	
-	gm_buffer[0] = ret.x;
-	gm_buffer[1] = ret.y;
+	fbuffer[0] = ret.x;
+	fbuffer[1] = ret.y;
 
 	return 0.0;
 }
@@ -582,8 +603,10 @@ fn_export double imgui_end_group() {
 fn_export double imgui_get_cursor_pos() {
 	ImVec2 pos = ImGui::GetCursorPos();
 
-	gm_buffer[0] = pos.x;
-	gm_buffer[0] = pos.y;
+	float* fbuffer = (float*)gm_buffer;
+
+	fbuffer[0] = pos.x;
+	fbuffer[0] = pos.y;
 
 	return 0.0;
 }
@@ -615,8 +638,10 @@ fn_export double imgui_set_cursor_pos_y(double y) {
 fn_export double imgui_get_cursor_start_pos() {
 	ImVec2 pos = ImGui::GetCursorStartPos();
 
-	gm_buffer[0] = pos.x;
-	gm_buffer[1] = pos.y;
+	float* fbuffer = (float*)gm_buffer;
+
+	fbuffer[0] = pos.x;
+	fbuffer[1] = pos.y;
 
 	return 0.0;
 }
@@ -624,8 +649,10 @@ fn_export double imgui_get_cursor_start_pos() {
 fn_export double imgui_get_cursor_screen_pos() {
 	ImVec2 pos = ImGui::GetCursorScreenPos();
 
-	gm_buffer[0] = pos.x;
-	gm_buffer[1] = pos.y;
+	float* fbuffer = (float*)gm_buffer;
+
+	fbuffer[0] = pos.x;
+	fbuffer[1] = pos.y;
 
 	return 0.0;
 }
@@ -745,8 +772,10 @@ fn_export double imgui_checkbox(const char* label, double checked) {
 	bool v = (bool)checked;
 	bool changed = ImGui::Checkbox(label, &v);
 
-	gm_buffer[0] = (float)changed;
-	gm_buffer[1] = (float)v;
+	float* fbuffer = (float*)gm_buffer;
+
+	fbuffer[0] = (float)changed;
+	fbuffer[1] = (float)v;
 
 	return 0.0;
 }
@@ -755,8 +784,10 @@ fn_export double imgui_checkbox_flags(const char* label, double flags, double fl
 	unsigned int _flags = (unsigned int)flags;
 	bool changed = ImGui::CheckboxFlags(label, &_flags, flags_value);
 
-	gm_buffer[0] = (float)changed;
-	gm_buffer[1] = (float)_flags;
+	float* fbuffer = (float*)gm_buffer;
+
+	fbuffer[0] = (float)changed;
+	fbuffer[1] = (float)_flags;
 
 	return 0.0;
 }
@@ -771,8 +802,10 @@ fn_export double imgui_radio_button_int(const char* label, double v, double v_bu
 	int iv_button = (int)v_button;
 	bool changed = ImGui::RadioButton(label, &iv, iv_button);
 
-	gm_buffer[0] = (float)changed;
-	gm_buffer[1] = (float)iv;
+	float* fbuffer = (float*)gm_buffer;
+
+	fbuffer[0] = (float)changed;
+	fbuffer[1] = (float)iv;
 
 	return 0.0;
 }
@@ -812,147 +845,167 @@ fn_export double imgui_end_combo() {
 
 // Widgets: Drag Sliders
 fn_export double imgui_drag_float(const char* label, const char* format, double flags) {
-	float v = gm_buffer[0];
-	float v_speed = gm_buffer[1];
-	float v_min = gm_buffer[2];
-	float v_max = gm_buffer[3];
+	float* fbuffer = (float*)gm_buffer;
+
+	float v = fbuffer[0];
+	float v_speed = fbuffer[1];
+	float v_min = fbuffer[2];
+	float v_max = fbuffer[3];
 	bool changed = ImGui::DragFloat(label, &v, v_speed, v_min, v_max, format, (ImGuiSliderFlags)flags);
 
-	gm_buffer[0] = (float)changed;
-	gm_buffer[1] = v;
+	fbuffer[0] = (float)changed;
+	fbuffer[1] = v;
 
 	return 0.0;
 }
 
 fn_export double imgui_drag_float2(const char* label, const char* format, double flags) {
-	float v[] = { gm_buffer[0], gm_buffer[1] };
-	float v_speed = gm_buffer[2];
-	float v_min = gm_buffer[3];
-	float v_max = gm_buffer[4];
+	float* fbuffer = (float*)gm_buffer;
+
+	float v[] = { fbuffer[0], fbuffer[1] };
+	float v_speed = fbuffer[2];
+	float v_min = fbuffer[3];
+	float v_max = fbuffer[4];
 	bool changed = ImGui::DragFloat2(label, v, v_speed, v_min, v_max, format, (ImGuiSliderFlags)flags);
 
-	gm_buffer[0] = (float)changed;
-	gm_buffer[1] = v[0];
-	gm_buffer[2] = v[1];
+	fbuffer[0] = (float)changed;
+	fbuffer[1] = v[0];
+	fbuffer[2] = v[1];
 
 	return 0.0;
 }
 
 fn_export double imgui_drag_float3(const char* label, const char* format, double flags) {
-	float v[] = { gm_buffer[0], gm_buffer[1], gm_buffer[2] };
-	float v_speed = gm_buffer[3];
-	float v_min = gm_buffer[4];
-	float v_max = gm_buffer[5];
+	float* fbuffer = (float*)gm_buffer;
+
+	float v[] = { fbuffer[0], fbuffer[1], fbuffer[2] };
+	float v_speed = fbuffer[3];
+	float v_min = fbuffer[4];
+	float v_max = fbuffer[5];
 	bool changed = ImGui::DragFloat3(label, v, v_speed, v_min, v_max, format, (ImGuiSliderFlags)flags);
 
-	gm_buffer[0] = (float)changed;
-	gm_buffer[1] = v[0];
-	gm_buffer[2] = v[1];
-	gm_buffer[3] = v[2];
+	fbuffer[0] = (float)changed;
+	fbuffer[1] = v[0];
+	fbuffer[2] = v[1];
+	fbuffer[3] = v[2];
 
 	return 0.0;
 }
 
 fn_export double imgui_drag_float4(const char* label, const char* format, double flags) {
-	float v[] = { gm_buffer[0], gm_buffer[1], gm_buffer[2], gm_buffer[3] };
-	float v_speed = gm_buffer[4];
-	float v_min = gm_buffer[5];
-	float v_max = gm_buffer[6];
+	float* fbuffer = (float*)gm_buffer;
+
+	float v[] = { fbuffer[0], fbuffer[1], fbuffer[2], fbuffer[3] };
+	float v_speed = fbuffer[4];
+	float v_min = fbuffer[5];
+	float v_max = fbuffer[6];
 	bool changed = ImGui::DragFloat4(label, v, v_speed, v_min, v_max, format, (ImGuiSliderFlags)flags);
 
-	gm_buffer[0] = (float)changed;
-	gm_buffer[1] = v[0];
-	gm_buffer[2] = v[1];
-	gm_buffer[3] = v[2];
-	gm_buffer[4] = v[3];
+	fbuffer[0] = (float)changed;
+	fbuffer[1] = v[0];
+	fbuffer[2] = v[1];
+	fbuffer[3] = v[2];
+	fbuffer[4] = v[3];
 
 	return 0.0;
 }
 
 fn_export double imgui_drag_float_range2(const char* label, const char* format, const char* format_max, double flags) {
-	float v_current_min = gm_buffer[0];
-	float v_current_max = gm_buffer[1];
-	float v_speed = gm_buffer[2];
-	float v_min = gm_buffer[3];
-	float v_max = gm_buffer[4];
+	float* fbuffer = (float*)gm_buffer;
+
+	float v_current_min = fbuffer[0];
+	float v_current_max = fbuffer[1];
+	float v_speed = fbuffer[2];
+	float v_min = fbuffer[3];
+	float v_max = fbuffer[4];
 	bool changed = ImGui::DragFloatRange2(label, &v_current_min, &v_current_max, v_speed, v_min, v_max, format, format_max, (ImGuiSliderFlags)flags);
 
-	gm_buffer[0] = (float)changed;
-	gm_buffer[1] = v_current_min;
-	gm_buffer[2] = v_current_max;
+	fbuffer[0] = (float)changed;
+	fbuffer[1] = v_current_min;
+	fbuffer[2] = v_current_max;
 
 	return 0.0;
 }
 
 fn_export double imgui_drag_int(const char* label, const char* format, double flags) {
-	int v = (int)gm_buffer[0];
-	float v_speed = gm_buffer[1];
-	float v_min = gm_buffer[2];
-	float v_max = gm_buffer[3];
+	float* fbuffer = (float*)gm_buffer;
+
+	int v = (int)fbuffer[0];
+	float v_speed = fbuffer[1];
+	float v_min = fbuffer[2];
+	float v_max = fbuffer[3];
 	bool changed = ImGui::DragInt(label, &v, v_speed, v_min, v_max, format, (ImGuiSliderFlags)flags);
 
-	gm_buffer[0] = (float)changed;
-	gm_buffer[1] = v;
+	fbuffer[0] = (float)changed;
+	fbuffer[1] = v;
 
 	return 0.0;
 }
 
 fn_export double imgui_drag_int2(const char* label, const char* format, double flags) {
-	int v[] = { (int)gm_buffer[0], (int)gm_buffer[1] };
-	float v_speed = gm_buffer[2];
-	float v_min = gm_buffer[3];
-	float v_max = gm_buffer[4];
+	float* fbuffer = (float*)gm_buffer;
+
+	int v[] = { (int)fbuffer[0], (int)fbuffer[1] };
+	float v_speed = fbuffer[2];
+	float v_min = fbuffer[3];
+	float v_max = fbuffer[4];
 	bool changed = ImGui::DragInt2(label, v, v_speed, v_min, v_max, format, (ImGuiSliderFlags)flags);
 
-	gm_buffer[0] = (float)changed;
-	gm_buffer[1] = v[0];
-	gm_buffer[2] = v[1];
+	fbuffer[0] = (float)changed;
+	fbuffer[1] = v[0];
+	fbuffer[2] = v[1];
 
 	return 0.0;
 }
 
 fn_export double imgui_drag_int3(const char* label, const char* format, double flags) {
-	int v[] = { (int)gm_buffer[0], (int)gm_buffer[1], (int)gm_buffer[2] };
-	float v_speed = gm_buffer[3];
-	float v_min = gm_buffer[4];
-	float v_max = gm_buffer[5];
+	float* fbuffer = (float*)gm_buffer;
+
+	int v[] = { (int)fbuffer[0], (int)fbuffer[1], (int)fbuffer[2] };
+	float v_speed = fbuffer[3];
+	float v_min = fbuffer[4];
+	float v_max = fbuffer[5];
 	bool changed = ImGui::DragInt3(label, v, v_speed, v_min, v_max, format, (ImGuiSliderFlags)flags);
 
-	gm_buffer[0] = (float)changed;
-	gm_buffer[1] = v[0];
-	gm_buffer[2] = v[1];
-	gm_buffer[3] = v[2];
+	fbuffer[0] = (float)changed;
+	fbuffer[1] = v[0];
+	fbuffer[2] = v[1];
+	fbuffer[3] = v[2];
 
 	return 0.0;
 }
 
 fn_export double imgui_drag_int4(const char* label, const char* format, double flags) {
-	int v[] = { (int)gm_buffer[0], (int)gm_buffer[1], (int)gm_buffer[2], (int)gm_buffer[3] };
-	float v_speed = gm_buffer[4];
-	float v_min = gm_buffer[5];
-	float v_max = gm_buffer[6];
+	float* fbuffer = (float*)gm_buffer;
+
+	int v[] = { (int)fbuffer[0], (int)fbuffer[1], (int)fbuffer[2], (int)fbuffer[3] };
+	float v_speed = fbuffer[4];
+	float v_min = fbuffer[5];
+	float v_max = fbuffer[6];
 	bool changed = ImGui::DragInt4(label, v, v_speed, v_min, v_max, format, (ImGuiSliderFlags)flags);
 
-	gm_buffer[0] = (float)changed;
-	gm_buffer[1] = v[0];
-	gm_buffer[2] = v[1];
-	gm_buffer[3] = v[2];
-	gm_buffer[4] = v[3];
+	fbuffer[0] = (float)changed;
+	fbuffer[1] = v[0];
+	fbuffer[2] = v[1];
+	fbuffer[3] = v[2];
+	fbuffer[4] = v[3];
 
 	return 0.0;
 }
 
 fn_export double imgui_drag_int_range2(const char* label, const char* format, const char* format_max, double flags) {
-	int v_current_min = (int)gm_buffer[0];
-	int v_current_max = (int)gm_buffer[1];
-	float v_speed = gm_buffer[2];
-	float v_min = gm_buffer[3];
-	float v_max = gm_buffer[4];
+	float* fbuffer = (float*)gm_buffer;
+
+	int v_current_min = (int)fbuffer[0];
+	int v_current_max = (int)fbuffer[1];
+	float v_speed = fbuffer[2];
+	float v_min = fbuffer[3];
+	float v_max = fbuffer[4];
 	bool changed = ImGui::DragIntRange2(label, &v_current_min, &v_current_max, v_speed, v_min, v_max, format, format_max, (ImGuiSliderFlags)flags);
 
-	gm_buffer[0] = (float)changed;
-	gm_buffer[1] = v_current_min;
-	gm_buffer[2] = v_current_max;
+	fbuffer[0] = (float)changed;
+	fbuffer[1] = v_current_min;
+	fbuffer[2] = v_current_max;
 
 	return 0.0;
 }
@@ -960,153 +1013,234 @@ fn_export double imgui_drag_int_range2(const char* label, const char* format, co
 
 // Widgets: Regular Sliders
 fn_export double imgui_slider_float(const char* label, const char* format, double flags) {
-	float v = gm_buffer[0];
-	float v_min = gm_buffer[1];
-	float v_max = gm_buffer[2];
+	float* fbuffer = (float*)gm_buffer;
+
+	float v = fbuffer[0];
+	float v_min = fbuffer[1];
+	float v_max = fbuffer[2];
 	bool changed = ImGui::SliderFloat(label, &v, v_min, v_max, format, (ImGuiSliderFlags)flags);
 
-	gm_buffer[0] = (float)changed;
-	gm_buffer[1] = v;
+	fbuffer[0] = (float)changed;
+	fbuffer[1] = v;
 
 	return 0.0;
 }
 
 fn_export double imgui_slider_float2(const char* label, const char* format, double flags) {
-	float v[] = { gm_buffer[0], gm_buffer[1] };
-	float v_min = gm_buffer[2];
-	float v_max = gm_buffer[3];
+	float* fbuffer = (float*)gm_buffer;
+
+	float v[] = { fbuffer[0], fbuffer[1] };
+	float v_min = fbuffer[2];
+	float v_max = fbuffer[3];
 	bool changed = ImGui::SliderFloat2(label, v, v_min, v_max, format, (ImGuiSliderFlags)flags);
 
-	gm_buffer[0] = (float)changed;
-	gm_buffer[1] = v[0];
-	gm_buffer[2] = v[1];
+	fbuffer[0] = (float)changed;
+	fbuffer[1] = v[0];
+	fbuffer[2] = v[1];
 
 	return 0.0;
 }
 
 fn_export double imgui_slider_float3(const char* label, const char* format, double flags) {
-	float v[] = { gm_buffer[0], gm_buffer[1], gm_buffer[2] };
-	float v_min = gm_buffer[3];
-	float v_max = gm_buffer[4];
+	float* fbuffer = (float*)gm_buffer;
+
+	float v[] = { fbuffer[0], fbuffer[1], fbuffer[2] };
+	float v_min = fbuffer[3];
+	float v_max = fbuffer[4];
 	bool changed = ImGui::SliderFloat3(label, v, v_min, v_max, format, (ImGuiSliderFlags)flags);
 
-	gm_buffer[0] = (float)changed;
-	gm_buffer[1] = v[0];
-	gm_buffer[2] = v[1];
-	gm_buffer[3] = v[2];
+	fbuffer[0] = (float)changed;
+	fbuffer[1] = v[0];
+	fbuffer[2] = v[1];
+	fbuffer[3] = v[2];
 
 	return 0.0;
 }
 
 fn_export double imgui_slider_float4(const char* label, const char* format, double flags) {
-	float v[] = { gm_buffer[0], gm_buffer[1], gm_buffer[2], gm_buffer[3] };
-	float v_min = gm_buffer[4];
-	float v_max = gm_buffer[5];
+	float* fbuffer = (float*)gm_buffer;
+
+	float v[] = { fbuffer[0], fbuffer[1], fbuffer[2], fbuffer[3] };
+	float v_min = fbuffer[4];
+	float v_max = fbuffer[5];
 	bool changed = ImGui::SliderFloat4(label, v, v_min, v_max, format, (ImGuiSliderFlags)flags);
 
-	gm_buffer[0] = (float)changed;
-	gm_buffer[1] = v[0];
-	gm_buffer[2] = v[1];
-	gm_buffer[3] = v[2];
-	gm_buffer[4] = v[3];
+	fbuffer[0] = (float)changed;
+	fbuffer[1] = v[0];
+	fbuffer[2] = v[1];
+	fbuffer[3] = v[2];
+	fbuffer[4] = v[3];
 
 	return 0.0;
 }
 
 fn_export double imgui_slider_angle(const char* label, const char* format, double flags) {
-	float v_rad = gm_buffer[0];
-	float v_degrees_min = gm_buffer[1];
-	float v_degrees_max = gm_buffer[2];
+	float* fbuffer = (float*)gm_buffer;
+
+	float v_rad = fbuffer[0];
+	float v_degrees_min = fbuffer[1];
+	float v_degrees_max = fbuffer[2];
 	bool changed = ImGui::SliderAngle(label, &v_rad, v_degrees_min, v_degrees_max, format, (ImGuiSliderFlags)flags);
 
-	gm_buffer[0] = (float)changed;
-	gm_buffer[1] = v_rad;
+	fbuffer[0] = (float)changed;
+	fbuffer[1] = v_rad;
 
 	return 0.0;
 }
 
 fn_export double imgui_slider_int(const char* label, const char* format, double flags) {
-	int v = (int)gm_buffer[0];
-	float v_min = gm_buffer[1];
-	float v_max = gm_buffer[2];
+	float* fbuffer = (float*)gm_buffer;
+
+	int v = (int)fbuffer[0];
+	float v_min = fbuffer[1];
+	float v_max = fbuffer[2];
 	bool changed = ImGui::SliderInt(label, &v, v_min, v_max, format, (ImGuiSliderFlags)flags);
 
-	gm_buffer[0] = (float)changed;
-	gm_buffer[1] = v;
+	fbuffer[0] = (float)changed;
+	fbuffer[1] = v;
 
 	return 0.0;
 }
 
 fn_export double imgui_slider_int2(const char* label, const char* format, double flags) {
-	int v[] = { (int)gm_buffer[0], (int)gm_buffer[1] };
-	float v_min = gm_buffer[2];
-	float v_max = gm_buffer[3];
+	float* fbuffer = (float*)gm_buffer;
+
+	int v[] = { (int)fbuffer[0], (int)fbuffer[1] };
+	float v_min = fbuffer[2];
+	float v_max = fbuffer[3];
 	bool changed = ImGui::SliderInt2(label, v, v_min, v_max, format, (ImGuiSliderFlags)flags);
 
-	gm_buffer[0] = (float)changed;
-	gm_buffer[1] = v[0];
-	gm_buffer[2] = v[1];
+	fbuffer[0] = (float)changed;
+	fbuffer[1] = v[0];
+	fbuffer[2] = v[1];
 
 	return 0.0;
 }
 
 fn_export double imgui_slider_int3(const char* label, const char* format, double flags) {
-	int v[] = { (int)gm_buffer[0], (int)gm_buffer[1], (int)gm_buffer[2] };
-	float v_min = gm_buffer[3];
-	float v_max = gm_buffer[4];
+	float* fbuffer = (float*)gm_buffer;
+
+	int v[] = { (int)fbuffer[0], (int)fbuffer[1], (int)fbuffer[2] };
+	float v_min = fbuffer[3];
+	float v_max = fbuffer[4];
 	bool changed = ImGui::SliderInt3(label, v, v_min, v_max, format, (ImGuiSliderFlags)flags);
 
-	gm_buffer[0] = (float)changed;
-	gm_buffer[1] = v[0];
-	gm_buffer[2] = v[1];
-	gm_buffer[3] = v[2];
+	fbuffer[0] = (float)changed;
+	fbuffer[1] = v[0];
+	fbuffer[2] = v[1];
+	fbuffer[3] = v[2];
 
 	return 0.0;
 }
 
 fn_export double imgui_slider_int4(const char* label, const char* format, double flags) {
-	int v[] = { (int)gm_buffer[0], (int)gm_buffer[1], (int)gm_buffer[2], (int)gm_buffer[3] };
-	float v_min = gm_buffer[4];
-	float v_max = gm_buffer[5];
+	float* fbuffer = (float*)gm_buffer;
+
+	int v[] = { (int)fbuffer[0], (int)fbuffer[1], (int)fbuffer[2], (int)fbuffer[3] };
+	float v_min = fbuffer[4];
+	float v_max = fbuffer[5];
 	bool changed = ImGui::SliderInt4(label, v, v_min, v_max, format, (ImGuiSliderFlags)flags);
 
-	gm_buffer[0] = (float)changed;
-	gm_buffer[1] = v[0];
-	gm_buffer[2] = v[1];
-	gm_buffer[3] = v[2];
-	gm_buffer[4] = v[3];
+	fbuffer[0] = (float)changed;
+	fbuffer[1] = v[0];
+	fbuffer[2] = v[1];
+	fbuffer[3] = v[2];
+	fbuffer[4] = v[3];
 
 	return 0.0;
 }
 
 fn_export double imgui_vslider_float(const char* label, const char* format, double flags) {
-	ImVec2 size(gm_buffer[0], gm_buffer[1]);
-	float v = gm_buffer[2];
-	float v_min = gm_buffer[3];
-	float v_max = gm_buffer[4];
-	bool changed = ImGui::VSliderFloat(label, size, &v, v_min, v_max, format, flags);
+	float* fbuffer = (float*)gm_buffer;
 
-	gm_buffer[0] = (float)changed;
-	gm_buffer[1] = v;
+	ImVec2 size(fbuffer[0], fbuffer[1]);
+	float v = fbuffer[2];
+	float v_min = fbuffer[3];
+	float v_max = fbuffer[4];
+	bool changed = ImGui::VSliderFloat(label, size, &v, v_min, v_max, format, (ImGuiSliderFlags)flags);
+
+	fbuffer[0] = (float)changed;
+	fbuffer[1] = v;
 
 	return 0.0;
 }
 
 fn_export double imgui_vslider_int(const char* label, const char* format, double flags) {
-	ImVec2 size(gm_buffer[0], gm_buffer[1]);
-	int v = (int)gm_buffer[2];
-	float v_min = gm_buffer[3];
-	float v_max = gm_buffer[4];
-	bool changed = ImGui::VSliderInt(label, size, &v, v_min, v_max, format, flags);
+	float* fbuffer = (float*)gm_buffer;
 
-	gm_buffer[0] = (float)changed;
-	gm_buffer[1] = v;
+	ImVec2 size(fbuffer[0], fbuffer[1]);
+	int v = (int)fbuffer[2];
+	float v_min = fbuffer[3];
+	float v_max = fbuffer[4];
+	bool changed = ImGui::VSliderInt(label, size, &v, v_min, v_max, format, (ImGuiSliderFlags)flags);
+
+	fbuffer[0] = (float)changed;
+	fbuffer[1] = v;
 
 	return 0.0;
 }
 
 // Widgets: Input with Keyboard
+fn_export double imgui_input_text(const char* label, const char* text, double flags) {
+	std::string str(text);
+	bool changed = ImGui::InputText(label, &str, (ImGuiInputTextFlags)flags);// , (ImGuiInputTextCallback)0, (void*)0);
 
+	float* fbuffer = (float*)gm_buffer;
+	char* cbuffer = (char*)gm_buffer;
+
+	fbuffer[0] = (float)changed;
+
+	int str_size = str.capacity() + 1;
+	const char* c_str = str.c_str();
+	for (int i = 0; i < str_size; ++i) {
+		cbuffer[4 + i] = c_str[i];
+	}
+
+	return 0.0;
+}
+
+fn_export double imgui_input_text_multiline(const char* label, const char* text, double flags) {
+
+	float* fbuffer = (float*)gm_buffer;
+	float width = fbuffer[0];
+	float height = fbuffer[1];
+
+	std::string str(text);
+	ImVec2 size(width, height);
+	bool changed = ImGui::InputTextMultiline(label, &str, size, (ImGuiInputTextFlags)flags);
+
+	//float* fbuffer = (float*)gm_buffer;
+	char* cbuffer = (char*)gm_buffer;
+
+	fbuffer[0] = (float)changed;
+
+	int str_size = str.capacity() + 1;
+	const char* c_str = str.c_str();
+	for (int i = 0; i < str_size; ++i) {
+		cbuffer[4 + i] = c_str[i];
+	}
+
+	return 0.0;
+
+}
+
+fn_export double imgui_input_text_with_hint(const char* label, const char* hint, const char* text, double flags) {
+	std::string str(text);
+	bool changed = ImGui::InputTextWithHint(label, hint, &str, (ImGuiInputTextFlags)flags);
+
+	float* fbuffer = (float*)gm_buffer;
+	char* cbuffer = (char*)gm_buffer;
+
+	fbuffer[0] = (float)changed;
+
+	int str_size = str.capacity() + 1;
+	const char* c_str = str.c_str();
+	for (int i = 0; i < str_size; ++i) {
+		cbuffer[4 + i] = c_str[i];
+	}
+
+	return 0.0;
+}
 
 // Widgets: Color Editor/Picker
 

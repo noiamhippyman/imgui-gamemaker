@@ -459,6 +459,22 @@
             1,
             2,
           ],"resourceVersion":"1.0","name":"_imgui_vslider_int","tags":[],"resourceType":"GMExtensionFunction",},
+        {"externalName":"imgui_input_text","kind":1,"help":"_imgui_input_text(label,text,flags)","hidden":false,"returnType":2,"argCount":0,"args":[
+            1,
+            1,
+            2,
+          ],"resourceVersion":"1.0","name":"_imgui_input_text","tags":[],"resourceType":"GMExtensionFunction",},
+        {"externalName":"imgui_input_text_multiline","kind":1,"help":"_imgui_input_text_multiline(label,text,flags)","hidden":false,"returnType":2,"argCount":0,"args":[
+            1,
+            1,
+            2,
+          ],"resourceVersion":"1.0","name":"_imgui_input_text_multiline","tags":[],"resourceType":"GMExtensionFunction",},
+        {"externalName":"imgui_input_text_with_hint","kind":1,"help":"_imgui_input_text_with_hint(label,hint,text,flags)","hidden":false,"returnType":2,"argCount":0,"args":[
+            1,
+            1,
+            1,
+            2,
+          ],"resourceVersion":"1.0","name":"_imgui_input_text_with_hint","tags":[],"resourceType":"GMExtensionFunction",},
       ],"constants":[],"ProxyFiles":[],"copyToTargets":144150411102650606,"order":[
         {"name":"_extension_assign_buffer","path":"extensions/Ext_imgui/Ext_imgui.yy",},
         {"name":"_imgui_setup","path":"extensions/Ext_imgui/Ext_imgui.yy",},
@@ -604,6 +620,9 @@
         {"name":"_imgui_slider_int4","path":"extensions/Ext_imgui/Ext_imgui.yy",},
         {"name":"_imgui_vslider_float","path":"extensions/Ext_imgui/Ext_imgui.yy",},
         {"name":"_imgui_vslider_int","path":"extensions/Ext_imgui/Ext_imgui.yy",},
+        {"name":"_imgui_input_text","path":"extensions/Ext_imgui/Ext_imgui.yy",},
+        {"name":"_imgui_input_text_multiline","path":"extensions/Ext_imgui/Ext_imgui.yy",},
+        {"name":"_imgui_input_text_with_hint","path":"extensions/Ext_imgui/Ext_imgui.yy",},
       ],"resourceVersion":"1.0","name":"","tags":[],"resourceType":"GMExtensionFile",},
   ],
   "classname": "",
