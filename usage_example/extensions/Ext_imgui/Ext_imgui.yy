@@ -475,6 +475,12 @@
             1,
             2,
           ],"resourceVersion":"1.0","name":"_imgui_input_text_with_hint","tags":[],"resourceType":"GMExtensionFunction",},
+        {"externalName":"test_buffer_setup","kind":1,"help":"test_buffer_setup(buffer_ptr,buffer_size)","hidden":false,"returnType":2,"argCount":0,"args":[
+            1,
+            2,
+          ],"resourceVersion":"1.0","name":"test_buffer_setup","tags":[],"resourceType":"GMExtensionFunction",},
+        {"externalName":"test_buffer_funcs","kind":1,"help":"test_buffer_funcs()","hidden":false,"returnType":2,"argCount":0,"args":[],"resourceVersion":"1.0","name":"test_buffer_funcs","tags":[],"resourceType":"GMExtensionFunction",},
+        {"externalName":"test_buffer_cleanup","kind":1,"help":"test_buffer_cleanup()","hidden":false,"returnType":2,"argCount":0,"args":[],"resourceVersion":"1.0","name":"test_buffer_cleanup","tags":[],"resourceType":"GMExtensionFunction",},
       ],"constants":[],"ProxyFiles":[],"copyToTargets":144150411102650606,"order":[
         {"name":"_extension_assign_buffer","path":"extensions/Ext_imgui/Ext_imgui.yy",},
         {"name":"_imgui_setup","path":"extensions/Ext_imgui/Ext_imgui.yy",},
@@ -623,6 +629,9 @@
         {"name":"_imgui_input_text","path":"extensions/Ext_imgui/Ext_imgui.yy",},
         {"name":"_imgui_input_text_multiline","path":"extensions/Ext_imgui/Ext_imgui.yy",},
         {"name":"_imgui_input_text_with_hint","path":"extensions/Ext_imgui/Ext_imgui.yy",},
+        {"name":"test_buffer_setup","path":"extensions/Ext_imgui/Ext_imgui.yy",},
+        {"name":"test_buffer_funcs","path":"extensions/Ext_imgui/Ext_imgui.yy",},
+        {"name":"test_buffer_cleanup","path":"extensions/Ext_imgui/Ext_imgui.yy",},
       ],"resourceVersion":"1.0","name":"","tags":[],"resourceType":"GMExtensionFile",},
   ],
   "classname": "",

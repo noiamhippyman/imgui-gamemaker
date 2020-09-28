@@ -1,3 +1,4 @@
+#include <iostream>
 #include <Windows.h>
 #include <commctrl.h>
 #pragma comment(lib, "comctl32.lib")
@@ -6,6 +7,8 @@
 #include "../imgui/imgui_stdlib.h"
 #include "../imgui/imgui_impl_dx11.h"
 #include "../imgui/imgui_impl_win32.h"
+
+#include "Buffer.h"
 
 #define fn_export extern "C" __declspec(dllexport)
 
@@ -24,6 +27,34 @@ LRESULT CALLBACK ImGuiGMSSubclassProc(HWND hWnd, UINT uMsg, WPARAM wParam,
 	}
 
 	return DefSubclassProc(hWnd, uMsg, wParam, lParam);
+}
+
+Buffer* test_buffer;
+fn_export double test_buffer_setup(void* buffer_ptr, double buffer_size) {
+	test_buffer = new Buffer(buffer_ptr, buffer_size);
+	return 0.0;
+}
+
+fn_export double test_buffer_funcs() {
+	test_buffer->seek(0);
+	test_buffer->write(0.5);
+	test_buffer->write("Howdy");
+
+	test_buffer->seek(0);
+	std::cout << "Float: " << test_buffer->read_float() << std::endl;
+	std::cout << "String: " << test_buffer->read_string() << std::endl;
+
+	test_buffer->poke(0, 100.0f);
+	test_buffer->poke(4, "Hello");
+	std::cout << "Peek Float: " << test_buffer->peek_float(0) << std::endl;
+	std::cout << "Peek String: " << test_buffer->peek_string(4) << std::endl;
+
+	return 0.0;
+}
+
+fn_export double test_buffer_cleanup() {
+	delete test_buffer;
+	return 0.0;
 }
 
 
