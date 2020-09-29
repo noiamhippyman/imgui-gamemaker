@@ -7,7 +7,6 @@
     {"id":{"name":"Obj_ImGuiExample","path":"objects/Obj_ImGuiExample/Obj_ImGuiExample.yy",},"order":2,},
     {"id":{"name":"IMGUI","path":"scripts/IMGUI/IMGUI.yy",},"order":1,},
     {"id":{"name":"Ext_imgui","path":"extensions/Ext_imgui/Ext_imgui.yy",},"order":0,},
-    {"id":{"name":"Object3","path":"objects/Object3/Object3.yy",},"order":8,},
     {"id":{"name":"Room1","path":"rooms/Room1/Room1.yy",},"order":1,},
   ],
   "Options": [

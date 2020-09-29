@@ -63,11 +63,13 @@ function imgui_setup() {
 	var device = os[? "video_d3d11_device" ];
 	var context = os[? "video_d3d11_context" ];
 	_imgui_setup(hwnd,device,context);
-	_extension_assign_buffer(buffer_get_address(global.imgui_buffer));
+	//_extension_assign_buffer(buffer_get_address(global.imgui_buffer));
+	_extension_setup(buffer_get_address(global.imgui_buffer), buffer_get_size(global.imgui_buffer));
 }
 
 function imgui_cleanup() {
 	_imgui_cleanup(window_handle());
+	_extension_cleanup();
 	buffer_delete(global.imgui_buffer);
 }
 
