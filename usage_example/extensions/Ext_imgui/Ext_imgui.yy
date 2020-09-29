@@ -41,9 +41,6 @@
             2,
           ],"resourceVersion":"1.0","name":"imgui_button","tags":[],"resourceType":"GMExtensionFunction",},
         {"externalName":"imgui_end","kind":1,"help":"imgui_end()","hidden":false,"returnType":2,"argCount":0,"args":[],"resourceVersion":"1.0","name":"imgui_end","tags":[],"resourceType":"GMExtensionFunction",},
-        {"externalName":"extension_assign_buffer","kind":1,"help":"_extension_assign_buffer(buffer_ptr)","hidden":false,"returnType":2,"argCount":0,"args":[
-            1,
-          ],"resourceVersion":"1.0","name":"_extension_assign_buffer","tags":[],"resourceType":"GMExtensionFunction",},
         {"externalName":"imgui_show_demo_window","kind":1,"help":"imgui_show_demo_window(open)","hidden":false,"returnType":2,"argCount":0,"args":[
             2,
           ],"resourceVersion":"1.0","name":"imgui_show_demo_window","tags":[],"resourceType":"GMExtensionFunction",},
@@ -480,8 +477,45 @@
             2,
           ],"resourceVersion":"1.0","name":"_extension_setup","tags":[],"resourceType":"GMExtensionFunction",},
         {"externalName":"extension_cleanup","kind":1,"help":"_extension_cleanup()","hidden":false,"returnType":2,"argCount":0,"args":[],"resourceVersion":"1.0","name":"_extension_cleanup","tags":[],"resourceType":"GMExtensionFunction",},
+        {"externalName":"imgui_input_float","kind":1,"help":"_imgui_input_float(label,format,flags)","hidden":false,"returnType":2,"argCount":0,"args":[
+            1,
+            1,
+            2,
+          ],"resourceVersion":"1.0","name":"_imgui_input_float","tags":[],"resourceType":"GMExtensionFunction",},
+        {"externalName":"imgui_input_float2","kind":1,"help":"_imgui_input_float2(label,format,flags)","hidden":false,"returnType":2,"argCount":0,"args":[
+            1,
+            1,
+            2,
+          ],"resourceVersion":"1.0","name":"_imgui_input_float2","tags":[],"resourceType":"GMExtensionFunction",},
+        {"externalName":"imgui_input_float3","kind":1,"help":"_imgui_input_float3(label,format,flags)","hidden":false,"returnType":2,"argCount":0,"args":[
+            1,
+            1,
+            2,
+          ],"resourceVersion":"1.0","name":"_imgui_input_float3","tags":[],"resourceType":"GMExtensionFunction",},
+        {"externalName":"imgui_input_float4","kind":1,"help":"_imgui_input_float4(label,format,flags)","hidden":false,"returnType":2,"argCount":0,"args":[
+            1,
+            1,
+            2,
+          ],"resourceVersion":"1.0","name":"_imgui_input_float4","tags":[],"resourceType":"GMExtensionFunction",},
+        {"externalName":"imgui_input_int","kind":1,"help":"_imgui_input_int(label,flags)","hidden":false,"returnType":2,"argCount":0,"args":[
+            1,
+            2,
+          ],"resourceVersion":"1.0","name":"_imgui_input_int","tags":[],"resourceType":"GMExtensionFunction",},
+        {"externalName":"imgui_input_int2","kind":1,"help":"_imgui_input_int2(label,flags)","hidden":false,"returnType":2,"argCount":0,"args":[
+            1,
+            2,
+          ],"resourceVersion":"1.0","name":"_imgui_input_int2","tags":[],"resourceType":"GMExtensionFunction",},
+        {"externalName":"imgui_input_int3","kind":1,"help":"_imgui_input_int3(label,flags)","hidden":false,"returnType":2,"argCount":0,"args":[
+            1,
+            2,
+          ],"resourceVersion":"1.0","name":"_imgui_input_int3","tags":[],"resourceType":"GMExtensionFunction",},
+        {"externalName":"imgui_input_int4","kind":1,"help":"_imgui_input_int4(label,flags)","hidden":false,"returnType":2,"argCount":0,"args":[
+            1,
+            2,
+          ],"resourceVersion":"1.0","name":"_imgui_input_int4","tags":[],"resourceType":"GMExtensionFunction",},
       ],"constants":[],"ProxyFiles":[],"copyToTargets":144150411102650606,"order":[
-        {"name":"_extension_assign_buffer","path":"extensions/Ext_imgui/Ext_imgui.yy",},
+        {"name":"_extension_setup","path":"extensions/Ext_imgui/Ext_imgui.yy",},
+        {"name":"_extension_cleanup","path":"extensions/Ext_imgui/Ext_imgui.yy",},
         {"name":"_imgui_setup","path":"extensions/Ext_imgui/Ext_imgui.yy",},
         {"name":"_imgui_cleanup","path":"extensions/Ext_imgui/Ext_imgui.yy",},
         {"name":"imgui_newframe","path":"extensions/Ext_imgui/Ext_imgui.yy",},
@@ -628,8 +662,14 @@
         {"name":"_imgui_input_text","path":"extensions/Ext_imgui/Ext_imgui.yy",},
         {"name":"_imgui_input_text_multiline","path":"extensions/Ext_imgui/Ext_imgui.yy",},
         {"name":"_imgui_input_text_with_hint","path":"extensions/Ext_imgui/Ext_imgui.yy",},
-        {"name":"_extension_setup","path":"extensions/Ext_imgui/Ext_imgui.yy",},
-        {"name":"_extension_cleanup","path":"extensions/Ext_imgui/Ext_imgui.yy",},
+        {"name":"_imgui_input_float","path":"extensions/Ext_imgui/Ext_imgui.yy",},
+        {"name":"_imgui_input_float2","path":"extensions/Ext_imgui/Ext_imgui.yy",},
+        {"name":"_imgui_input_float3","path":"extensions/Ext_imgui/Ext_imgui.yy",},
+        {"name":"_imgui_input_float4","path":"extensions/Ext_imgui/Ext_imgui.yy",},
+        {"name":"_imgui_input_int","path":"extensions/Ext_imgui/Ext_imgui.yy",},
+        {"name":"_imgui_input_int2","path":"extensions/Ext_imgui/Ext_imgui.yy",},
+        {"name":"_imgui_input_int3","path":"extensions/Ext_imgui/Ext_imgui.yy",},
+        {"name":"_imgui_input_int4","path":"extensions/Ext_imgui/Ext_imgui.yy",},
       ],"resourceVersion":"1.0","name":"","tags":[],"resourceType":"GMExtensionFile",},
   ],
   "classname": "",

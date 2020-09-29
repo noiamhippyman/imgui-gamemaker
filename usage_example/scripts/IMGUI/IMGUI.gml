@@ -22,7 +22,6 @@ function buffer_write_args(buffer,args) {
 				offset += string_byte_length(val)+1;
 				break;
 		}
-		
 	}
 }
 
@@ -246,17 +245,6 @@ function imgui_radio_button_int(label,v,v_button) {
 	]);
 	
 }
-
-//function imgui_combo(label,current_item,items_separated_by_zeros,popup_max_height_in_items) {
-//	_imgui_combo(label,current_item,items_separated_by_zeros,popup_max_height_in_items);
-	
-//	var ret_array = [
-//		buffer_peek(global.imgui_buffer,0,IMGUI_BUFFER_TYPE), // Combo changed
-//		buffer_peek(global.imgui_buffer,4,IMGUI_BUFFER_TYPE) // Current combo index
-//	];
-	
-//	return ret_array;
-//}
 
 function imgui_drag_float(label,value,v_speed,v_min,v_max,format,flags) {
 	
@@ -713,5 +701,137 @@ function imgui_input_text_with_hint(label,hint,text,flags) {
 	return buffer_return(global.imgui_buffer, [
 		buffer_f32, // Changed
 		buffer_string // Current Text
+	]);
+}
+
+function imgui_input_float(label,value,step,step_fast,format,flags) {
+	buffer_write_args(global.imgui_buffer,[
+		buffer_f32, value,
+		buffer_f32, step,
+		buffer_f32, step_fast
+	]);
+	
+	_imgui_input_float(label,format,flags);
+	
+	return buffer_return(global.imgui_buffer,[
+		buffer_f32, // Changed
+		buffer_f32 // Current Value
+	]);
+}
+
+function imgui_input_float2(label,varray,format,flags) {
+	buffer_write_args(global.imgui_buffer,[
+		buffer_f32, varray[0],
+		buffer_f32, varray[1]
+	]);
+	
+	_imgui_input_float2(label,format,flags);
+	
+	return buffer_return(global.imgui_buffer,[
+		buffer_f32, // Changed
+		buffer_f32, // Current X
+		buffer_f32 // Current Y
+	]);
+}
+
+function imgui_input_float3(label,varray,format,flags) {
+	buffer_write_args(global.imgui_buffer,[
+		buffer_f32, varray[0],
+		buffer_f32, varray[1],
+		buffer_f32, varray[2]
+	]);
+	
+	_imgui_input_float3(label,format,flags);
+	
+	return buffer_return(global.imgui_buffer,[
+		buffer_f32, // Changed
+		buffer_f32, // Current X
+		buffer_f32, // Current Y
+		buffer_f32 // Current Z
+	]);
+}
+
+function imgui_input_float4(label,varray,format,flags) {
+	buffer_write_args(global.imgui_buffer,[
+		buffer_f32, varray[0],
+		buffer_f32, varray[1],
+		buffer_f32, varray[2],
+		buffer_f32, varray[3]
+	]);
+	
+	_imgui_input_float4(label,format,flags);
+	
+	return buffer_return(global.imgui_buffer,[
+		buffer_f32, // Changed
+		buffer_f32, // Current X
+		buffer_f32, // Current Y
+		buffer_f32, // Current Z
+		buffer_f32 // Current W
+	]);
+}
+
+function imgui_input_int(label,value,step,step_fast,flags) {
+	buffer_write_args(global.imgui_buffer,[
+		buffer_f32, value,
+		buffer_f32, step,
+		buffer_f32, step_fast
+	]);
+	
+	_imgui_input_int(label,flags);
+	
+	return buffer_return(global.imgui_buffer,[
+		buffer_f32, // Changed
+		buffer_f32 // Current Value
+	]);
+}
+
+function imgui_input_int2(label,varray,flags) {
+	buffer_write_args(global.imgui_buffer,[
+		buffer_f32, varray[0],
+		buffer_f32, varray[1]
+	]);
+	
+	_imgui_input_int2(label,flags);
+	
+	return buffer_return(global.imgui_buffer,[
+		buffer_f32, // Changed
+		buffer_f32, // Current X
+		buffer_f32 // Current Y
+	]);
+}
+
+function imgui_input_int3(label,varray,flags) {
+	buffer_write_args(global.imgui_buffer,[
+		buffer_f32, varray[0],
+		buffer_f32, varray[1],
+		buffer_f32, varray[2]
+	]);
+	
+	_imgui_input_int3(label,flags);
+	
+	return buffer_return(global.imgui_buffer,[
+		buffer_f32, // Changed
+		buffer_f32, // Current X
+		buffer_f32, // Current Y
+		buffer_f32 // Current Z
+	]);
+}
+
+function imgui_input_int4(label,varray,flags) {
+	buffer_write_args(global.imgui_buffer,[
+		buffer_f32, varray[0],
+		buffer_f32, varray[1],
+		buffer_f32, varray[2],
+		buffer_f32, varray[3]
+	]);
+	
+	_imgui_input_int4(label,flags);
+	
+	return buffer_return(global.imgui_buffer,[
+		buffer_f32, // Changed
+		buffer_f32, // Current X
+		buffer_f32, // Current Y
+		buffer_f32, // Current Z
+		buffer_f32 // Current W
 	]);
 }
