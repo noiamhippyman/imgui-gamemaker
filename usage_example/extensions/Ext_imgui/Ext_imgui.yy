@@ -513,6 +513,29 @@
             1,
             2,
           ],"resourceVersion":"1.0","name":"_imgui_input_int4","tags":[],"resourceType":"GMExtensionFunction",},
+        {"externalName":"imgui_color_edit3","kind":1,"help":"_imgui_color_edit3(label,flags)","hidden":false,"returnType":2,"argCount":0,"args":[
+            1,
+            2,
+          ],"resourceVersion":"1.0","name":"_imgui_color_edit3","tags":[],"resourceType":"GMExtensionFunction",},
+        {"externalName":"imgui_color_edit4","kind":1,"help":"_imgui_color_edit4(label,flags)","hidden":false,"returnType":2,"argCount":0,"args":[
+            1,
+            2,
+          ],"resourceVersion":"1.0","name":"_imgui_color_edit4","tags":[],"resourceType":"GMExtensionFunction",},
+        {"externalName":"imgui_color_picker3","kind":1,"help":"_imgui_color_picker3(label,flags)","hidden":false,"returnType":2,"argCount":0,"args":[
+            1,
+            2,
+          ],"resourceVersion":"1.0","name":"_imgui_color_picker3","tags":[],"resourceType":"GMExtensionFunction",},
+        {"externalName":"imgui_color_picker4","kind":1,"help":"_imgui_color_picker4(label,flags)","hidden":false,"returnType":2,"argCount":0,"args":[
+            1,
+            2,
+          ],"resourceVersion":"1.0","name":"_imgui_color_picker4","tags":[],"resourceType":"GMExtensionFunction",},
+        {"externalName":"imgui_color_button","kind":1,"help":"_imgui_color_button(desc_id,flags)","hidden":false,"returnType":2,"argCount":0,"args":[
+            1,
+            2,
+          ],"resourceVersion":"1.0","name":"_imgui_color_button","tags":[],"resourceType":"GMExtensionFunction",},
+        {"externalName":"imgui_set_color_edit_options","kind":1,"help":"imgui_set_color_edit_options(flags)","hidden":false,"returnType":2,"argCount":0,"args":[
+            2,
+          ],"resourceVersion":"1.0","name":"imgui_set_color_edit_options","tags":[],"resourceType":"GMExtensionFunction",},
       ],"constants":[],"ProxyFiles":[],"copyToTargets":144150411102650606,"order":[
         {"name":"_extension_setup","path":"extensions/Ext_imgui/Ext_imgui.yy",},
         {"name":"_extension_cleanup","path":"extensions/Ext_imgui/Ext_imgui.yy",},
@@ -670,6 +693,12 @@
         {"name":"_imgui_input_int2","path":"extensions/Ext_imgui/Ext_imgui.yy",},
         {"name":"_imgui_input_int3","path":"extensions/Ext_imgui/Ext_imgui.yy",},
         {"name":"_imgui_input_int4","path":"extensions/Ext_imgui/Ext_imgui.yy",},
+        {"name":"_imgui_color_edit3","path":"extensions/Ext_imgui/Ext_imgui.yy",},
+        {"name":"_imgui_color_edit4","path":"extensions/Ext_imgui/Ext_imgui.yy",},
+        {"name":"_imgui_color_picker3","path":"extensions/Ext_imgui/Ext_imgui.yy",},
+        {"name":"_imgui_color_picker4","path":"extensions/Ext_imgui/Ext_imgui.yy",},
+        {"name":"_imgui_color_button","path":"extensions/Ext_imgui/Ext_imgui.yy",},
+        {"name":"imgui_set_color_edit_options","path":"extensions/Ext_imgui/Ext_imgui.yy",},
       ],"resourceVersion":"1.0","name":"","tags":[],"resourceType":"GMExtensionFile",},
   ],
   "classname": "",

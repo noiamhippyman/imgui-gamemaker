@@ -203,6 +203,43 @@ if (open) {
 			int_v[3] = ret[4];
 		}
 		
+		ret = imgui_color_edit3("Color Edit3",color,0);
+		if (ret[0]) {
+			color[0] = ret[1];
+			color[1] = ret[2];
+			color[2] = ret[3];
+		}
+		
+		ret = imgui_color_edit4("Color Edit4",color,0);
+		if (ret[0]) {
+			color[0] = ret[1];
+			color[1] = ret[2];
+			color[2] = ret[3];
+			color[3] = ret[4];
+		}
+		
+		ret = imgui_color_picker3("Color Picker3",color,0);
+		if (ret[0]) {
+			color[0] = ret[1];
+			color[1] = ret[2];
+			color[2] = ret[3];
+		}
+		
+		ret = imgui_color_picker4("Color Picker4",color,0);
+		if (ret[0]) {
+			color[0] = ret[1];
+			color[1] = ret[2];
+			color[2] = ret[3];
+			color[3] = ret[4];
+		}
+		
+		imgui_color_button("Color Button",color,0,100,100)
+		//if (imgui_color_button("Color Button",color,0,0,0)) {
+		//	color[0] = random(1);
+		//	color[1] = random(1);
+		//	color[2] = random(1);
+		//}
+		
 	}
 	imgui_end();
 }

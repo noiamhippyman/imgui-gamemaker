@@ -13,6 +13,7 @@ int_v_current_max = 0;
 
 int_v = [1,2,3,4];
 float_v = [0,0.25,0.5,0.75];
+color = [1.0,0.5,0.2,1.0];
 
 // imgui_slider_floatX variables
 slider_angle = 0;

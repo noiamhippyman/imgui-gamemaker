@@ -835,3 +835,81 @@ function imgui_input_int4(label,varray,flags) {
 		buffer_f32 // Current W
 	]);
 }
+
+function imgui_color_edit3(label,color,flags) {
+	buffer_write_args(global.imgui_buffer, [
+		buffer_f32, color[0],
+		buffer_f32, color[1],
+		buffer_f32, color[2]
+	]);
+	_imgui_color_edit3(label,flags);
+	return buffer_return(global.imgui_buffer,[
+		buffer_f32, // Changed
+		buffer_f32, // R
+		buffer_f32, // G
+		buffer_f32 // B
+	]);
+}
+
+function imgui_color_edit4(label,color,flags) {
+	buffer_write_args(global.imgui_buffer, [
+		buffer_f32, color[0],
+		buffer_f32, color[1],
+		buffer_f32, color[2],
+		buffer_f32, color[3]
+	]);
+	_imgui_color_edit4(label,flags);
+	return buffer_return(global.imgui_buffer,[
+		buffer_f32, // Changed
+		buffer_f32, // R
+		buffer_f32, // G
+		buffer_f32, // B
+		buffer_f32 // A
+	]);
+}
+
+function imgui_color_picker3(label,color,flags) {
+	buffer_write_args(global.imgui_buffer, [
+		buffer_f32, color[0],
+		buffer_f32, color[1],
+		buffer_f32, color[2]
+	]);
+	
+	_imgui_color_picker3(label,flags);
+	
+	return buffer_return(global.imgui_buffer,[
+		buffer_f32, // Changed
+		buffer_f32, // R
+		buffer_f32, // G
+		buffer_f32 // B
+	]);
+}
+
+function imgui_color_picker4(label,color,flags) {
+	buffer_write_args(global.imgui_buffer, [
+		buffer_f32, color[0],
+		buffer_f32, color[1],
+		buffer_f32, color[2],
+		buffer_f32, color[3]
+	]);
+	_imgui_color_picker4(label,flags);
+	return buffer_return(global.imgui_buffer,[
+		buffer_f32, // Changed
+		buffer_f32, // R
+		buffer_f32, // G
+		buffer_f32, // B
+		buffer_f32 // A
+	]);
+}
+
+function imgui_color_button(desc_id,color,flags,width,height) {
+	buffer_write_args(global.imgui_buffer, [
+		buffer_f32, color[@0],
+		buffer_f32, color[@1],
+		buffer_f32, color[@2],
+		buffer_f32, color[@3],
+		buffer_f32, width,
+		buffer_f32, height
+	]);
+	return _imgui_color_button(desc_id,flags);
+}

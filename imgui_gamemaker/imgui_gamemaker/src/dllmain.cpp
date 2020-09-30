@@ -1419,7 +1419,103 @@ fn_export double imgui_input_int4(const char* label, double flags) {
 
 
 // Widgets: Color Editor/Picker
+fn_export double imgui_color_edit3(const char* label, double flags) {
+	ext_buffer->seek(0);
+	float c[] = {
+		ext_buffer->read_float(),
+		ext_buffer->read_float(),
+		ext_buffer->read_float()
+	};
+	bool changed = ImGui::ColorEdit3(label, c, (ImGuiColorEditFlags)flags);
 
+	ext_buffer->seek(0);
+	ext_buffer->write((float)changed);
+	ext_buffer->write(c[0]);
+	ext_buffer->write(c[1]);
+	ext_buffer->write(c[2]);
+
+	return 0.0;
+}
+
+fn_export double imgui_color_edit4(const char* label, double flags) {
+	ext_buffer->seek(0);
+	float c[] = {
+		ext_buffer->read_float(),
+		ext_buffer->read_float(),
+		ext_buffer->read_float(),
+		ext_buffer->read_float()
+	};
+	bool changed = ImGui::ColorEdit4(label, c, (ImGuiColorEditFlags)flags);
+
+	ext_buffer->seek(0);
+	ext_buffer->write((float)changed);
+	ext_buffer->write(c[0]);
+	ext_buffer->write(c[1]);
+	ext_buffer->write(c[2]);
+
+	return 0.0;
+}
+
+fn_export double imgui_color_picker3(const char* label, double flags) {
+	ext_buffer->seek(0);
+	float c[] = {
+		ext_buffer->read_float(),
+		ext_buffer->read_float(),
+		ext_buffer->read_float()
+	};
+	bool changed = ImGui::ColorPicker3(label, c, (ImGuiColorEditFlags)flags);
+
+	ext_buffer->seek(0);
+	ext_buffer->write((float)changed);
+	ext_buffer->write(c[0]);
+	ext_buffer->write(c[1]);
+	ext_buffer->write(c[2]);
+
+	return 0.0;
+}
+
+fn_export double imgui_color_picker4(const char* label, double flags) {
+	ext_buffer->seek(0);
+	float c[] = {
+		ext_buffer->read_float(),
+		ext_buffer->read_float(),
+		ext_buffer->read_float(),
+		ext_buffer->read_float()
+	};
+	bool changed = ImGui::ColorPicker4(label, c, (ImGuiColorEditFlags)flags);
+
+	ext_buffer->seek(0);
+	ext_buffer->write((float)changed);
+	ext_buffer->write(c[0]);
+	ext_buffer->write(c[1]);
+	ext_buffer->write(c[2]);
+	ext_buffer->write(c[3]);
+
+	return 0.0;
+}
+
+fn_export double imgui_color_button(const char* desc_id, double flags) {
+	ext_buffer->seek(0);
+	ImVec4 c(
+		ext_buffer->read_float(),
+		ext_buffer->read_float(),
+		ext_buffer->read_float(),
+		ext_buffer->read_float()
+	);
+
+	ImVec2 size(
+		ext_buffer->read_float(),
+		ext_buffer->read_float()
+	);
+	
+	return ImGui::ColorButton(desc_id, c, (ImGuiColorEditFlags)flags, size);
+}
+
+fn_export double imgui_set_color_edit_options(double flags) {
+	ImGui::SetColorEditOptions((ImGuiColorEditFlags)flags);
+
+	return 0.0;
+}
 
 // Widgets: Trees
 
