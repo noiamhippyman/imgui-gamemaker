@@ -3,6 +3,11 @@ imgui_setup();
 // main window variables
 open = true;
 
+items = ["AAA","BBB","CCC","DDD","EEE"];
+current_item = items[0];
+
+current_index = 0;
+
 
 
 float_v_current_min = 0;
@@ -22,3 +27,5 @@ slider_angle = 0;
 input_text = "Hello there!";
 multiline_input_text = "Hello there multi-lines!";
 input_text_with_hint = "Hello there with hints!";
+
+collapsing_header_open = true;

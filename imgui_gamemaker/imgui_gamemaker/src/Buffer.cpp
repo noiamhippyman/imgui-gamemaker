@@ -48,10 +48,15 @@ float Buffer::read_float()
 	return val.f;
 }
 
+#include <iostream>
 std::string Buffer::read_string()
 {
-	std::string str((char*)&data[data_index]);
-	data_index += str.capacity() + 1;
+	std::string str;
+	while (data[data_index] != (unsigned char)0) {
+		str.push_back(data[data_index]);
+		data_index++;
+	}
+	data_index++;	
 	return str;
 }
 

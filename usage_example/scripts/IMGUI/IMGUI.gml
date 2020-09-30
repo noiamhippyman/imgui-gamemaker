@@ -13,14 +13,30 @@ function buffer_write_args(buffer,args) {
 	for (var i = 0; i < count; i+=2) {
 		var type = args[i];
 		var val = args[i+1];
-		buffer_poke(buffer,offset,type,val);
-		switch (type) {
-			case buffer_f32:
-				offset += buffer_sizeof(type);
-				break;
-			case buffer_string:
-				offset += string_byte_length(val)+1;
-				break;
+		if (is_array(val)) {
+			var val_count = array_length(val);
+			for (var j = 0; j < val_count; ++j) {
+				var v = val[j];
+				buffer_poke(buffer,offset,type,v);
+				switch (type) {
+					case buffer_f32:
+						offset += buffer_sizeof(type);
+						break;
+					case buffer_string:
+						offset += string_byte_length(v)+1;
+						break;
+				}
+			}
+		} else {
+			buffer_poke(buffer,offset,type,val);
+			switch (type) {
+				case buffer_f32:
+					offset += buffer_sizeof(type);
+					break;
+				case buffer_string:
+					offset += string_byte_length(val)+1;
+					break;
+			}
 		}
 	}
 }
@@ -912,4 +928,53 @@ function imgui_color_button(desc_id,color,flags,width,height) {
 		buffer_f32, height
 	]);
 	return _imgui_color_button(desc_id,flags);
+}
+
+function imgui_collapsing_header(label,open,flags) {
+	
+	_imgui_collapsing_header(label,open,flags);
+	
+	return buffer_return(global.imgui_buffer,[
+		buffer_f32,
+		buffer_f32
+	]);
+}
+
+function imgui_selectable(label,selected,flags,width,height) {
+	buffer_write_args(global.imgui_buffer,[
+		buffer_f32, width,
+		buffer_f32, height,
+	]);
+	return _imgui_selectable(label,selected,flags);
+}
+
+function imgui_combo(label,current_item,items,item_count,popup_max_height_in_items) {
+	buffer_write_args(global.imgui_buffer,[
+		buffer_f32, popup_max_height_in_items,
+		buffer_f32, current_item,
+		buffer_f32, item_count,
+		buffer_string, items
+	]);
+	_imgui_combo(label);
+	
+	return buffer_return(global.imgui_buffer,[
+		buffer_f32, // Changed
+		buffer_f32 // Current Item
+	]);
+}
+
+function imgui_list_box(label,current_item,items,item_count,height_in_items) {
+	buffer_write_args(global.imgui_buffer,[
+		buffer_f32, height_in_items,
+		buffer_f32, current_item,
+		buffer_f32, item_count,
+		buffer_string, items
+	]);
+	
+	_imgui_list_box(label);
+	
+	return buffer_return(global.imgui_buffer, [
+		buffer_f32, // Changed
+		buffer_f32 // Current Item
+	]);
 }

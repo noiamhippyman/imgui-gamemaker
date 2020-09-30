@@ -536,6 +536,44 @@
         {"externalName":"imgui_set_color_edit_options","kind":1,"help":"imgui_set_color_edit_options(flags)","hidden":false,"returnType":2,"argCount":0,"args":[
             2,
           ],"resourceVersion":"1.0","name":"imgui_set_color_edit_options","tags":[],"resourceType":"GMExtensionFunction",},
+        {"externalName":"imgui_tree_node","kind":1,"help":"imgui_tree_node(label)","hidden":false,"returnType":2,"argCount":0,"args":[
+            1,
+          ],"resourceVersion":"1.0","name":"imgui_tree_node","tags":[],"resourceType":"GMExtensionFunction",},
+        {"externalName":"imgui_tree_node_ex","kind":1,"help":"imgui_tree_node_ex(label,flags)","hidden":false,"returnType":2,"argCount":0,"args":[
+            1,
+            2,
+          ],"resourceVersion":"1.0","name":"imgui_tree_node_ex","tags":[],"resourceType":"GMExtensionFunction",},
+        {"externalName":"imgui_tree_push","kind":1,"help":"imgui_tree_push(str_id)","hidden":false,"returnType":2,"argCount":0,"args":[
+            1,
+          ],"resourceVersion":"1.0","name":"imgui_tree_push","tags":[],"resourceType":"GMExtensionFunction",},
+        {"externalName":"imgui_tree_pop","kind":1,"help":"imgui_tree_pop()","hidden":false,"returnType":2,"argCount":0,"args":[],"resourceVersion":"1.0","name":"imgui_tree_pop","tags":[],"resourceType":"GMExtensionFunction",},
+        {"externalName":"imgui_get_tree_node_to_label_spacing","kind":1,"help":"imgui_get_tree_node_to_label_spacing()","hidden":false,"returnType":2,"argCount":0,"args":[],"resourceVersion":"1.0","name":"imgui_get_tree_node_to_label_spacing","tags":[],"resourceType":"GMExtensionFunction",},
+        {"externalName":"imgui_collapsing_header","kind":1,"help":"_imgui_collapsing_header(label,open,flags)","hidden":false,"returnType":2,"argCount":0,"args":[
+            1,
+            2,
+            2,
+          ],"resourceVersion":"1.0","name":"_imgui_collapsing_header","tags":[],"resourceType":"GMExtensionFunction",},
+        {"externalName":"imgui_set_next_item_open","kind":1,"help":"imgui_set_next_item_open(is_open,cond)","hidden":false,"returnType":2,"argCount":0,"args":[
+            2,
+            2,
+          ],"resourceVersion":"1.0","name":"imgui_set_next_item_open","tags":[],"resourceType":"GMExtensionFunction",},
+        {"externalName":"imgui_selectable","kind":1,"help":"_imgui_selectable(label,selected,flags)","hidden":false,"returnType":2,"argCount":0,"args":[
+            1,
+            2,
+            2,
+          ],"resourceVersion":"1.0","name":"_imgui_selectable","tags":[],"resourceType":"GMExtensionFunction",},
+        {"externalName":"imgui_combo","kind":1,"help":"_imgui_combo(label)","hidden":false,"returnType":2,"argCount":0,"args":[
+            1,
+          ],"resourceVersion":"1.0","name":"_imgui_combo","tags":[],"resourceType":"GMExtensionFunction",},
+        {"externalName":"imgui_list_box","kind":1,"help":"_imgui_list_box(label)","hidden":false,"returnType":2,"argCount":0,"args":[
+            1,
+          ],"resourceVersion":"1.0","name":"_imgui_list_box","tags":[],"resourceType":"GMExtensionFunction",},
+        {"externalName":"imgui_list_box_header","kind":1,"help":"imgui_list_box_header(label,width,height)","hidden":false,"returnType":2,"argCount":0,"args":[
+            1,
+            2,
+            2,
+          ],"resourceVersion":"1.0","name":"imgui_list_box_header","tags":[],"resourceType":"GMExtensionFunction",},
+        {"externalName":"imgui_list_box_footer","kind":1,"help":"imgui_list_box_footer()","hidden":false,"returnType":2,"argCount":0,"args":[],"resourceVersion":"1.0","name":"imgui_list_box_footer","tags":[],"resourceType":"GMExtensionFunction",},
       ],"constants":[],"ProxyFiles":[],"copyToTargets":144150411102650606,"order":[
         {"name":"_extension_setup","path":"extensions/Ext_imgui/Ext_imgui.yy",},
         {"name":"_extension_cleanup","path":"extensions/Ext_imgui/Ext_imgui.yy",},
@@ -661,6 +699,7 @@
         {"name":"imgui_bullet","path":"extensions/Ext_imgui/Ext_imgui.yy",},
         {"name":"imgui_begin_combo","path":"extensions/Ext_imgui/Ext_imgui.yy",},
         {"name":"imgui_end_combo","path":"extensions/Ext_imgui/Ext_imgui.yy",},
+        {"name":"_imgui_combo","path":"extensions/Ext_imgui/Ext_imgui.yy",},
         {"name":"_imgui_drag_float","path":"extensions/Ext_imgui/Ext_imgui.yy",},
         {"name":"_imgui_drag_float2","path":"extensions/Ext_imgui/Ext_imgui.yy",},
         {"name":"_imgui_drag_float3","path":"extensions/Ext_imgui/Ext_imgui.yy",},
@@ -699,6 +738,17 @@
         {"name":"_imgui_color_picker4","path":"extensions/Ext_imgui/Ext_imgui.yy",},
         {"name":"_imgui_color_button","path":"extensions/Ext_imgui/Ext_imgui.yy",},
         {"name":"imgui_set_color_edit_options","path":"extensions/Ext_imgui/Ext_imgui.yy",},
+        {"name":"imgui_tree_node","path":"extensions/Ext_imgui/Ext_imgui.yy",},
+        {"name":"imgui_tree_node_ex","path":"extensions/Ext_imgui/Ext_imgui.yy",},
+        {"name":"imgui_tree_push","path":"extensions/Ext_imgui/Ext_imgui.yy",},
+        {"name":"imgui_tree_pop","path":"extensions/Ext_imgui/Ext_imgui.yy",},
+        {"name":"imgui_get_tree_node_to_label_spacing","path":"extensions/Ext_imgui/Ext_imgui.yy",},
+        {"name":"_imgui_collapsing_header","path":"extensions/Ext_imgui/Ext_imgui.yy",},
+        {"name":"imgui_set_next_item_open","path":"extensions/Ext_imgui/Ext_imgui.yy",},
+        {"name":"_imgui_selectable","path":"extensions/Ext_imgui/Ext_imgui.yy",},
+        {"name":"_imgui_list_box","path":"extensions/Ext_imgui/Ext_imgui.yy",},
+        {"name":"imgui_list_box_header","path":"extensions/Ext_imgui/Ext_imgui.yy",},
+        {"name":"imgui_list_box_footer","path":"extensions/Ext_imgui/Ext_imgui.yy",},
       ],"resourceVersion":"1.0","name":"","tags":[],"resourceType":"GMExtensionFile",},
   ],
   "classname": "",

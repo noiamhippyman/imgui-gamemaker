@@ -11,6 +11,7 @@
 #pragma once
 
 #include <string>
+#include <vector>
 
 namespace ImGui
 {
@@ -19,4 +20,8 @@ namespace ImGui
     IMGUI_API bool  InputText(const char* label, std::string* str, ImGuiInputTextFlags flags = 0, ImGuiInputTextCallback callback = NULL, void* user_data = NULL);
     IMGUI_API bool  InputTextMultiline(const char* label, std::string* str, const ImVec2& size = ImVec2(0, 0), ImGuiInputTextFlags flags = 0, ImGuiInputTextCallback callback = NULL, void* user_data = NULL);
     IMGUI_API bool  InputTextWithHint(const char* label, const char* hint, std::string* str, ImGuiInputTextFlags flags = 0, ImGuiInputTextCallback callback = NULL, void* user_data = NULL);
+
+	IMGUI_API bool Combo(const char* label, int* current_item, std::vector<std::string>& items, int popup_max_height_in_items = -1);
+	IMGUI_API bool ListBox(const char* label, int* current_item, std::vector<std::string>& items, int height_in_items = -1);
+
 }

@@ -825,6 +825,24 @@ fn_export double imgui_end_combo() {
 	return 0.0;
 }
 
+fn_export double imgui_combo(const char* label) {
+	ext_buffer->seek(0);
+	int popup_max_height_in_items = ext_buffer->read_float();
+	int current_item = ext_buffer->read_float();
+	int items_count = ext_buffer->read_float();
+	std::vector<std::string> items;
+	for (int i = 0; i < items_count; ++i) {
+		items.push_back(ext_buffer->read_string());
+	}
+	
+	bool changed = ImGui::Combo(label, &current_item, items, popup_max_height_in_items);
+
+	ext_buffer->seek(0);
+	ext_buffer->write((float)changed);
+	ext_buffer->write(current_item);
+
+	return 0.0;
+}
 
 // Widgets: Drag Sliders
 fn_export double imgui_drag_float(const char* label, const char* format, double flags) {
@@ -1517,14 +1535,84 @@ fn_export double imgui_set_color_edit_options(double flags) {
 	return 0.0;
 }
 
+
 // Widgets: Trees
+fn_export double imgui_tree_node(const char* label) {
+	return ImGui::TreeNode(label);
+}
+
+fn_export double imgui_tree_node_ex(const char* label, double flags) {
+	return ImGui::TreeNodeEx(label, (ImGuiTreeNodeFlags)flags);
+}
+
+fn_export double imgui_tree_push(const char* str_id) {
+	ImGui::TreePush(str_id);
+	return 0.0;
+}
+
+fn_export double imgui_tree_pop() {
+	ImGui::TreePop();
+	return 0.0;
+}
+
+fn_export double imgui_get_tree_node_to_label_spacing() {
+	return ImGui::GetTreeNodeToLabelSpacing();
+}
+
+fn_export double imgui_collapsing_header(const char* label, double  open, double flags) {
+	bool is_null = open == -4;
+	bool b = (bool)open;
+	bool collapsed = ImGui::CollapsingHeader(label, is_null ? NULL : &b, (ImGuiTreeNodeFlags)flags);
+
+	ext_buffer->seek(0);
+	ext_buffer->write((float)collapsed);
+	ext_buffer->write(is_null ? -4.0 : (float)b);
+
+	return 0.0;
+}
+
+fn_export double imgui_set_next_item_open(double is_open, double cond) {
+	ImGui::SetNextItemOpen((bool)is_open, (ImGuiCond)cond);
+	return 0.0;
+}
 
 
 // Widgets: Selectables
+fn_export double imgui_selectable(const char* label, double selected, double flags) {
+	ext_buffer->seek(0);
+	ImVec2 size(ext_buffer->read_float(), ext_buffer->read_float());
+	return ImGui::Selectable(label, selected, (ImGuiSelectableFlags)flags, size);
+}
 
 
 // Widgets: List Boxes
+fn_export double imgui_list_box(const char* label) {
+	ext_buffer->seek(0);
+	int height_in_items = ext_buffer->read_float();
+	int current_item = ext_buffer->read_float();
+	int item_count = ext_buffer->read_float();
+	std::vector<std::string> items;
+	for (int i = 0; i < item_count; ++i) {
+		items.push_back(ext_buffer->read_string());
+	}
+	bool changed = ImGui::ListBox(label, &current_item, items, height_in_items);
 
+	ext_buffer->seek(0);
+	ext_buffer->write((float)changed);
+	ext_buffer->write(current_item);
+
+	return 0.0;
+}
+
+fn_export double imgui_list_box_header(const char* label, double width, double height) {
+	ImVec2 size(width, height);
+	return ImGui::ListBoxHeader(label, size);
+}
+
+fn_export double imgui_list_box_footer() {
+	ImGui::ListBoxFooter();
+	return 0.0;
+}
 
 // Widgets: Data Plotting
 
