@@ -5,6 +5,7 @@ if (keyboard_check_pressed(vk_space)) {
 }
 
 if (open) {
+	
 	var ret = imgui_begin("Test",open,0);
 	if (ret[0]) {
 		open = ret[1];
@@ -233,12 +234,11 @@ if (open) {
 			color[3] = ret[4];
 		}
 		
-		imgui_color_button("Color Button",color,0,100,100)
-		//if (imgui_color_button("Color Button",color,0,0,0)) {
-		//	color[0] = random(1);
-		//	color[1] = random(1);
-		//	color[2] = random(1);
-		//}
+		if (imgui_color_button("Color Button",color,0,0,0)) {
+			color[0] = random(1);
+			color[1] = random(1);
+			color[2] = random(1);
+		}
 		
 	}
 	imgui_end();

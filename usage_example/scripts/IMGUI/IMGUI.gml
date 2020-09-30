@@ -904,10 +904,10 @@ function imgui_color_picker4(label,color,flags) {
 
 function imgui_color_button(desc_id,color,flags,width,height) {
 	buffer_write_args(global.imgui_buffer, [
-		buffer_f32, color[@0],
-		buffer_f32, color[@1],
-		buffer_f32, color[@2],
-		buffer_f32, color[@3],
+		buffer_f32, color[3],
+		buffer_f32, color[2],
+		buffer_f32, color[1],
+		buffer_f32, color[0],
 		buffer_f32, width,
 		buffer_f32, height
 	]);
