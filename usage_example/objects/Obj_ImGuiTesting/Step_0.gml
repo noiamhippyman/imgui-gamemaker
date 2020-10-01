@@ -295,18 +295,25 @@ if (open) {
 #endregion
 
 #region List Box Functions
-		ret = imgui_list_box("List Box",current_index,items,array_length(items),-1);
-		if (ret[0]) current_index = ret[1];
+		ret = imgui_collapsing_header("List Box Functions",noone,0);
+		if (ret[0]) {
+			ret = imgui_list_box("List Box",current_index,items,array_length(items),-1);
+			if (ret[0]) current_index = ret[1];
 		
-		if (imgui_list_box_header("List Box Header",0,64)) {
-			imgui_text("Text1 in LBH");
-			imgui_text("Text2 in LBH");
-			imgui_text("Text3 in LBH");
-			imgui_text("Text4 in LBH");
-			imgui_list_box_footer();
+			if (imgui_list_box_header("List Box Header",0,64)) {
+				imgui_text("Text1 in LBH");
+				imgui_text("Text2 in LBH");
+				imgui_text("Text3 in LBH");
+				imgui_text("Text4 in LBH");
+				imgui_list_box_footer();
+			}
 		}
 #endregion
-		
+		ret = imgui_collapsing_header("Plotting Functions",noone,0);
+		if (ret[0]) {
+			imgui_plot_lines("Plot Lines",[0,1,2,3,4,5,6,7,8,9],2,0,noone,noone,200,50);
+			imgui_plot_histogram("Plot Histogram",[0,1,2,3,4,5,6,7,8,9],5,"Overlay",noone,noone,500,500);
+		}
 	}
 	imgui_end();
 }

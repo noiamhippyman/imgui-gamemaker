@@ -262,6 +262,21 @@ function imgui_radio_button_int(label,v,v_button) {
 	
 }
 
+function imgui_combo(label,current_item,items,item_count,popup_max_height_in_items) {
+	buffer_write_args(global.imgui_buffer,[
+		buffer_f32, popup_max_height_in_items,
+		buffer_f32, current_item,
+		buffer_f32, item_count,
+		buffer_string, items
+	]);
+	_imgui_combo(label);
+	
+	return buffer_return(global.imgui_buffer,[
+		buffer_f32, // Changed
+		buffer_f32 // Current Item
+	]);
+}
+
 function imgui_drag_float(label,value,v_speed,v_min,v_max,format,flags) {
 	
 	buffer_write_args(global.imgui_buffer,[
@@ -283,8 +298,9 @@ function imgui_drag_float(label,value,v_speed,v_min,v_max,format,flags) {
 function imgui_drag_float2(label,varray,v_speed,v_min,v_max,format,flags) {
 	
 	buffer_write_args(global.imgui_buffer,[
-		buffer_f32, varray[0],
-		buffer_f32, varray[1],
+		buffer_f32, varray,
+		//buffer_f32, varray[0],
+		//buffer_f32, varray[1],
 		buffer_f32, v_speed,
 		buffer_f32, v_min,
 		buffer_f32, v_max
@@ -303,9 +319,10 @@ function imgui_drag_float2(label,varray,v_speed,v_min,v_max,format,flags) {
 function imgui_drag_float3(label,varray,v_speed,v_min,v_max,format,flags) {
 	
 	buffer_write_args(global.imgui_buffer,[
-		buffer_f32, varray[0],
-		buffer_f32, varray[1],
-		buffer_f32, varray[2],
+		buffer_f32, varray,
+		//buffer_f32, varray[0],
+		//buffer_f32, varray[1],
+		//buffer_f32, varray[2],
 		buffer_f32, v_speed,
 		buffer_f32, v_min,
 		buffer_f32, v_max
@@ -325,10 +342,11 @@ function imgui_drag_float3(label,varray,v_speed,v_min,v_max,format,flags) {
 function imgui_drag_float4(label,varray,v_speed,v_min,v_max,format,flags) {
 	
 	buffer_write_args(global.imgui_buffer,[
-		buffer_f32, varray[0],
-		buffer_f32, varray[1],
-		buffer_f32, varray[2],
-		buffer_f32, varray[3],
+		buffer_f32, varray,
+		//buffer_f32, varray[0],
+		//buffer_f32, varray[1],
+		//buffer_f32, varray[2],
+		//buffer_f32, varray[3],
 		buffer_f32, v_speed,
 		buffer_f32, v_min,
 		buffer_f32, v_max
@@ -387,8 +405,9 @@ function imgui_drag_int(label,value,v_speed,v_min,v_max,format,flags) {
 function imgui_drag_int2(label,varray,v_speed,v_min,v_max,format,flags) {
 	
 	buffer_write_args(global.imgui_buffer,[
-		buffer_f32, varray[0],
-		buffer_f32, varray[1],
+		buffer_f32, varray,
+		//buffer_f32, varray[0],
+		//buffer_f32, varray[1],
 		buffer_f32, v_speed,
 		buffer_f32, v_min,
 		buffer_f32, v_max
@@ -407,9 +426,10 @@ function imgui_drag_int2(label,varray,v_speed,v_min,v_max,format,flags) {
 function imgui_drag_int3(label,varray,v_speed,v_min,v_max,format,flags) {
 	
 	buffer_write_args(global.imgui_buffer,[
-		buffer_f32, varray[0],
-		buffer_f32, varray[1],
-		buffer_f32, varray[2],
+		buffer_f32, varray,
+		//buffer_f32, varray[0],
+		//buffer_f32, varray[1],
+		//buffer_f32, varray[2],
 		buffer_f32, v_speed,
 		buffer_f32, v_min,
 		buffer_f32, v_max
@@ -429,10 +449,11 @@ function imgui_drag_int3(label,varray,v_speed,v_min,v_max,format,flags) {
 function imgui_drag_int4(label,varray,v_speed,v_min,v_max,format,flags) {
 	
 	buffer_write_args(global.imgui_buffer,[
-		buffer_f32, varray[0],
-		buffer_f32, varray[1],
-		buffer_f32, varray[2],
-		buffer_f32, varray[3],
+		buffer_f32, varray,
+		//buffer_f32, varray[0],
+		//buffer_f32, varray[1],
+		//buffer_f32, varray[2],
+		//buffer_f32, varray[3],
 		buffer_f32, v_speed,
 		buffer_f32, v_min,
 		buffer_f32, v_max
@@ -490,8 +511,9 @@ function imgui_slider_float(label,value,v_min,v_max,format,flags) {
 function imgui_slider_float2(label,varray,v_min,v_max,format,flags) {
 	
 	buffer_write_args(global.imgui_buffer,[
-		buffer_f32, varray[0],
-		buffer_f32, varray[1],
+		buffer_f32, varray,
+		//buffer_f32, varray[0],
+		//buffer_f32, varray[1],
 		buffer_f32, v_min,
 		buffer_f32, v_max
 	]);
@@ -509,9 +531,10 @@ function imgui_slider_float2(label,varray,v_min,v_max,format,flags) {
 function imgui_slider_float3(label,varray,v_min,v_max,format,flags) {
 	
 	buffer_write_args(global.imgui_buffer,[
-		buffer_f32, varray[0],
-		buffer_f32, varray[1],
-		buffer_f32, varray[2],
+		buffer_f32, varray,
+		//buffer_f32, varray[0],
+		//buffer_f32, varray[1],
+		//buffer_f32, varray[2],
 		buffer_f32, v_min,
 		buffer_f32, v_max
 	]);
@@ -530,10 +553,11 @@ function imgui_slider_float3(label,varray,v_min,v_max,format,flags) {
 function imgui_slider_float4(label,varray,v_min,v_max,format,flags) {
 	
 	buffer_write_args(global.imgui_buffer,[
-		buffer_f32, varray[0],
-		buffer_f32, varray[1],
-		buffer_f32, varray[2],
-		buffer_f32, varray[3],
+		buffer_f32, varray,
+		//buffer_f32, varray[0],
+		//buffer_f32, varray[1],
+		//buffer_f32, varray[2],
+		//buffer_f32, varray[3],
 		buffer_f32, v_min,
 		buffer_f32, v_max
 	]);
@@ -587,8 +611,9 @@ function imgui_slider_int(label,value,v_min,v_max,format,flags) {
 function imgui_slider_int2(label,varray,v_min,v_max,format,flags) {
 	
 	buffer_write_args(global.imgui_buffer,[
-		buffer_f32, varray[0],
-		buffer_f32, varray[1],
+		buffer_f32, varray,
+		//buffer_f32, varray[0],
+		//buffer_f32, varray[1],
 		buffer_f32, v_min,
 		buffer_f32, v_max
 	]);
@@ -606,9 +631,10 @@ function imgui_slider_int2(label,varray,v_min,v_max,format,flags) {
 function imgui_slider_int3(label,varray,v_min,v_max,format,flags) {
 	
 	buffer_write_args(global.imgui_buffer,[
-		buffer_f32, varray[0],
-		buffer_f32, varray[1],
-		buffer_f32, varray[2],
+		buffer_f32, varray,
+		//buffer_f32, varray[0],
+		//buffer_f32, varray[1],
+		//buffer_f32, varray[2],
 		buffer_f32, v_min,
 		buffer_f32, v_max
 	]);
@@ -627,10 +653,11 @@ function imgui_slider_int3(label,varray,v_min,v_max,format,flags) {
 function imgui_slider_int4(label,varray,v_min,v_max,format,flags) {
 	
 	buffer_write_args(global.imgui_buffer,[
-		buffer_f32, varray[0],
-		buffer_f32, varray[1],
-		buffer_f32, varray[2],
-		buffer_f32, varray[3],
+		buffer_f32, varray,
+		//buffer_f32, varray[0],
+		//buffer_f32, varray[1],
+		//buffer_f32, varray[2],
+		//buffer_f32, varray[3],
 		buffer_f32, v_min,
 		buffer_f32, v_max
 	]);
@@ -737,8 +764,9 @@ function imgui_input_float(label,value,step,step_fast,format,flags) {
 
 function imgui_input_float2(label,varray,format,flags) {
 	buffer_write_args(global.imgui_buffer,[
-		buffer_f32, varray[0],
-		buffer_f32, varray[1]
+		buffer_f32, varray
+		//buffer_f32, varray[0],
+		//buffer_f32, varray[1]
 	]);
 	
 	_imgui_input_float2(label,format,flags);
@@ -752,9 +780,10 @@ function imgui_input_float2(label,varray,format,flags) {
 
 function imgui_input_float3(label,varray,format,flags) {
 	buffer_write_args(global.imgui_buffer,[
-		buffer_f32, varray[0],
-		buffer_f32, varray[1],
-		buffer_f32, varray[2]
+		buffer_f32, varray
+		//buffer_f32, varray[0],
+		//buffer_f32, varray[1],
+		//buffer_f32, varray[2]
 	]);
 	
 	_imgui_input_float3(label,format,flags);
@@ -769,10 +798,11 @@ function imgui_input_float3(label,varray,format,flags) {
 
 function imgui_input_float4(label,varray,format,flags) {
 	buffer_write_args(global.imgui_buffer,[
-		buffer_f32, varray[0],
-		buffer_f32, varray[1],
-		buffer_f32, varray[2],
-		buffer_f32, varray[3]
+		buffer_f32, varray
+		//buffer_f32, varray[0],
+		//buffer_f32, varray[1],
+		//buffer_f32, varray[2],
+		//buffer_f32, varray[3]
 	]);
 	
 	_imgui_input_float4(label,format,flags);
@@ -803,8 +833,9 @@ function imgui_input_int(label,value,step,step_fast,flags) {
 
 function imgui_input_int2(label,varray,flags) {
 	buffer_write_args(global.imgui_buffer,[
-		buffer_f32, varray[0],
-		buffer_f32, varray[1]
+		buffer_f32, varray
+		//buffer_f32, varray[0],
+		//buffer_f32, varray[1]
 	]);
 	
 	_imgui_input_int2(label,flags);
@@ -818,9 +849,10 @@ function imgui_input_int2(label,varray,flags) {
 
 function imgui_input_int3(label,varray,flags) {
 	buffer_write_args(global.imgui_buffer,[
-		buffer_f32, varray[0],
-		buffer_f32, varray[1],
-		buffer_f32, varray[2]
+		buffer_f32, varray
+		//buffer_f32, varray[0],
+		//buffer_f32, varray[1],
+		//buffer_f32, varray[2]
 	]);
 	
 	_imgui_input_int3(label,flags);
@@ -835,10 +867,11 @@ function imgui_input_int3(label,varray,flags) {
 
 function imgui_input_int4(label,varray,flags) {
 	buffer_write_args(global.imgui_buffer,[
-		buffer_f32, varray[0],
-		buffer_f32, varray[1],
-		buffer_f32, varray[2],
-		buffer_f32, varray[3]
+		buffer_f32, varray
+		//buffer_f32, varray[0],
+		//buffer_f32, varray[1],
+		//buffer_f32, varray[2],
+		//buffer_f32, varray[3]
 	]);
 	
 	_imgui_input_int4(label,flags);
@@ -854,9 +887,10 @@ function imgui_input_int4(label,varray,flags) {
 
 function imgui_color_edit3(label,color,flags) {
 	buffer_write_args(global.imgui_buffer, [
-		buffer_f32, color[0],
-		buffer_f32, color[1],
-		buffer_f32, color[2]
+		buffer_f32, color
+		//buffer_f32, color[0],
+		//buffer_f32, color[1],
+		//buffer_f32, color[2]
 	]);
 	_imgui_color_edit3(label,flags);
 	return buffer_return(global.imgui_buffer,[
@@ -869,10 +903,11 @@ function imgui_color_edit3(label,color,flags) {
 
 function imgui_color_edit4(label,color,flags) {
 	buffer_write_args(global.imgui_buffer, [
-		buffer_f32, color[0],
-		buffer_f32, color[1],
-		buffer_f32, color[2],
-		buffer_f32, color[3]
+		buffer_f32, color
+		//buffer_f32, color[0],
+		//buffer_f32, color[1],
+		//buffer_f32, color[2],
+		//buffer_f32, color[3]
 	]);
 	_imgui_color_edit4(label,flags);
 	return buffer_return(global.imgui_buffer,[
@@ -886,9 +921,10 @@ function imgui_color_edit4(label,color,flags) {
 
 function imgui_color_picker3(label,color,flags) {
 	buffer_write_args(global.imgui_buffer, [
-		buffer_f32, color[0],
-		buffer_f32, color[1],
-		buffer_f32, color[2]
+		buffer_f32, color
+		//buffer_f32, color[0],
+		//buffer_f32, color[1],
+		//buffer_f32, color[2]
 	]);
 	
 	_imgui_color_picker3(label,flags);
@@ -903,10 +939,11 @@ function imgui_color_picker3(label,color,flags) {
 
 function imgui_color_picker4(label,color,flags) {
 	buffer_write_args(global.imgui_buffer, [
-		buffer_f32, color[0],
-		buffer_f32, color[1],
-		buffer_f32, color[2],
-		buffer_f32, color[3]
+		buffer_f32, color
+		//buffer_f32, color[0],
+		//buffer_f32, color[1],
+		//buffer_f32, color[2],
+		//buffer_f32, color[3]
 	]);
 	_imgui_color_picker4(label,flags);
 	return buffer_return(global.imgui_buffer,[
@@ -920,10 +957,7 @@ function imgui_color_picker4(label,color,flags) {
 
 function imgui_color_button(desc_id,color,flags,width,height) {
 	buffer_write_args(global.imgui_buffer, [
-		buffer_f32, color[3],
-		buffer_f32, color[2],
-		buffer_f32, color[1],
-		buffer_f32, color[0],
+		buffer_f32, color,
 		buffer_f32, width,
 		buffer_f32, height
 	]);
@@ -948,21 +982,6 @@ function imgui_selectable(label,selected,flags,width,height) {
 	return _imgui_selectable(label,selected,flags);
 }
 
-function imgui_combo(label,current_item,items,item_count,popup_max_height_in_items) {
-	buffer_write_args(global.imgui_buffer,[
-		buffer_f32, popup_max_height_in_items,
-		buffer_f32, current_item,
-		buffer_f32, item_count,
-		buffer_string, items
-	]);
-	_imgui_combo(label);
-	
-	return buffer_return(global.imgui_buffer,[
-		buffer_f32, // Changed
-		buffer_f32 // Current Item
-	]);
-}
-
 function imgui_list_box(label,current_item,items,item_count,height_in_items) {
 	buffer_write_args(global.imgui_buffer,[
 		buffer_f32, height_in_items,
@@ -977,4 +996,30 @@ function imgui_list_box(label,current_item,items,item_count,height_in_items) {
 		buffer_f32, // Changed
 		buffer_f32 // Current Item
 	]);
+}
+
+function imgui_plot_lines(label,values_array,values_offset,overlay,scale_min,scale_max,width,height) {
+	buffer_write_args(global.imgui_buffer,[
+		buffer_f32, array_length(values_array),
+		buffer_f32, values_array,
+		buffer_f32, values_offset,
+		buffer_f32, scale_min,
+		buffer_f32, scale_max,
+		buffer_f32, width,
+		buffer_f32, height
+	]);
+	_imgui_plot_lines(label,overlay);
+}
+
+function imgui_plot_histogram(label,values_array,values_offset,overlay,scale_min,scale_max,width,height) {
+	buffer_write_args(global.imgui_buffer,[
+		buffer_f32, array_length(values_array),
+		buffer_f32, values_array,
+		buffer_f32, values_offset,
+		buffer_f32, scale_min,
+		buffer_f32, scale_max,
+		buffer_f32, width,
+		buffer_f32, height
+	]);
+	_imgui_plot_histogram(label,overlay);
 }

@@ -574,6 +574,14 @@
             2,
           ],"resourceVersion":"1.0","name":"imgui_list_box_header","tags":[],"resourceType":"GMExtensionFunction",},
         {"externalName":"imgui_list_box_footer","kind":1,"help":"imgui_list_box_footer()","hidden":false,"returnType":2,"argCount":0,"args":[],"resourceVersion":"1.0","name":"imgui_list_box_footer","tags":[],"resourceType":"GMExtensionFunction",},
+        {"externalName":"imgui_plot_lines","kind":1,"help":"_imgui_plot_lines(label,overlay)","hidden":false,"returnType":2,"argCount":0,"args":[
+            1,
+            1,
+          ],"resourceVersion":"1.0","name":"_imgui_plot_lines","tags":[],"resourceType":"GMExtensionFunction",},
+        {"externalName":"imgui_plot_histogram","kind":1,"help":"_imgui_plot_histogram(label,overlay)","hidden":false,"returnType":2,"argCount":0,"args":[
+            1,
+            1,
+          ],"resourceVersion":"1.0","name":"_imgui_plot_histogram","tags":[],"resourceType":"GMExtensionFunction",},
       ],"constants":[],"ProxyFiles":[],"copyToTargets":144150411102650606,"order":[
         {"name":"_extension_setup","path":"extensions/Ext_imgui/Ext_imgui.yy",},
         {"name":"_extension_cleanup","path":"extensions/Ext_imgui/Ext_imgui.yy",},
@@ -749,6 +757,8 @@
         {"name":"_imgui_list_box","path":"extensions/Ext_imgui/Ext_imgui.yy",},
         {"name":"imgui_list_box_header","path":"extensions/Ext_imgui/Ext_imgui.yy",},
         {"name":"imgui_list_box_footer","path":"extensions/Ext_imgui/Ext_imgui.yy",},
+        {"name":"_imgui_plot_lines","path":"extensions/Ext_imgui/Ext_imgui.yy",},
+        {"name":"_imgui_plot_histogram","path":"extensions/Ext_imgui/Ext_imgui.yy",},
       ],"resourceVersion":"1.0","name":"","tags":[],"resourceType":"GMExtensionFile",},
   ],
   "classname": "",

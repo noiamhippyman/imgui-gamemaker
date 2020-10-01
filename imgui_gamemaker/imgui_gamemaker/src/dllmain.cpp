@@ -187,7 +187,9 @@ fn_export double imgui_end() {
 
 // Child Windows
 fn_export double imgui_begin_child(double id, double width, double height, double border, double flags) {
-	ImVec2 size(width, height);
+	ImVec2 size;
+	size.x = width;
+	size.y = height;
 
 	bool expanded = ImGui::BeginChild((ImGuiID)id, size, border, (ImGuiWindowFlags)flags);
 
@@ -257,13 +259,17 @@ fn_export double imgui_set_next_window_pos(double x, double y, double cond, doub
 }
 
 fn_export double imgui_set_next_window_size(double width, double height, double cond) {
-	ImVec2 size(width, height);
+	ImVec2 size;
+	size.x = width;
+	size.y = height;
 	ImGui::SetNextWindowSize(size, (ImGuiCond)cond);
 	return 0.0;
 }
 
 fn_export double imgui_set_next_window_content_size(double width, double height) {
-	ImVec2 size(width, height);
+	ImVec2 size;
+	size.x = width;
+	size.y = height;
 	ImGui::SetNextWindowContentSize(size);
 	return 0.0;
 }
@@ -296,7 +302,9 @@ fn_export double imgui_set_window_pos(double x, double y, double cond) {
 }
 
 fn_export double imgui_set_window_size(double width, double height, double cond) {
-	ImVec2 size(width, height);
+	ImVec2 size;
+	size.x = width;
+	size.y = height;
 	ImGui::SetWindowSize(size, (ImGuiCond)cond);
 	return 0.0;
 }
@@ -324,7 +332,9 @@ fn_export double imgui_set_window_pos_named(const char* name, double x, double y
 }
 
 fn_export double imgui_set_window_size_named(const char* name, double width, double height, double cond) {
-	ImVec2 size(width, height);
+	ImVec2 size;
+	size.x = width;
+	size.y = height;
 	ImGui::SetWindowSize(name, size, (ImGuiCond)cond);
 	return 0.0;
 }
@@ -437,7 +447,11 @@ fn_export double imgui_set_scroll_from_pos_y(double local_y, double center_y_rat
 
 // Parameter Stacks (Shared)
 fn_export double imgui_push_style_color(double id, double r, double g, double b, double a) {
-	ImVec4 col(r, g, b, a);
+	ImVec4 col;
+	col.x = r;
+	col.y = g;
+	col.z = b;
+	col.w = a;
 	ImGui::PushStyleColor((ImGuiCol)id, col);
 	return 0.0;
 }
@@ -494,7 +508,11 @@ fn_export double imgui_get_color_u32_id(double id, double alpha_mul) {
 }
 
 fn_export double imgui_get_color_u32_f4(double r, double g, double b, double a) {
-	ImVec4 col(r, g, b, a);
+	ImVec4 col;
+	col.x = r;
+	col.y = g;
+	col.z = b;
+	col.w = a;
 	return ImGui::GetColorU32(col);
 }
 
@@ -574,7 +592,9 @@ fn_export double imgui_spacing() {
 }
 
 fn_export double imgui_dummy(double width, double height) {
-	ImVec2 size(width, height);
+	ImVec2 size;
+	size.x = width;
+	size.y = height;
 	ImGui::Dummy(size);
 	return 0.0;
 }
@@ -751,7 +771,9 @@ fn_export double imgui_bullet_text(const char* text) {
 
 // Widgets: Main
 fn_export double imgui_button(const char* label, double width, double height) {
-	ImVec2 size(width, height);
+	ImVec2 size;
+	size.x = width;
+	size.y = height;
 	return (double)(ImGui::Button(label,size));
 }
 
@@ -760,7 +782,9 @@ fn_export double imgui_small_button(const char* label) {
 }
 
 fn_export double imgui_invisible_button(const char* str_id, double width, double height, double flags) {
-	ImVec2 size(width, height);
+	ImVec2 size;
+	size.x = width;
+	size.y = height;
 	return (double)(ImGui::InvisibleButton(str_id, size, (ImGuiButtonFlags)flags));
 }
 
@@ -804,7 +828,9 @@ fn_export double imgui_radio_button_int(const char* label, double v, double v_bu
 }
 
 fn_export double imgui_progress_bar(double fraction, double width, double height, const char* overlay) {
-	ImVec2 size(width, height);
+	ImVec2 size;
+	size.x = width;
+	size.y = height;
 	ImGui::ProgressBar(fraction, size, overlay);
 	return 0.0;
 }
@@ -1209,7 +1235,9 @@ fn_export double imgui_slider_int4(const char* label, const char* format, double
 
 fn_export double imgui_vslider_float(const char* label, const char* format, double flags) {
 	ext_buffer->seek(0);
-	ImVec2 size(ext_buffer->read_float(), ext_buffer->read_float());
+	ImVec2 size;
+	size.x = ext_buffer->read_float();
+	size.y = ext_buffer->read_float();
 	float v = ext_buffer->read_float();
 	float v_min = ext_buffer->read_float();
 	float v_max = ext_buffer->read_float();
@@ -1225,7 +1253,9 @@ fn_export double imgui_vslider_float(const char* label, const char* format, doub
 
 fn_export double imgui_vslider_int(const char* label, const char* format, double flags) {
 	ext_buffer->seek(0);
-	ImVec2 size(ext_buffer->read_float(), ext_buffer->read_float());
+	ImVec2 size;
+	size.x = ext_buffer->read_float();
+	size.y = ext_buffer->read_float();
 	int v = (int)ext_buffer->read_float();
 	float v_min = ext_buffer->read_float();
 	float v_max = ext_buffer->read_float();
@@ -1257,7 +1287,9 @@ fn_export double imgui_input_text_multiline(const char* label, const char* text,
 	float height = ext_buffer->read_float();
 
 	std::string str(text);
-	ImVec2 size(width, height);
+	ImVec2 size;
+	size.x = width;
+	size.y = height;
 	bool changed = ImGui::InputTextMultiline(label, &str, size, (ImGuiInputTextFlags)flags);
 	
 	ext_buffer->seek(0);
@@ -1514,17 +1546,15 @@ fn_export double imgui_color_picker4(const char* label, double flags) {
 
 fn_export double imgui_color_button(const char* desc_id, double flags) {
 	ext_buffer->seek(0);
-	ImVec4 c(
-		ext_buffer->read_float(),
-		ext_buffer->read_float(),
-		ext_buffer->read_float(),
-		ext_buffer->read_float()
-	);
+	ImVec4 c;
+	c.x = ext_buffer->read_float();
+	c.y = ext_buffer->read_float();
+	c.z = ext_buffer->read_float();
+	c.w = ext_buffer->read_float();
 
-	ImVec2 size(
-		ext_buffer->read_float(),
-		ext_buffer->read_float()
-	);
+	ImVec2 size;
+	size.x = ext_buffer->read_float();
+	size.y = ext_buffer->read_float();
 	
 	return ImGui::ColorButton(desc_id, c, (ImGuiColorEditFlags)flags, size);
 }
@@ -1580,7 +1610,9 @@ fn_export double imgui_set_next_item_open(double is_open, double cond) {
 // Widgets: Selectables
 fn_export double imgui_selectable(const char* label, double selected, double flags) {
 	ext_buffer->seek(0);
-	ImVec2 size(ext_buffer->read_float(), ext_buffer->read_float());
+	ImVec2 size;
+	size.x = ext_buffer->read_float();
+	size.y = ext_buffer->read_float();
 	return ImGui::Selectable(label, selected, (ImGuiSelectableFlags)flags, size);
 }
 
@@ -1605,7 +1637,9 @@ fn_export double imgui_list_box(const char* label) {
 }
 
 fn_export double imgui_list_box_header(const char* label, double width, double height) {
-	ImVec2 size(width, height);
+	ImVec2 size;
+	size.x = width;
+	size.y = height;
 	return ImGui::ListBoxHeader(label, size);
 }
 
@@ -1615,7 +1649,61 @@ fn_export double imgui_list_box_footer() {
 }
 
 // Widgets: Data Plotting
+//fn_export double imgui_plot_lines(const char* label, double values_count, double values_offset, const char* overlay_text) {
+//
+//	ext_buffer->seek(0);
+//	//int values_count = ext_buffer->read_float();
+//	std::vector<float> values;
+//	for (int i = 0; i < values_count; ++i) {
+//		values.push_back(ext_buffer->read_float());
+//	}
+//	ImGui::PlotLines(label, &values[0], values_count, values_offset, overlay_text);
+//
+//	return 0.0;
+//
+//}
 
+fn_export double imgui_plot_lines(const char* label, const char* overlay_text) {
+
+	ext_buffer->seek(0);
+	int values_count = ext_buffer->read_float();
+	std::vector<float> values;
+	for (int i = 0; i < values_count; ++i) {
+		values.push_back(ext_buffer->read_float());
+	}
+	int values_offset = ext_buffer->read_float();
+	float scale_min = ext_buffer->read_float();
+	float scale_max = ext_buffer->read_float();
+	ImVec2 graph_size;
+	graph_size.x = ext_buffer->read_float();
+	graph_size.y = ext_buffer->read_float();
+
+	ImGui::PlotLines(label, &values[0], values_count, values_offset, overlay_text, scale_min == -4 ? FLT_MAX : scale_min, scale_max == -4 ? FLT_MAX : scale_max, graph_size);
+
+	return 0.0;
+
+}
+
+fn_export double imgui_plot_histogram(const char* label, const char* overlay_text) {
+
+	ext_buffer->seek(0);
+	int values_count = ext_buffer->read_float();
+	std::vector<float> values;
+	for (int i = 0; i < values_count; ++i) {
+		values.push_back(ext_buffer->read_float());
+	}
+	int values_offset = ext_buffer->read_float();
+	float scale_min = ext_buffer->read_float();
+	float scale_max = ext_buffer->read_float();
+	ImVec2 graph_size;
+	graph_size.x = ext_buffer->read_float();
+	graph_size.y = ext_buffer->read_float();
+	
+	ImGui::PlotHistogram(label, &values[0], values_count, values_offset, overlay_text, scale_min == -4 ? FLT_MAX : scale_min, scale_max == -4 ? FLT_MAX : scale_max, graph_size);
+
+	return 0.0;
+
+}
 
 // Widgets: Value() Helpers
 
