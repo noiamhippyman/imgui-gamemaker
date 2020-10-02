@@ -23,3 +23,8 @@ multiline_input_text = "Hello there multi-lines!";
 input_text_with_hint = "Hello there with hints!";
 
 collapsing_header_open = true;
+
+menu_enabled = false;
+submenu_enabled = false;
+
+modal_open = true;

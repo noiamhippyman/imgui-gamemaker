@@ -1705,22 +1705,182 @@ fn_export double imgui_plot_histogram(const char* label, const char* overlay_tex
 
 }
 
+
 // Widgets: Value() Helpers
+// do them yourself if you want. It's pointless to make this for GMS
 
 
 // Widgets: Menus
+fn_export double imgui_begin_menu_bar() {
+	return ImGui::BeginMenuBar();
+}
+
+fn_export double imgui_end_menu_bar() {
+	ImGui::EndMenuBar();
+	return 0.0;
+}
+
+fn_export double imgui_begin_main_menu_bar() {
+	return ImGui::BeginMainMenuBar();
+}
+
+fn_export double imgui_end_main_menu_bar() {
+	ImGui::EndMainMenuBar();
+	return 0.0;
+}
+
+fn_export double imgui_begin_menu(const char* label, double enabled) {
+	return ImGui::BeginMenu(label, enabled);
+}
+
+fn_export double imgui_end_menu() {
+	ImGui::EndMenu();
+	return 0.0;
+}
+
+fn_export double imgui_menu_item(const char* label, const char* shortcut, double selected, double enabled) {
+	bool _selected = (bool)selected;
+	return ImGui::MenuItem(label, shortcut, &_selected, enabled);
+}
 
 
 // Tooltips
+fn_export double imgui_begin_tooltip() {
+	ImGui::BeginTooltip();
+	return 0.0;
+}
+
+fn_export double imgui_end_tooltip() {
+	ImGui::EndTooltip();
+	return 0.0;
+}
+
+fn_export double imgui_set_tooltip(const char* fmt) {
+	ImGui::SetTooltip(fmt);
+	return 0.0;
+}
 
 
 // Popups, Modals
+fn_export double imgui_begin_popup(const char* str_id, double flags) {
+	return ImGui::BeginPopup(str_id, (ImGuiWindowFlags)flags);
+}
+
+fn_export double imgui_begin_popup_modal(const char* name, double open, double flags) {
+	bool _open = (bool)open;
+	bool opened = ImGui::BeginPopupModal(name, &_open, (ImGuiWindowFlags)flags);
+
+	ext_buffer->seek(0);
+	ext_buffer->write((float)opened);
+	ext_buffer->write((float)_open);
+
+	return 0.0;
+}
+
+fn_export double imgui_end_popup() {
+	ImGui::EndPopup();
+	return 0.0;
+}
+
+fn_export double imgui_open_popup(const char* str_id, double flags) {
+	ImGui::OpenPopup(str_id, (ImGuiPopupFlags)flags);
+	return 0.0;
+}
+
+fn_export double imgui_close_current_popup() {
+	ImGui::CloseCurrentPopup();
+	return 0.0;
+}
+
+fn_export double imgui_begin_popup_context_item(const char* str_id, double flags) {
+	return ImGui::BeginPopupContextItem(str_id, (ImGuiPopupFlags)flags);
+}
+
+fn_export double imgui_begin_popup_context_window(const char* str_id, double flags) {
+	return ImGui::BeginPopupContextWindow(str_id, (ImGuiPopupFlags)flags);
+}
+
+fn_export double imgui_begin_popup_context_void(const char* str_id, double flags) {
+	return ImGui::BeginPopupContextVoid(str_id, (ImGuiPopupFlags)flags);
+}
+
+fn_export double imgui_is_popup_open(const char* str_id, double flags) {
+	return ImGui::IsPopupOpen(str_id, (ImGuiPopupFlags)flags);
+}
 
 
 // Columns
+fn_export double imgui_columns(double count, const char* id, double border) {
+	ImGui::Columns(count, id, border);
+	return 0.0;
+}
+
+fn_export double imgui_next_column() {
+	ImGui::NextColumn();
+	return 0.0;
+}
+
+fn_export double imgui_get_column_index() {
+	return ImGui::GetColumnIndex();
+}
+
+fn_export double imgui_get_column_width(double column_index) {
+	return ImGui::GetColumnWidth(column_index);
+}
+
+fn_export double imgui_set_column_width(double column_index, double width) {
+	ImGui::SetColumnWidth(column_index, width);
+	return 0.0;
+}
+
+fn_export double imgui_get_column_offset(double column_index) {
+	return ImGui::GetColumnOffset(column_index);
+}
+
+fn_export double imgui_set_column_offset(double column_index, double offset) {
+	ImGui::SetColumnOffset(column_index, offset);
+	return 0.0;
+}
+
+fn_export double imgui_get_columns_count() {
+	return ImGui::GetColumnsCount();
+}
 
 
 // Tab Bars, Tabs
+fn_export double imgui_begin_tab_bar(const char* str_id, double flags) {
+	return ImGui::BeginTabBar(str_id, (ImGuiTabBarFlags)flags);
+}
+
+fn_export double imgui_end_tab_bar() {
+	ImGui::EndTabBar();
+	return 0.0;
+}
+
+fn_export double imgui_begin_tab_item(const char* label, double open, double flags) {
+
+	bool _open = (bool)open;
+	bool selected = ImGui::BeginTabItem(label, &_open, (ImGuiTabItemFlags)flags);
+	
+	ext_buffer->seek(0);
+	ext_buffer->write(selected);
+	ext_buffer->write(_open);
+
+	return 0.0;
+}
+
+fn_export double imgui_end_tab_item() {
+	ImGui::EndTabItem();
+	return 0.0;
+}
+
+fn_export double imgui_set_tab_item_closed(const char* tab_or_docked_window_label) {
+	ImGui::SetTabItemClosed(tab_or_docked_window_label);
+	return 0.0;
+}
+
+
+// Docking
 
 
 // Logging/Capture

@@ -6,7 +6,7 @@ if (keyboard_check_pressed(vk_space)) {
 
 if (open) {
 	
-	var ret = imgui_begin("Test",open,0);
+	var ret = imgui_begin("Test",open,ImGuiWindowFlags.MenuBar);
 	if (ret[0]) {
 		open = ret[1];
 #region Combo/Selectable Functions
@@ -309,11 +309,87 @@ if (open) {
 			}
 		}
 #endregion
+		
+#region Plotting Functions
 		ret = imgui_collapsing_header("Plotting Functions",noone,0);
 		if (ret[0]) {
 			imgui_plot_lines("Plot Lines",[0,1,2,3,4,5,6,7,8,9],2,0,noone,noone,200,50);
 			imgui_plot_histogram("Plot Histogram",[0,1,2,3,4,5,6,7,8,9],5,"Overlay",noone,noone,500,500);
 		}
+#endregion
+		
+#region Tooltips
+		imgui_text("Press F1 to see normal tooltip");
+		if (keyboard_check(vk_f1)) {
+			imgui_set_tooltip("Tooltip");
+		}
+		
+		imgui_text("Press F2 to see custom tooltip");
+		if (keyboard_check(vk_f2)) {
+			imgui_begin_tooltip();
+			imgui_button("Button in a tooltip. But why?",0,0);
+			imgui_set_next_item_open(true,0);
+			if (imgui_tree_node("Tree in a tooltip")) {
+				imgui_label_text("Labeled", "Some text in a tree in a tooltip.");
+				imgui_tree_pop();
+			}
+			imgui_end_tooltip();
+		}
+#endregion
+	
+#region Popups, Modals
+	if (imgui_button("How about a popup?",0,0)) {
+		imgui_open_popup("Popup",0);
+	}
+	if (imgui_begin_popup("Popup",0)) {
+		imgui_text("I'm in a popup");
+		imgui_end_popup();
+	}
+	
+	if (imgui_button("How about a modal popup?",0,0)) {
+		imgui_open_popup("Modal Popup",0);
+	}
+	ret = imgui_begin_popup_modal("Modal Popup",modal_open,0);
+	if (ret[0]) {
+		modal_open = ret[1];
+		imgui_text("Im in a modal popup");
+		if (imgui_button("Close",0,0)) {
+			imgui_close_current_popup();
+		}
+		imgui_end_popup();
+	}
+	
+	// It's really annoying when the comment-block below is active.
+	// Uncomment to see them popup helper functions working.
+	/*
+	if (imgui_begin_child(1,0,0,true,0)) {
+		imgui_text("Howdy");
+		imgui_end_child();
+	}
+	if (imgui_begin_popup_context_item("0",0)) {
+		imgui_text("Text in a context item popup");
+		imgui_end_popup();
+	}
+	
+	if (imgui_begin_popup_context_window("Test",0)) {
+		imgui_text("Text in a context window popup");
+		imgui_end_popup();
+	}
+	
+	if (imgui_begin_popup_context_void("Oi",0)) {
+		imgui_text("Text in a context void popup");
+		imgui_end_popup();
+	}
+	*/
+	
+#endregion
+
+#region Columns
+#endregion
+
+#region Tab bars, Tabs
+#endregion
+
 	}
 	imgui_end();
 }

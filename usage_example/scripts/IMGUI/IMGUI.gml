@@ -1023,3 +1023,19 @@ function imgui_plot_histogram(label,values_array,values_offset,overlay,scale_min
 	]);
 	_imgui_plot_histogram(label,overlay);
 }
+
+function imgui_begin_popup_modal(name,open,flags) {
+	_imgui_begin_popup_modal(name,open,flags);
+	return buffer_return(global.imgui_buffer,[
+		buffer_f32, // Opened
+		buffer_f32 // Current open? Check to see if these are the same.
+	]);
+}
+
+function imgui_begin_tab_item(label,open,flags) {
+	_imgui_begin_tab_item(label,open,flags)
+	buffer_return(global.imgui_buffer,[
+		buffer_f32, // Selected
+		buffer_f32 // Open
+	]);
+}
