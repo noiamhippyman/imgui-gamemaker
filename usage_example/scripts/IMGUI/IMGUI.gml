@@ -1033,8 +1033,9 @@ function imgui_begin_popup_modal(name,open,flags) {
 }
 
 function imgui_begin_tab_item(label,open,flags) {
-	_imgui_begin_tab_item(label,open,flags)
-	buffer_return(global.imgui_buffer,[
+	_imgui_begin_tab_item(label,open,flags);
+	
+	return buffer_return(global.imgui_buffer,[
 		buffer_f32, // Selected
 		buffer_f32 // Open
 	]);

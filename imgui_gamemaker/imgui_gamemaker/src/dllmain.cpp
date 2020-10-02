@@ -1860,7 +1860,7 @@ fn_export double imgui_end_tab_bar() {
 fn_export double imgui_begin_tab_item(const char* label, double open, double flags) {
 
 	bool _open = (bool)open;
-	bool selected = ImGui::BeginTabItem(label, &_open, (ImGuiTabItemFlags)flags);
+	bool selected = ImGui::BeginTabItem(label, open < 0.0 ? NULL : &_open, (ImGuiTabItemFlags)flags);
 	
 	ext_buffer->seek(0);
 	ext_buffer->write(selected);
@@ -1896,24 +1896,284 @@ fn_export double imgui_set_tab_item_closed(const char* tab_or_docked_window_labe
 
 
 // Item/Widgets Utilities
+fn_export double imgui_is_item_hovered(double flags) {
+	return ImGui::IsItemHovered((ImGuiHoveredFlags)flags);
+}
 
+fn_export double imgui_is_item_active() {
+	return ImGui::IsItemActive();
+}
+
+fn_export double imgui_is_item_focused() {
+	return ImGui::IsItemFocused();
+}
+
+fn_export double imgui_is_item_clicked(double mouse_button) {
+	return ImGui::IsItemClicked((ImGuiMouseButton)mouse_button);
+}
+
+fn_export double imgui_is_item_visible() {
+	return ImGui::IsItemVisible();
+}
+
+fn_export double imgui_is_item_edited() {
+	return ImGui::IsItemVisible();
+}
+
+fn_export double imgui_is_item_activated() {
+	return ImGui::IsItemVisible();
+}
+
+fn_export double imgui_is_item_deactivated() {
+	return ImGui::IsItemVisible();
+}
+
+fn_export double imgui_is_item_deactivated_after_edit() {
+	return ImGui::IsItemVisible();
+}
+
+fn_export double imgui_is_item_toggled_open() {
+	return ImGui::IsItemVisible();
+}
+
+fn_export double imgui_is_any_item_hovered() {
+	return ImGui::IsAnyItemHovered();
+}
+
+fn_export double imgui_is_any_item_active() {
+	return ImGui::IsAnyItemActive();
+}
+
+fn_export double imgui_is_any_item_focused() {
+	return ImGui::IsAnyItemFocused();
+}
+
+fn_export double imgui_get_item_rect_min() {
+	ImVec2 rmin = ImGui::GetItemRectMin();
+	ext_buffer->seek(0);
+	ext_buffer->write(rmin.x);
+	ext_buffer->write(rmin.y);
+	return 0.0;
+}
+
+fn_export double imgui_get_item_rect_max() {
+	ImVec2 rmax = ImGui::GetItemRectMax();
+	ext_buffer->seek(0);
+	ext_buffer->write(rmax.x);
+	ext_buffer->write(rmax.y);
+	return 0.0;
+}
+
+fn_export double imgui_get_item_rect_size() {
+	ImVec2 rsize = ImGui::GetItemRectSize();
+	ext_buffer->seek(0);
+	ext_buffer->write(rsize.x);
+	ext_buffer->write(rsize.y);
+	return 0.0;
+}
+
+fn_export double imgui_set_item_allow_overlap() {
+	ImGui::SetItemAllowOverlap();
+	return 0.0;
+}
 
 // Miscellaneous Utilities
+fn_export double imgui_is_rect_visible(double x1, double y1, double x2, double y2) {
+	ImVec2 rect_min;
+	rect_min.x = x1;
+	rect_min.y = y1;
+
+	ImVec2 rect_max;
+	rect_min.x = x1;
+	rect_min.y = y1;
+	return ImGui::IsRectVisible(rect_min, rect_max);
+}
+
+fn_export double imgui_get_time() {
+	return ImGui::GetTime();
+}
+
+fn_export double imgui_get_frame_count() {
+	return ImGui::GetFrameCount();
+}
+
+fn_export const char* imgui_get_style_color_name(double idx) {
+	return ImGui::GetStyleColorName((ImGuiCol)idx);
+}
+
+fn_export double imgui_begin_child_frame(double id, double width, double height, double flags) {
+	ImVec2 size;
+	size.x = width;
+	size.y = height;
+	return ImGui::BeginChildFrame((ImGuiID)id, size, (ImGuiWindowFlags)flags);
+}
+
+fn_export double imgui_end_child_frame() {
+	ImGui::EndChildFrame();
+	return 0.0;
+}
 
 
 // Text Utilities
+fn_export double imgui_calc_text_size(const char* text, const char* text_end, double hide_text_after_double_hash, double wrap_width) {
+	ImVec2 size = ImGui::CalcTextSize(text, text_end, hide_text_after_double_hash, wrap_width);
+	ext_buffer->seek(0);
+	ext_buffer->write(size.x);
+	ext_buffer->write(size.y);
+
+	return 0.0;
+}
 
 
 // Color Utilities
+fn_export double imgui_color_convert_u32_to_float4(double in) {
+	ImVec4 color = ImGui::ColorConvertU32ToFloat4((ImU32)in);
+	ext_buffer->seek(0);
+	ext_buffer->write(color.x);
+	ext_buffer->write(color.y);
+	ext_buffer->write(color.z);
+	ext_buffer->write(color.w);
+
+	return 0.0;
+}
+
+fn_export double imgui_color_convert_float4_to_u32(double r, double g, double b, double a) {
+	ImVec4 in;
+	in.x = r;
+	in.y = g;
+	in.z = b;
+	in.w = a;
+	return ImGui::ColorConvertFloat4ToU32(in);
+}
+
+fn_export double imgui_color_convert_rgb_to_hsv(double r, double g, double b) {
+	float h, s, v;
+	ImGui::ColorConvertRGBtoHSV(r, g, b, h, s, v);
+	ext_buffer->seek(0);
+	ext_buffer->write(h);
+	ext_buffer->write(s);
+	ext_buffer->write(v);
+	return 0.0;
+}
+
+fn_export double imgui_color_convert_rgb_to_hsv(double h, double s, double v) {
+	float r, g, b;
+	ImGui::ColorConvertHSVtoRGB(h, s, v, r, g, b);
+	ext_buffer->seek(0);
+	ext_buffer->write(r);
+	ext_buffer->write(g);
+	ext_buffer->write(b);
+	return 0.0;
+}
 
 
 // Input Utilities: Keyboard
+fn_export double imgui_get_key_index(double imgui_key) {
+	return ImGui::GetKeyIndex((ImGuiKey)imgui_key);
+}
 
+fn_export double imgui_is_key_down(double user_key_index) {
+	return ImGui::IsKeyDown(user_key_index);
+}
+
+fn_export double imgui_is_key_pressed(double user_key_index, double repeat) {
+	return ImGui::IsKeyPressed(user_key_index, repeat);
+}
+
+fn_export double imgui_is_key_released(double user_key_index) {
+	return ImGui::IsKeyReleased(user_key_index);
+}
+
+fn_export double imgui_get_key_pressed_amount(double key_index, double repeat_delay, double rate) {
+	return ImGui::GetKeyPressedAmount(key_index, repeat_delay, rate);
+}
 
 // Input Utilities: Mouse
+fn_export double imgui_is_mouse_down(double button) {
+	return ImGui::IsMouseDown((ImGuiMouseButton)button);
+}
 
+fn_export double imgui_is_mouse_clicked(double button, double repeat) {
+	return ImGui::IsMouseClicked((ImGuiMouseButton)button, repeat);
+}
+
+fn_export double imgui_is_mouse_released(double button) {
+	return ImGui::IsMouseReleased((ImGuiMouseButton)button);
+}
+
+fn_export double imgui_is_mouse_double_clicked(double button) {
+	return ImGui::IsMouseDoubleClicked((ImGuiMouseButton)button);
+}
+
+fn_export double imgui_is_mouse_hovering_rect(double x1, double y1, double x2, double y2, double clip) {
+	ImVec2 rmin; rmin.x = x1; rmin.y = y1;
+	ImVec2 rmax; rmax.x = x1; rmax.y = y1;
+	return ImGui::IsMouseHoveringRect(rmin, rmax, clip);
+}
+
+fn_export double imgui_is_mouse_pos_valid(double x, double y) {
+	ImVec2 mouse_pos;
+	mouse_pos.x = x;
+	mouse_pos.y = y;
+	return ImGui::IsMousePosValid(&mouse_pos);
+}
+
+fn_export double imgui_is_any_mouse_down() {
+	return ImGui::IsAnyMouseDown();
+}
+
+fn_export double imgui_get_mouse_pos() {
+	ImVec2 pos = ImGui::GetMousePos();
+	ext_buffer->seek(0);
+	ext_buffer->write(pos.x);
+	ext_buffer->write(pos.y);
+	return 0.0;
+}
+
+fn_export double imgui_get_mouse_pos_on_opening_current_popup() {
+	ImVec2 pos = ImGui::GetMousePosOnOpeningCurrentPopup();
+	ext_buffer->seek(0);
+	ext_buffer->write(pos.x);
+	ext_buffer->write(pos.y);
+	return 0.0;
+}
+
+fn_export double imgui_is_mouse_dragging(double button, double lock_threshold) {
+	return ImGui::IsMouseDragging((ImGuiMouseButton)button, lock_threshold);
+}
+
+fn_export double imgui_get_mouse_drag_delta(double button, double lock_threshold) {
+	ImVec2 d = ImGui::GetMouseDragDelta((ImGuiMouseButton)button, lock_threshold);
+	ext_buffer->seek(0);
+	ext_buffer->write(d.x);
+	ext_buffer->write(d.y);
+	return 0.0;
+}
+
+fn_export double imgui_reset_mouse_drag_delta(double button) {
+	ImGui::ResetMouseDragDelta((ImGuiMouseButton)button);
+	return 0.0;
+}
+
+fn_export double imgui_get_mouse_cursor() {
+	return ImGui::GetMouseCursor();
+}
+
+fn_export double imgui_set_mouse_cursor(double cursor_type) {
+	ImGui::SetMouseCursor(cursor_type);
+	return 0.0;
+}
 
 // Clipboard Utilities
+fn_export const char* imgui_get_clipboard_text() {
+	return ImGui::GetClipboardText();
+}
+
+fn_export double imgui_set_clipboard_text(const char* text) {
+	ImGui::SetClipboardText(text);
+	return 0.0;
+}
+
 
 
 // Settings/.INI Utilities

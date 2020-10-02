@@ -28,3 +28,7 @@ menu_enabled = false;
 submenu_enabled = false;
 
 modal_open = true;
+
+avocado_open = true;
+broccoli_open = true;
+cucumber_open = true;

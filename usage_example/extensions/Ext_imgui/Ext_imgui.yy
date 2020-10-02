@@ -669,6 +669,7 @@
         {"externalName":"imgui_set_tab_item_closed","kind":1,"help":"imgui_set_tab_item_closed(tab_or_docked_window_label)","hidden":false,"returnType":2,"argCount":0,"args":[
             1,
           ],"resourceVersion":"1.0","name":"imgui_set_tab_item_closed","tags":[],"resourceType":"GMExtensionFunction",},
+        {"externalName":"imgui_is_item_hovered","kind":1,"help":"imgui_is_item_hovered()","hidden":false,"returnType":2,"argCount":0,"args":[],"resourceVersion":"1.0","name":"imgui_is_item_hovered","tags":[],"resourceType":"GMExtensionFunction",},
       ],"constants":[],"ProxyFiles":[],"copyToTargets":144150411102650606,"order":[
         {"name":"_extension_setup","path":"extensions/Ext_imgui/Ext_imgui.yy",},
         {"name":"_extension_cleanup","path":"extensions/Ext_imgui/Ext_imgui.yy",},
@@ -878,6 +879,7 @@
         {"name":"_imgui_begin_tab_item","path":"extensions/Ext_imgui/Ext_imgui.yy",},
         {"name":"imgui_end_tab_item","path":"extensions/Ext_imgui/Ext_imgui.yy",},
         {"name":"imgui_set_tab_item_closed","path":"extensions/Ext_imgui/Ext_imgui.yy",},
+        {"name":"imgui_is_item_hovered","path":"extensions/Ext_imgui/Ext_imgui.yy",},
       ],"resourceVersion":"1.0","name":"","tags":[],"resourceType":"GMExtensionFile",},
   ],
   "classname": "",
