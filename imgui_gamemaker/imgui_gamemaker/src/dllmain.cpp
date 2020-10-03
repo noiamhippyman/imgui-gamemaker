@@ -40,26 +40,6 @@ LRESULT CALLBACK ImGuiGMSSubclassProc(HWND hWnd, UINT uMsg, WPARAM wParam,
 
 
 
-// Context creation and access
-fn_export void* imgui_create_context(void* shared_font_atlas) {
-	return ImGui::CreateContext((ImFontAtlas*)shared_font_atlas);
-}
-
-fn_export double imgui_destroy_context(void* ctx) {
-	ImGui::DestroyContext((ImGuiContext*)ctx);
-	return 0.0;
-}
-
-fn_export void* imgui_get_current_context() {
-	return ImGui::GetCurrentContext();
-}
-
-fn_export double imgui_set_current_context(void* ctx) {
-	ImGui::SetCurrentContext((ImGuiContext*)ctx);
-	return 0.0;
-}
-
-
 // IO Config
 // TODO: Start adding functons to GMS extension
 fn_export double imgui_io_set_config_flags(double flags) {
@@ -165,6 +145,7 @@ fn_export double imgui_io_set_config_input_text_cursor_blink(double enable) {
 	ImGui::GetIO().ConfigInputTextCursorBlink = enable;
 	return 0.0;
 }
+
 fn_export double imgui_io_get_config_input_text_cursor_blink() {
 	return ImGui::GetIO().ConfigInputTextCursorBlink;
 }
@@ -173,6 +154,7 @@ fn_export double imgui_io_set_config_windows_resize_from_edges(double enable) {
 	ImGui::GetIO().ConfigWindowsResizeFromEdges = enable;
 	return 0.0;
 }
+
 fn_export double imgui_io_get_config_windows_resize_from_edges() {
 	return ImGui::GetIO().ConfigWindowsResizeFromEdges;
 }
@@ -181,6 +163,7 @@ fn_export double imgui_io_set_config_windows_move_from_title_bar_only(double ena
 	ImGui::GetIO().ConfigWindowsMoveFromTitleBarOnly = enable;
 	return 0.0;
 }
+
 fn_export double imgui_io_get_config_windows_move_from_title_bar_only() {
 	return ImGui::GetIO().ConfigWindowsMoveFromTitleBarOnly;
 }
@@ -573,36 +556,6 @@ fn_export double imgui_style_get_circle_segment_max_error() {
 // TODO: Everything below is already in GMS extension
 
 // Main
-fn_export double imgui_test_setup(char* hwnd, char* device, char* device_context) {
-	// TODO: rename this and find out if I need to use IMGUI_CHECKVERSION macro
-	// setup context
-	IMGUI_CHECKVERSION();
-	//ImGui::CreateContext();
-
-	// Enable keyboard navigation, docking, and viewports
-	//ImGuiIO& io = ImGui::GetIO(); (void)io;
-	//io.ConfigFlags |= ImGuiConfigFlags_NavEnableKeyboard;
-	//io.ConfigFlags |= ImGuiConfigFlags_DockingEnable;
-	//io.ConfigFlags |= ImGuiConfigFlags_ViewportsEnable;
-
-	// setup style
-	//ImGui::StyleColorsDark();
-
-	// tweak WindowRounding/WindowBg so platform windows can look identical to regular ones.
-	//ImGuiStyle& style = ImGui::GetStyle();
-	//style.WindowRounding = 0.0f;
-	//style.Colors[ImGuiCol_WindowBg].w = 1.0f;
-
-	// setup platform/renderer bindings
-	ImGui_ImplWin32_Init((void*)hwnd);
-	ImGui_ImplDX11_Init((ID3D11Device*)device, (ID3D11DeviceContext*)device_context);
-
-	// Subclass GM window to update keyboard/mouse/etc events
-	SetWindowSubclass((HWND)hwnd, ImGuiGMSSubclassProc, 1, 1);
-
-	return 0.0;
-}
-
 fn_export double imgui_setup(char* hwnd, char* device, char* device_context) {
 
 	// setup context

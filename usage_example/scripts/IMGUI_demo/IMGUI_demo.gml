@@ -9,6 +9,10 @@ function imgui_help_marker(desc) {
 	}
 }
 
+function imgui_show_docking_disabled_message() {
+	imgui_text("ERROR: Docking is not enabled! See Demo > Configuration.");
+}
+
 function imgui_show_user_guide_gml() {
 	
 }
