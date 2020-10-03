@@ -824,9 +824,24 @@
         {"externalName":"imgui_load_ini_settings_from_disk","kind":1,"help":"imgui_load_ini_settings_from_disk(ini_filename)","hidden":false,"returnType":2,"argCount":0,"args":[
             1,
           ],"resourceVersion":"1.0","name":"imgui_load_ini_settings_from_disk","tags":[],"resourceType":"GMExtensionFunction",},
-        {"externalName":"imgui_save_ini_settings_from_disk","kind":1,"help":"imgui_save_ini_settings_from_disk(ini_filename)","hidden":false,"returnType":2,"argCount":0,"args":[
+        {"externalName":"imgui_save_ini_settings_to_disk","kind":1,"help":"imgui_save_ini_settings_to_disk(ini_filename)","hidden":false,"returnType":2,"argCount":0,"args":[
             1,
-          ],"resourceVersion":"1.0","name":"imgui_save_ini_settings_from_disk","tags":[],"resourceType":"GMExtensionFunction",},
+          ],"resourceVersion":"1.0","name":"imgui_save_ini_settings_to_disk","tags":[],"resourceType":"GMExtensionFunction",},
+        {"externalName":"imgui_create_context","kind":1,"help":"imgui_create_context(shared_font_atlas_ptr)","hidden":false,"returnType":1,"argCount":0,"args":[
+            1,
+          ],"resourceVersion":"1.0","name":"imgui_create_context","tags":[],"resourceType":"GMExtensionFunction",},
+        {"externalName":"imgui_destroy_context","kind":1,"help":"imgui_destroy_context(ctx)","hidden":false,"returnType":2,"argCount":0,"args":[
+            1,
+          ],"resourceVersion":"1.0","name":"imgui_destroy_context","tags":[],"resourceType":"GMExtensionFunction",},
+        {"externalName":"imgui_get_current_context","kind":1,"help":"imgui_get_current_context()","hidden":false,"returnType":1,"argCount":0,"args":[],"resourceVersion":"1.0","name":"imgui_get_current_context","tags":[],"resourceType":"GMExtensionFunction",},
+        {"externalName":"imgui_set_current_context","kind":1,"help":"imgui_set_current_context(ctx)","hidden":false,"returnType":2,"argCount":0,"args":[
+            1,
+          ],"resourceVersion":"1.0","name":"imgui_set_current_context","tags":[],"resourceType":"GMExtensionFunction",},
+        {"externalName":"imgui_test_setup","kind":1,"help":"_imgui_test_setup(hwnd,device,context)","hidden":false,"returnType":2,"argCount":0,"args":[
+            1,
+            1,
+            1,
+          ],"resourceVersion":"1.0","name":"_imgui_test_setup","tags":[],"resourceType":"GMExtensionFunction",},
       ],"constants":[],"ProxyFiles":[],"copyToTargets":144150411102650606,"order":[
         {"name":"_extension_setup","path":"extensions/Ext_imgui/Ext_imgui.yy",},
         {"name":"_extension_cleanup","path":"extensions/Ext_imgui/Ext_imgui.yy",},
@@ -1095,7 +1110,12 @@
         {"name":"imgui_get_clipboard_text","path":"extensions/Ext_imgui/Ext_imgui.yy",},
         {"name":"imgui_set_clipboard_text","path":"extensions/Ext_imgui/Ext_imgui.yy",},
         {"name":"imgui_load_ini_settings_from_disk","path":"extensions/Ext_imgui/Ext_imgui.yy",},
-        {"name":"imgui_save_ini_settings_from_disk","path":"extensions/Ext_imgui/Ext_imgui.yy",},
+        {"name":"imgui_save_ini_settings_to_disk","path":"extensions/Ext_imgui/Ext_imgui.yy",},
+        {"name":"imgui_create_context","path":"extensions/Ext_imgui/Ext_imgui.yy",},
+        {"name":"imgui_destroy_context","path":"extensions/Ext_imgui/Ext_imgui.yy",},
+        {"name":"imgui_get_current_context","path":"extensions/Ext_imgui/Ext_imgui.yy",},
+        {"name":"imgui_set_current_context","path":"extensions/Ext_imgui/Ext_imgui.yy",},
+        {"name":"_imgui_test_setup","path":"extensions/Ext_imgui/Ext_imgui.yy",},
       ],"resourceVersion":"1.0","name":"","tags":[],"resourceType":"GMExtensionFile",},
   ],
   "classname": "",

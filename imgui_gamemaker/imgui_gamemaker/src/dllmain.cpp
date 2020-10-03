@@ -15,6 +15,16 @@
 
 Buffer* ext_buffer = nullptr;
 
+fn_export double extension_setup(void* buffer_ptr, double buffer_size) {
+	ext_buffer = new Buffer(buffer_ptr, buffer_size);
+	return 0.0;
+}
+
+fn_export double extension_cleanup() {
+	delete ext_buffer;
+	ext_buffer = nullptr;
+	return 0.0;
+}
 
 extern IMGUI_IMPL_API LRESULT ImGui_ImplWin32_WndProcHandler(HWND hWnd, UINT msg, WPARAM wParam, LPARAM lParam);
 
@@ -29,16 +39,567 @@ LRESULT CALLBACK ImGuiGMSSubclassProc(HWND hWnd, UINT uMsg, WPARAM wParam,
 }
 
 
-// Main
 
-fn_export double extension_setup(void* buffer_ptr, double buffer_size) {
-	ext_buffer = new Buffer(buffer_ptr, buffer_size);
+// Context creation and access
+fn_export void* imgui_create_context(void* shared_font_atlas) {
+	return ImGui::CreateContext((ImFontAtlas*)shared_font_atlas);
+}
+
+fn_export double imgui_destroy_context(void* ctx) {
+	ImGui::DestroyContext((ImGuiContext*)ctx);
 	return 0.0;
 }
 
-fn_export double extension_cleanup() {
-	delete ext_buffer;
-	ext_buffer = nullptr;
+fn_export void* imgui_get_current_context() {
+	return ImGui::GetCurrentContext();
+}
+
+fn_export double imgui_set_current_context(void* ctx) {
+	ImGui::SetCurrentContext((ImGuiContext*)ctx);
+	return 0.0;
+}
+
+
+// IO Config
+// TODO: Start adding functons to GMS extension
+fn_export double imgui_io_set_config_flags(double flags) {
+	ImGui::GetIO().ConfigFlags = flags;
+	return 0.0;
+}
+
+fn_export double imgui_io_get_config_flags() {
+	return ImGui::GetIO().ConfigFlags;
+}
+
+fn_export double imgui_io_set_font_global_scale(double scale) {
+	ImGui::GetIO().FontGlobalScale = scale;
+	return 0.0;
+}
+
+fn_export double imgui_io_get_font_global_scale() {
+	return ImGui::GetIO().FontGlobalScale;
+}
+
+fn_export double imgui_io_set_font_allow_user_scaling(double enable) {
+	ImGui::GetIO().FontAllowUserScaling = enable;
+	return 0.0;
+}
+
+fn_export double imgui_io_get_font_allow_user_scaling() {
+	return ImGui::GetIO().FontAllowUserScaling;
+}
+
+fn_export double imgui_io_set_config_docking_no_split(double enable) {
+	ImGui::GetIO().ConfigDockingNoSplit = enable;
+	return 0.0;
+}
+
+fn_export double imgui_io_get_config_docking_no_split() {
+	return ImGui::GetIO().ConfigDockingNoSplit;
+}
+
+fn_export double imgui_io_set_config_docking_with_shift(double enable) {
+	ImGui::GetIO().ConfigDockingWithShift = enable;
+	return 0.0;
+}
+
+fn_export double imgui_io_get_config_docking_with_shift() {
+	return ImGui::GetIO().ConfigDockingWithShift;
+}
+
+fn_export double imgui_io_set_config_docking_always_tab_bar(double enable) {
+	ImGui::GetIO().ConfigDockingAlwaysTabBar = enable;
+	return 0.0;
+}
+
+fn_export double imgui_io_get_config_docking_always_tab_bar() {
+	return ImGui::GetIO().ConfigDockingAlwaysTabBar;
+}
+
+fn_export double imgui_io_set_config_docking_transparent_payload(double enable) {
+	ImGui::GetIO().ConfigDockingTransparentPayload = enable;
+	return 0.0;
+}
+
+fn_export double imgui_io_get_config_docking_transparent_payload() {
+	return ImGui::GetIO().ConfigDockingTransparentPayload;
+}
+
+fn_export double imgui_io_set_config_viewports_no_automerge(double enable) {
+	ImGui::GetIO().ConfigViewportsNoAutoMerge = enable;
+	return 0.0;
+}
+
+fn_export double imgui_io_get_config_viewports_no_automerge() {
+	return ImGui::GetIO().ConfigViewportsNoAutoMerge;
+}
+
+fn_export double imgui_io_set_config_viewports_no_task_bar_icon(double enable) {
+	ImGui::GetIO().ConfigViewportsNoTaskBarIcon = enable;
+	return 0.0;
+}
+
+fn_export double imgui_io_get_config_viewports_no_task_bar_icon() {
+	return ImGui::GetIO().ConfigViewportsNoTaskBarIcon;
+}
+
+fn_export double imgui_io_set_config_viewports_no_decoration(double enable) {
+	ImGui::GetIO().ConfigViewportsNoDecoration = enable;
+	return 0.0;
+}
+
+fn_export double imgui_io_get_config_viewports_no_decoration() {
+	return ImGui::GetIO().ConfigViewportsNoDecoration;
+}
+
+fn_export double imgui_io_set_config_viewports_no_default_parent(double enable) {
+	ImGui::GetIO().ConfigViewportsNoDefaultParent = enable;
+	return 0.0;
+}
+
+fn_export double imgui_io_get_config_viewports_no_default_parent() {
+	return ImGui::GetIO().ConfigViewportsNoDefaultParent;
+}
+
+fn_export double imgui_io_set_config_input_text_cursor_blink(double enable) {
+	ImGui::GetIO().ConfigInputTextCursorBlink = enable;
+	return 0.0;
+}
+fn_export double imgui_io_get_config_input_text_cursor_blink() {
+	return ImGui::GetIO().ConfigInputTextCursorBlink;
+}
+
+fn_export double imgui_io_set_config_windows_resize_from_edges(double enable) {
+	ImGui::GetIO().ConfigWindowsResizeFromEdges = enable;
+	return 0.0;
+}
+fn_export double imgui_io_get_config_windows_resize_from_edges() {
+	return ImGui::GetIO().ConfigWindowsResizeFromEdges;
+}
+
+fn_export double imgui_io_set_config_windows_move_from_title_bar_only(double enable) {
+	ImGui::GetIO().ConfigWindowsMoveFromTitleBarOnly = enable;
+	return 0.0;
+}
+fn_export double imgui_io_get_config_windows_move_from_title_bar_only() {
+	return ImGui::GetIO().ConfigWindowsMoveFromTitleBarOnly;
+}
+
+
+// Style Config
+fn_export double imgui_style_set_alpha(double alpha) {
+	ImGui::GetStyle().Alpha = alpha;
+	return 0.0;
+}
+
+fn_export double imgui_style_get_alpha() {
+	return ImGui::GetStyle().Alpha;
+}
+
+fn_export double imgui_style_set_window_padding(double padx, double pady) {
+	ImGuiStyle& style = ImGui::GetStyle();
+	style.WindowPadding.x = padx;
+	style.WindowPadding.y = pady;
+	return 0.0;
+}
+
+fn_export double imgui_style_get_window_padding() {
+	ImGuiStyle& style = ImGui::GetStyle();
+	ext_buffer->seek(0);
+	ext_buffer->write(style.WindowPadding.x);
+	ext_buffer->write(style.WindowPadding.y);
+	return 0.0;
+}
+
+fn_export double imgui_style_set_window_rounding(double rounding) {
+	ImGui::GetStyle().WindowRounding = rounding;
+	return 0.0;
+}
+
+fn_export double imgui_style_get_window_rounding() {
+	return ImGui::GetStyle().WindowRounding;
+}
+
+fn_export double imgui_style_set_window_border_size(double border_size) {
+	ImGui::GetStyle().WindowBorderSize = border_size;
+	return 0.0;
+}
+
+fn_export double imgui_style_get_window_border_size() {
+	return ImGui::GetStyle().WindowBorderSize;
+}
+
+fn_export double imgui_style_set_window_min_size(double minx, double miny) {
+	ImGuiStyle& style = ImGui::GetStyle();
+	style.WindowMinSize.x = minx;
+	style.WindowMinSize.y = miny;
+	return 0.0;
+}
+
+fn_export double imgui_style_get_window_min_size() {
+	ImGuiStyle& style = ImGui::GetStyle();
+	ext_buffer->seek(0);
+	ext_buffer->write(style.WindowMinSize.x);
+	ext_buffer->write(style.WindowMinSize.y);
+	return 0.0;
+}
+
+fn_export double imgui_style_set_window_title_align(double alignx, double aligny) {
+	ImGuiStyle& style = ImGui::GetStyle();
+	style.WindowTitleAlign.x = alignx;
+	style.WindowTitleAlign.y = aligny;
+	return 0.0;
+}
+
+fn_export double imgui_style_get_window_title_align() {
+	ImGuiStyle& style = ImGui::GetStyle();
+	ext_buffer->seek(0);
+	ext_buffer->write(style.WindowTitleAlign.x);
+	ext_buffer->write(style.WindowTitleAlign.y);
+	return 0.0;
+}
+
+fn_export double imgui_style_set_window_menu_button_position(double position) {
+	ImGui::GetStyle().WindowMenuButtonPosition = position;
+	return 0.0;
+}
+
+fn_export double imgui_style_get_window_menu_button_position() {
+	return ImGui::GetStyle().WindowMenuButtonPosition;
+}
+
+fn_export double imgui_style_set_child_rounding(double rounding) {
+	ImGui::GetStyle().ChildRounding = rounding;
+	return 0.0;
+}
+
+fn_export double imgui_style_get_child_rounding() {
+	return ImGui::GetStyle().ChildRounding;
+}
+
+fn_export double imgui_style_set_child_border_size(double border_size) {
+	ImGui::GetStyle().ChildBorderSize = border_size;
+	return 0.0;
+}
+
+fn_export double imgui_style_get_child_border_size() {
+	return ImGui::GetStyle().ChildBorderSize;
+}
+
+fn_export double imgui_style_set_popup_rounding(double rounding) {
+	ImGui::GetStyle().PopupRounding = rounding;
+	return 0.0;
+}
+
+fn_export double imgui_style_get_popup_rounding() {
+	return ImGui::GetStyle().PopupRounding;
+}
+
+fn_export double imgui_style_set_popup_border_size(double border_size) {
+	ImGui::GetStyle().PopupBorderSize = border_size;
+	return 0.0;
+}
+
+fn_export double imgui_style_get_popup_border_size() {
+	return ImGui::GetStyle().PopupBorderSize;
+}
+
+fn_export double imgui_style_set_frame_padding(double padx, double pady) {
+	ImGuiStyle& style = ImGui::GetStyle();
+	style.FramePadding.x = padx;
+	style.FramePadding.y = pady;
+	return 0.0;
+}
+
+fn_export double imgui_style_get_frame_padding() {
+	ImGuiStyle& style = ImGui::GetStyle();
+	ext_buffer->seek(0);
+	ext_buffer->write(style.FramePadding.x);
+	ext_buffer->write(style.FramePadding.y);
+	return 0.0;
+}
+
+fn_export double imgui_style_set_frame_rounding(double rounding) {
+	ImGui::GetStyle().FrameRounding = rounding;
+	return 0.0;
+}
+
+fn_export double imgui_style_get_frame_rounding() {
+	return ImGui::GetStyle().FrameRounding;
+}
+
+fn_export double imgui_style_set_frame_border_size(double border_size) {
+	ImGui::GetStyle().FrameBorderSize = border_size;
+	return 0.0;
+}
+
+fn_export double imgui_style_get_frame_border_size() {
+	return ImGui::GetStyle().FrameBorderSize;
+}
+
+fn_export double imgui_style_set_item_spacing(double spacex, double spacey) {
+	ImGuiStyle& style = ImGui::GetStyle();
+	style.ItemSpacing.x = spacex;
+	style.ItemSpacing.y = spacey;
+	return 0.0;
+}
+
+fn_export double imgui_style_get_item_spacing() {
+	ImGuiStyle& style = ImGui::GetStyle();
+	ext_buffer->seek(0);
+	ext_buffer->write(style.ItemSpacing.x);
+	ext_buffer->write(style.ItemSpacing.y);
+	return 0.0;
+}
+
+fn_export double imgui_style_set_item_inner_spacing(double spacex, double spacey) {
+	ImGuiStyle& style = ImGui::GetStyle();
+	style.ItemInnerSpacing.x = spacex;
+	style.ItemInnerSpacing.y = spacey;
+	return 0.0;
+}
+
+fn_export double imgui_style_get_item_inner_spacing() {
+	ImGuiStyle& style = ImGui::GetStyle();
+	ext_buffer->seek(0);
+	ext_buffer->write(style.ItemInnerSpacing.x);
+	ext_buffer->write(style.ItemInnerSpacing.y);
+	return 0.0;
+}
+
+fn_export double imgui_style_set_indent_spacing(double spacing) {
+	ImGui::GetStyle().IndentSpacing = spacing;
+	return 0.0;
+}
+
+fn_export double imgui_style_get_indent_spacing() {
+	return ImGui::GetStyle().IndentSpacing;
+}
+
+fn_export double imgui_style_set_columns_min_spacing(double spacing) {
+	ImGui::GetStyle().ColumnsMinSpacing = spacing;
+	return 0.0;
+}
+
+fn_export double imgui_style_get_columns_min_spacing() {
+	return ImGui::GetStyle().ColumnsMinSpacing;
+}
+
+fn_export double imgui_style_set_scrollbar_size(double size) {
+	ImGui::GetStyle().ScrollbarSize = size;
+	return 0.0;
+}
+
+fn_export double imgui_style_get_scrollbar_size() {
+	return ImGui::GetStyle().ScrollbarSize;
+}
+
+fn_export double imgui_style_set_scrollbar_rounding(double rounding) {
+	ImGui::GetStyle().ScrollbarRounding = rounding;
+	return 0.0;
+}
+
+fn_export double imgui_style_get_scrollbar_rounding() {
+	return ImGui::GetStyle().ScrollbarRounding;
+}
+
+fn_export double imgui_style_set_grab_min_size(double size) {
+	ImGui::GetStyle().GrabMinSize = size;
+	return 0.0;
+}
+
+fn_export double imgui_style_get_grab_min_size() {
+	return ImGui::GetStyle().GrabMinSize;
+}
+
+fn_export double imgui_style_set_grab_rounding(double rounding) {
+	ImGui::GetStyle().GrabRounding = rounding;
+	return 0.0;
+}
+
+fn_export double imgui_style_get_grab_rounding() {
+	return ImGui::GetStyle().GrabRounding;
+}
+
+fn_export double imgui_style_set_log_slider_deadzone(double deadzone) {
+	ImGui::GetStyle().LogSliderDeadzone = deadzone;
+	return 0.0;
+}
+
+fn_export double imgui_style_get_log_slider_deadzone() {
+	return ImGui::GetStyle().LogSliderDeadzone;
+}
+
+fn_export double imgui_style_set_tab_rounding(double rounding) {
+	ImGui::GetStyle().TabRounding = rounding;
+	return 0.0;
+}
+
+fn_export double imgui_style_get_tab_rounding() {
+	return ImGui::GetStyle().TabRounding;
+}
+
+fn_export double imgui_style_set_tab_border_size(double border_size) {
+	ImGui::GetStyle().TabBorderSize = border_size;
+	return 0.0;
+}
+
+fn_export double imgui_style_get_tab_border_size() {
+	return ImGui::GetStyle().TabBorderSize;
+}
+
+fn_export double imgui_style_set_tab_min_width_for_unselected_close_button(double width) {
+	ImGui::GetStyle().TabMinWidthForUnselectedCloseButton = width;
+	return 0.0;
+}
+
+fn_export double imgui_style_get_tab_min_width_for_unselected_close_button() {
+	return ImGui::GetStyle().TabMinWidthForUnselectedCloseButton;
+}
+
+fn_export double imgui_style_set_color_button_position(double position) {
+	ImGui::GetStyle().ColorButtonPosition = position;
+	return 0.0;
+}
+
+fn_export double imgui_style_get_color_button_position() {
+	return ImGui::GetStyle().ColorButtonPosition;
+}
+
+fn_export double imgui_style_set_button_text_align(double alignx, double aligny) {
+	ImGuiStyle& style = ImGui::GetStyle();
+	style.ButtonTextAlign.x = alignx;
+	style.ButtonTextAlign.y = aligny;
+	return 0.0;
+}
+
+fn_export double imgui_style_get_button_text_align() {
+	ImGuiStyle& style = ImGui::GetStyle();
+	ext_buffer->seek(0);
+	ext_buffer->write(style.ButtonTextAlign.x);
+	ext_buffer->write(style.ButtonTextAlign.y);
+	return 0.0;
+}
+
+fn_export double imgui_style_set_selectable_text_align(double alignx, double aligny) {
+	ImGuiStyle& style = ImGui::GetStyle();
+	style.SelectableTextAlign.x = alignx;
+	style.SelectableTextAlign.y = aligny;
+	return 0.0;
+}
+
+fn_export double imgui_style_get_selectable_text_align() {
+	ImGuiStyle& style = ImGui::GetStyle();
+	ext_buffer->seek(0);
+	ext_buffer->write(style.SelectableTextAlign.x);
+	ext_buffer->write(style.SelectableTextAlign.y);
+	return 0.0;
+}
+
+fn_export double imgui_style_set_display_window_padding(double padx, double pady) {
+	ImGuiStyle& style = ImGui::GetStyle();
+	style.DisplayWindowPadding.x = padx;
+	style.DisplayWindowPadding.y = pady;
+	return 0.0;
+}
+
+fn_export double imgui_style_get_display_window_padding() {
+	ImGuiStyle& style = ImGui::GetStyle();
+	ext_buffer->seek(0);
+	ext_buffer->write(style.DisplayWindowPadding.x);
+	ext_buffer->write(style.DisplayWindowPadding.y);
+	return 0.0;
+}
+
+fn_export double imgui_style_set_display_safe_area_padding(double padx, double pady) {
+	ImGuiStyle& style = ImGui::GetStyle();
+	style.DisplaySafeAreaPadding.x = padx;
+	style.DisplaySafeAreaPadding.y = pady;
+	return 0.0;
+}
+
+fn_export double imgui_style_get_display_safe_area_padding() {
+	ImGuiStyle& style = ImGui::GetStyle();
+	ext_buffer->seek(0);
+	ext_buffer->write(style.DisplaySafeAreaPadding.x);
+	ext_buffer->write(style.DisplaySafeAreaPadding.y);
+	return 0.0;
+}
+
+fn_export double imgui_style_set_mouse_cursor_scale(double scale) {
+	ImGui::GetStyle().MouseCursorScale = scale;
+	return 0.0;
+}
+
+fn_export double imgui_style_get_mouse_cursor_scale() {
+	return ImGui::GetStyle().MouseCursorScale;
+}
+
+fn_export double imgui_style_set_antialiased_lines(double enable) {
+	ImGui::GetStyle().AntiAliasedLines = enable;
+	return 0.0;
+}
+
+fn_export double imgui_style_get_antialiased_lines() {
+	return ImGui::GetStyle().AntiAliasedLines;
+}
+
+fn_export double imgui_style_set_antialiased_fill(double enable) {
+	ImGui::GetStyle().AntiAliasedFill = enable;
+	return 0.0;
+}
+
+fn_export double imgui_style_get_antialiased_fill() {
+	return ImGui::GetStyle().AntiAliasedFill;
+}
+
+fn_export double imgui_style_set_curve_tessellation_tol(double tolerance) {
+	ImGui::GetStyle().CurveTessellationTol = tolerance;
+	return 0.0;
+}
+
+fn_export double imgui_style_get_curve_tessellation_tol() {
+	return ImGui::GetStyle().CurveTessellationTol;
+}
+
+fn_export double imgui_style_set_circle_segment_max_error(double max_error) {
+	ImGui::GetStyle().CircleSegmentMaxError = max_error;
+	return 0.0;
+}
+
+fn_export double imgui_style_get_circle_segment_max_error() {
+	return ImGui::GetStyle().CircleSegmentMaxError;
+}
+// TODO: Everything below is already in GMS extension
+
+// Main
+fn_export double imgui_test_setup(char* hwnd, char* device, char* device_context) {
+	// TODO: rename this and find out if I need to use IMGUI_CHECKVERSION macro
+	// setup context
+	IMGUI_CHECKVERSION();
+	//ImGui::CreateContext();
+
+	// Enable keyboard navigation, docking, and viewports
+	//ImGuiIO& io = ImGui::GetIO(); (void)io;
+	//io.ConfigFlags |= ImGuiConfigFlags_NavEnableKeyboard;
+	//io.ConfigFlags |= ImGuiConfigFlags_DockingEnable;
+	//io.ConfigFlags |= ImGuiConfigFlags_ViewportsEnable;
+
+	// setup style
+	//ImGui::StyleColorsDark();
+
+	// tweak WindowRounding/WindowBg so platform windows can look identical to regular ones.
+	//ImGuiStyle& style = ImGui::GetStyle();
+	//style.WindowRounding = 0.0f;
+	//style.Colors[ImGuiCol_WindowBg].w = 1.0f;
+
+	// setup platform/renderer bindings
+	ImGui_ImplWin32_Init((void*)hwnd);
+	ImGui_ImplDX11_Init((ID3D11Device*)device, (ID3D11DeviceContext*)device_context);
+
+	// Subclass GM window to update keyboard/mouse/etc events
+	SetWindowSubclass((HWND)hwnd, ImGuiGMSSubclassProc, 1, 1);
+
 	return 0.0;
 }
 

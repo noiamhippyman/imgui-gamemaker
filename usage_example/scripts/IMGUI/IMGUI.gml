@@ -67,6 +67,18 @@ function buffer_return(buffer,expected_return_types) {
 
 
 // IMGUI Functions
+function imgui_test_setup() {
+	if (!variable_global_exists("imgui_buffer")) global.imgui_buffer = noone;
+	if (!buffer_exists(global.imgui_buffer)) global.imgui_buffer = buffer_create(IMGUI_BUFFER_SIZE,buffer_fixed,1);//buffer_array_create(IMGUI_BUFFER_SIZE,IMGUI_BUFFER_TYPE);
+	_extension_setup(buffer_get_address(global.imgui_buffer), buffer_get_size(global.imgui_buffer));
+	
+	var hwnd = window_handle();
+	var os = os_get_info();
+	var device = os[? "video_d3d11_device" ];
+	var context = os[? "video_d3d11_context" ];
+	imgui_create_context(0);
+	_imgui_test_setup(hwnd,device,context);
+}
 function imgui_setup() {
 	
 	if (!variable_global_exists("imgui_buffer")) global.imgui_buffer = noone;
