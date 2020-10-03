@@ -1040,3 +1040,89 @@ function imgui_begin_tab_item(label,open,flags) {
 		buffer_f32 // Open
 	]);
 }
+
+function imgui_get_item_rect_min() {
+	_imgui_get_item_rect_min();
+	return buffer_return(global.imgui_buffer,[
+		buffer_f32, // Rect min x
+		buffer_f32 // Rect min y
+	]);
+}
+
+function imgui_get_item_rect_max() {
+	_imgui_get_item_rect_max();
+	return buffer_return(global.imgui_buffer,[
+		buffer_f32, // Rect max x
+		buffer_f32 // Rect max y
+	]);
+}
+
+function imgui_get_item_rect_size() {
+	_imgui_get_item_rect_size();
+	return buffer_return(global.imgui_buffer,[
+		buffer_f32, // Rect size x
+		buffer_f32 // Rect size y
+	]);
+}
+
+function imgui_calc_text_size(text,text_end,hide_text_after_double_dash,wrap_width) {
+	_imgui_calc_text_size(text,text_end,hide_text_after_double_dash,wrap_width);
+	return buffer_return(global.imgui_buffer,[
+		buffer_f32, // Calculated text size width
+		buffer_f32 // Calculated text size height
+	]);
+}
+
+function imgui_color_convert_u32_to_float4(u32_color) {
+	_imgui_color_convert_u32_to_float4(u32_color);
+	return buffer_return(global.imgui_buffer,[
+		buffer_f32, // R
+		buffer_f32, // G
+		buffer_f32, // B
+		buffer_f32 // A
+	]);
+}
+
+function imgui_color_convert_rgb_to_hsv(r,g,b) {
+	_imgui_color_convert_rgb_to_hsv(r,g,b);
+	return buffer_return(global.imgui_buffer,[
+		buffer_f32, // H
+		buffer_f32, // S
+		buffer_f32 // V
+	]);
+}
+
+function imgui_color_convert_hsv_to_rgb(h,s,v) {
+	_imgui_color_convert_hsv_to_rgb(h,s,v);
+	return buffer_return(global.imgui_buffer,[
+		buffer_f32, // R
+		buffer_f32, // G
+		buffer_f32 // B
+	]);
+}
+
+function imgui_get_mouse_pos() {
+	_imgui_get_mouse_pos();
+	return buffer_return(global.imgui_buffer,[
+		buffer_f32, // Mouse x
+		buffer_f32 // Mouse y
+	]);
+}
+
+function imgui_get_mouse_pos_on_opening_current_popup() {
+	_imgui_get_mouse_pos_on_opening_current_popup();
+	return buffer_return(global.imgui_buffer,[
+		buffer_f32, // Mouse x
+		buffer_f32 // Mouse y
+	]);
+}
+
+function imgui_get_mouse_drag_delta(button,lock_threshold) {
+	_imgui_get_mouse_drag_delta(button,lock_threshold);
+	return buffer_return(global.imgui_buffer,[
+		buffer_f32, // Delta x
+		buffer_f32 // Delta y
+	]);
+}
+
+

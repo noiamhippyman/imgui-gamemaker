@@ -415,6 +415,7 @@ if (open) {
 #region Tab bars, Tabs
 		if (imgui_begin_tab_bar("Tab Bar",0)) {
 			ret = imgui_begin_tab_item("Avocado",avocado_open,0);
+			if (ret[1] == false and avocado_open) avocado_open = ret[1];
 			if (ret[0]) {
 				avocado_open = ret[1];
 				imgui_text("This is the Avocado tab!\nblah blah blah blah blah");
@@ -427,11 +428,12 @@ if (open) {
 				imgui_end_tab_item();
 			}
 			ret = imgui_begin_tab_item("Cucumber",cucumber_open,0);
+			if (ret[1] == false and cucumber_open) cucumber_open = ret[1];
 			if (ret[0]) {
-				cucumber_open = ret[1];
 				imgui_text("This is the Cucumber tab!\nblah blah blah blah blah");
 				imgui_end_tab_item();
 			}
+			
 			imgui_end_tab_bar();
 		}
 #endregion

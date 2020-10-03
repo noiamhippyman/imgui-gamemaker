@@ -1648,21 +1648,8 @@ fn_export double imgui_list_box_footer() {
 	return 0.0;
 }
 
-// Widgets: Data Plotting
-//fn_export double imgui_plot_lines(const char* label, double values_count, double values_offset, const char* overlay_text) {
-//
-//	ext_buffer->seek(0);
-//	//int values_count = ext_buffer->read_float();
-//	std::vector<float> values;
-//	for (int i = 0; i < values_count; ++i) {
-//		values.push_back(ext_buffer->read_float());
-//	}
-//	ImGui::PlotLines(label, &values[0], values_count, values_offset, overlay_text);
-//
-//	return 0.0;
-//
-//}
 
+// Widgets: Data Plotting
 fn_export double imgui_plot_lines(const char* label, const char* overlay_text) {
 
 	ext_buffer->seek(0);
@@ -1884,15 +1871,69 @@ fn_export double imgui_set_tab_item_closed(const char* tab_or_docked_window_labe
 
 
 // Logging/Capture
+fn_export double imgui_log_to_tty(double auto_open_depth) {
+	ImGui::LogToTTY(auto_open_depth);
+	return 0.0;
+}
 
+fn_export double imgui_log_to_file(double auto_open_depth, const char* filename) {
+	ImGui::LogToFile(auto_open_depth, filename);
+	return 0.0;
+}
+
+fn_export double imgui_log_to_clipboard(double auto_open_depth) {
+	ImGui::LogToClipboard(auto_open_depth);
+	return 0.0;
+}
+
+fn_export double imgui_log_finish() {
+	ImGui::LogFinish();
+	return 0.0;
+}
+
+fn_export double imgui_log_buttons() {
+	ImGui::LogButtons();
+	return 0.0;
+}
+
+fn_export double imgui_log_text(const char* fmt) {
+	ImGui::LogText(fmt);
+	return 0.0;
+}
 
 // Drag and Drop
 
 
 // Clipping
+fn_export double imgui_push_clip_rect(double min_x, double min_y, double max_x, double max_y, double intersect_with_current_clip_rect) {
+	ImVec2 clip_rect_min;
+	clip_rect_min.x = min_x;
+	clip_rect_min.y = min_y;
+
+	ImVec2 clip_rect_max;
+	clip_rect_max.x = max_x;
+	clip_rect_max.y = max_y;
+
+	ImGui::PushClipRect(clip_rect_min, clip_rect_max, intersect_with_current_clip_rect);
+	return 0.0;
+}
+
+fn_export double imgui_pop_clip_rect() {
+	ImGui::PopClipRect();
+	return 0.0;
+}
 
 
 // Focus, Activation
+fn_export double imgui_set_item_default_focus() {
+	ImGui::SetItemDefaultFocus();
+	return 0.0;
+}
+
+fn_export double imgui_set_keyboard_focus_here(double offset) {
+	ImGui::SetKeyboardFocusHere(offset);
+	return 0.0;
+}
 
 
 // Item/Widgets Utilities
@@ -1917,23 +1958,23 @@ fn_export double imgui_is_item_visible() {
 }
 
 fn_export double imgui_is_item_edited() {
-	return ImGui::IsItemVisible();
+	return ImGui::IsItemEdited();
 }
 
 fn_export double imgui_is_item_activated() {
-	return ImGui::IsItemVisible();
+	return ImGui::IsItemActivated();
 }
 
 fn_export double imgui_is_item_deactivated() {
-	return ImGui::IsItemVisible();
+	return ImGui::IsItemDeactivated();
 }
 
 fn_export double imgui_is_item_deactivated_after_edit() {
-	return ImGui::IsItemVisible();
+	return ImGui::IsItemDeactivatedAfterEdit();
 }
 
 fn_export double imgui_is_item_toggled_open() {
-	return ImGui::IsItemVisible();
+	return ImGui::IsItemToggledOpen();
 }
 
 fn_export double imgui_is_any_item_hovered() {
@@ -2056,7 +2097,7 @@ fn_export double imgui_color_convert_rgb_to_hsv(double r, double g, double b) {
 	return 0.0;
 }
 
-fn_export double imgui_color_convert_rgb_to_hsv(double h, double s, double v) {
+fn_export double imgui_color_convert_hsv_to_rgb(double h, double s, double v) {
 	float r, g, b;
 	ImGui::ColorConvertHSVtoRGB(h, s, v, r, g, b);
 	ext_buffer->seek(0);
@@ -2177,18 +2218,15 @@ fn_export double imgui_set_clipboard_text(const char* text) {
 
 
 // Settings/.INI Utilities
+fn_export double imgui_load_ini_settings_from_disk(const char* ini_filename) {
+	ImGui::LoadIniSettingsFromDisk(ini_filename);
+	return 0.0;
+}
 
-
-//fn_export double buffer_fiddle(void* buffer) {
-//	float* _b = (float*)buffer;
-//	_b[0] = 100.1;
-//	_b[1] = 1000.01;
-//	_b[2] = 10000.001;
-//	_b[3] = 100000.0001;
-//	_b[4] = 1000000.00001;
-//
-//	return 0.0;
-//}
+fn_export double imgui_save_ini_settings_to_disk(const char* ini_filename) {
+	ImGui::SaveIniSettingsToDisk(ini_filename);
+	return 0.0;
+}
 
 // Pretty sure I don't need this.
 BOOL WINAPI DllMain(
