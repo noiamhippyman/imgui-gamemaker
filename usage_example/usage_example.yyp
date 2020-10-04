@@ -1,14 +1,16 @@
 {
   "resources": [
     {"id":{"name":"IMGUI_demo","path":"scripts/IMGUI_demo/IMGUI_demo.yy",},"order":3,},
-    {"id":{"name":"TestStruct","path":"scripts/TestStruct/TestStruct.yy",},"order":4,},
+    {"id":{"name":"TestStruct","path":"scripts/TestStruct/TestStruct.yy",},"order":3,},
+    {"id":{"name":"Obj_IMGUI_demo","path":"objects/Obj_IMGUI_demo/Obj_IMGUI_demo.yy",},"order":4,},
     {"id":{"name":"IMGUI_EnumsAndMacros","path":"scripts/IMGUI_EnumsAndMacros/IMGUI_EnumsAndMacros.yy",},"order":2,},
-    {"id":{"name":"TODO","path":"notes/TODO/TODO.yy",},"order":6,},
-    {"id":{"name":"Obj_ImGuiTesting","path":"objects/Obj_ImGuiTesting/Obj_ImGuiTesting.yy",},"order":7,},
-    {"id":{"name":"Obj_ImGuiExample","path":"objects/Obj_ImGuiExample/Obj_ImGuiExample.yy",},"order":2,},
+    {"id":{"name":"TODO","path":"notes/TODO/TODO.yy",},"order":4,},
+    {"id":{"name":"Obj_ImGuiTesting","path":"objects/Obj_ImGuiTesting/Obj_ImGuiTesting.yy",},"order":1,},
+    {"id":{"name":"Obj_ImGuiExample","path":"objects/Obj_ImGuiExample/Obj_ImGuiExample.yy",},"order":0,},
     {"id":{"name":"IMGUI","path":"scripts/IMGUI/IMGUI.yy",},"order":1,},
+    {"id":{"name":"Rm_IMGUI_demo","path":"rooms/Rm_IMGUI_demo/Rm_IMGUI_demo.yy",},"order":5,},
     {"id":{"name":"Ext_imgui","path":"extensions/Ext_imgui/Ext_imgui.yy",},"order":0,},
-    {"id":{"name":"Room1","path":"rooms/Room1/Room1.yy",},"order":1,},
+    {"id":{"name":"Room1","path":"rooms/Room1/Room1.yy",},"order":2,},
   ],
   "Options": [
     {"name":"Linux","path":"options/linux/options_linux.yy",},
@@ -24,10 +26,12 @@
     "children": [],
   },
   "RoomOrder": [
+    {"name":"Rm_IMGUI_demo","path":"rooms/Rm_IMGUI_demo/Rm_IMGUI_demo.yy",},
     {"name":"Room1","path":"rooms/Room1/Room1.yy",},
   ],
   "Folders": [
     {"folderPath":"folders/IMGUI.yy","order":5,"resourceVersion":"1.0","name":"IMGUI","tags":[],"resourceType":"GMFolder",},
+    {"folderPath":"folders/Testing.yy","order":8,"resourceVersion":"1.0","name":"Testing","tags":[],"resourceType":"GMFolder",},
   ],
   "AudioGroups": [
     {"targets":461609314234257646,"resourceVersion":"1.0","name":"audiogroup_default","resourceType":"GMAudioGroup",},

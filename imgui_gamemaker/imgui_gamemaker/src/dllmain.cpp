@@ -43,7 +43,7 @@ LRESULT CALLBACK ImGuiGMSSubclassProc(HWND hWnd, UINT uMsg, WPARAM wParam,
 // IO Config
 // TODO: Start adding functons to GMS extension
 fn_export double imgui_io_set_config_flags(double flags) {
-	ImGui::GetIO().ConfigFlags = flags;
+	ImGui::GetIO().ConfigFlags = (ImGuiConfigFlags)flags;
 	return 0.0;
 }
 
@@ -553,7 +553,28 @@ fn_export double imgui_style_set_circle_segment_max_error(double max_error) {
 fn_export double imgui_style_get_circle_segment_max_error() {
 	return ImGui::GetStyle().CircleSegmentMaxError;
 }
-// TODO: Everything below is already in GMS extension
+
+fn_export double imgui_style_set_color(double idx, double r, double g, double b, double a) {
+	ImGuiStyle& style = ImGui::GetStyle();
+	ImVec4 col = style.Colors[(ImGuiCol)idx];
+	col.x = r;
+	col.y = g;
+	col.z = b;
+	col.w = a;
+	return 0.0;
+}
+
+fn_export double imgui_style_get_color(double idx) {
+	ImGuiStyle& style = ImGui::GetStyle();
+	ImVec4 col = style.Colors[(ImGuiCol)idx];
+	ext_buffer->seek(0);
+	ext_buffer->write(col.x);
+	ext_buffer->write(col.y);
+	ext_buffer->write(col.z);
+	ext_buffer->write(col.w);
+	return 0.0;
+}
+
 
 // Main
 fn_export double imgui_setup(char* hwnd, char* device, char* device_context) {
@@ -2382,6 +2403,7 @@ fn_export double imgui_set_tab_item_closed(const char* tab_or_docked_window_labe
 
 
 // Docking
+// TODO: Wrap these functions ya bum
 
 
 // Logging/Capture
@@ -2416,6 +2438,7 @@ fn_export double imgui_log_text(const char* fmt) {
 }
 
 // Drag and Drop
+// TODO: Wrap these functions ya bum
 
 
 // Clipping
@@ -2532,6 +2555,7 @@ fn_export double imgui_set_item_allow_overlap() {
 	return 0.0;
 }
 
+
 // Miscellaneous Utilities
 fn_export double imgui_is_rect_visible(double x1, double y1, double x2, double y2) {
 	ImVec2 rect_min;
@@ -2643,6 +2667,7 @@ fn_export double imgui_get_key_pressed_amount(double key_index, double repeat_de
 	return ImGui::GetKeyPressedAmount(key_index, repeat_delay, rate);
 }
 
+
 // Input Utilities: Mouse
 fn_export double imgui_is_mouse_down(double button) {
 	return ImGui::IsMouseDown((ImGuiMouseButton)button);
@@ -2719,6 +2744,7 @@ fn_export double imgui_set_mouse_cursor(double cursor_type) {
 	return 0.0;
 }
 
+
 // Clipboard Utilities
 fn_export const char* imgui_get_clipboard_text() {
 	return ImGui::GetClipboardText();
@@ -2741,6 +2767,7 @@ fn_export double imgui_save_ini_settings_to_disk(const char* ini_filename) {
 	ImGui::SaveIniSettingsToDisk(ini_filename);
 	return 0.0;
 }
+
 
 // Pretty sure I don't need this.
 BOOL WINAPI DllMain(

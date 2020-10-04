@@ -1195,3 +1195,13 @@ function imgui_style_get_display_safe_area_padding() {
 		buffer_f32 // Pad y
 	]);
 }
+
+function imgui_style_get_color(idx) {
+	_imgui_style_get_color(idx);
+	return buffer_return(global.imgui_buffer,[
+		buffer_f32, // R
+		buffer_f32, // G
+		buffer_f32, // B
+		buffer_f32 // A
+	]);
+}

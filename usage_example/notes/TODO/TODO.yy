@@ -1,7 +1,7 @@
 {
   "parent": {
-    "name": "usage_example",
-    "path": "usage_example.yyp",
+    "name": "Testing",
+    "path": "folders/Testing.yy",
   },
   "resourceVersion": "1.1",
   "name": "TODO",

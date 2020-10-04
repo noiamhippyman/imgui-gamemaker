@@ -1037,6 +1037,16 @@
             2,
           ],"resourceVersion":"1.0","name":"imgui_style_set_circle_segment_max_error","tags":[],"resourceType":"GMExtensionFunction",},
         {"externalName":"imgui_style_get_circle_segment_max_error","kind":1,"help":"imgui_style_get_circle_segment_max_error()","hidden":false,"returnType":2,"argCount":0,"args":[],"resourceVersion":"1.0","name":"imgui_style_get_circle_segment_max_error","tags":[],"resourceType":"GMExtensionFunction",},
+        {"externalName":"imgui_style_set_color","kind":1,"help":"imgui_style_set_color(idx,r,g,b,a)","hidden":false,"returnType":2,"argCount":0,"args":[
+            2,
+            2,
+            2,
+            2,
+            2,
+          ],"resourceVersion":"1.0","name":"imgui_style_set_color","tags":[],"resourceType":"GMExtensionFunction",},
+        {"externalName":"imgui_style_get_color","kind":1,"help":"_imgui_style_get_color(idx)","hidden":false,"returnType":2,"argCount":0,"args":[
+            2,
+          ],"resourceVersion":"1.0","name":"_imgui_style_get_color","tags":[],"resourceType":"GMExtensionFunction",},
       ],"constants":[],"ProxyFiles":[],"copyToTargets":144150411102650606,"order":[
         {"name":"_extension_setup","path":"extensions/Ext_imgui/Ext_imgui.yy",},
         {"name":"_extension_cleanup","path":"extensions/Ext_imgui/Ext_imgui.yy",},
@@ -1406,6 +1416,8 @@
         {"name":"imgui_style_get_curve_tessellation_tol","path":"extensions/Ext_imgui/Ext_imgui.yy",},
         {"name":"imgui_style_set_circle_segment_max_error","path":"extensions/Ext_imgui/Ext_imgui.yy",},
         {"name":"imgui_style_get_circle_segment_max_error","path":"extensions/Ext_imgui/Ext_imgui.yy",},
+        {"name":"imgui_style_set_color","path":"extensions/Ext_imgui/Ext_imgui.yy",},
+        {"name":"_imgui_style_get_color","path":"extensions/Ext_imgui/Ext_imgui.yy",},
       ],"resourceVersion":"1.0","name":"","tags":[],"resourceType":"GMExtensionFile",},
   ],
   "classname": "",
