@@ -2041,6 +2041,7 @@ fn_export double imgui_color_edit4(const char* label, double flags) {
 	ext_buffer->write(c[0]);
 	ext_buffer->write(c[1]);
 	ext_buffer->write(c[2]);
+	ext_buffer->write(c[3]);
 
 	return 0.0;
 }

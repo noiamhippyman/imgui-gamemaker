@@ -89,10 +89,23 @@ function imgui_show_demo_window_widgets_gml() {
 	static item_current = 0;
 	static str0 = "Hello, world!";
 	static str1 = "";
-	static i0 = 123;
-	static f0 = 0.001;
-	static f1 = 1;
+	static input_i0 = 123;
+	static input_f0 = 0.001;
+	static input_f1 = 1;
 	static vec4a = [ 0.1,0.2,0.3,0.44 ];
+	static drag_i1 = 50;
+	static drag_i2 = 42;
+	static drag_f1 = 1;
+	static drag_f2 = 0.0067;
+	static slider_i1 = 0;
+	static slider_f1 = 0.123;
+	static slider_f2 = 0;
+	static angle = 0;
+	enum Element { Fire, Earth, Air, Water, COUNT }
+	static elem = Element.Fire;
+	static col1 = [ 1, 0, 0.2 ];
+	static col2 = [ 0.4, 0.7, 0.0, 0.5 ];
+	static list_item_current = 1;
 	
 	var ret = imgui_collapsing_header("Widgets",noone,0);
 	if (!ret[0])
@@ -205,9 +218,9 @@ function imgui_show_demo_window_widgets_gml() {
 			ret = imgui_input_text_with_hint("input text(w/ hint)","enter text here",str1,0);
 			if (ret[0]) str1 = ret[1];
 			
-			//static i0 = 123;
-			ret = imgui_input_int("input int",i0,1,100,0);
-			if (ret[0]) i0 = ret[1];
+			//static input_i0 = 123;
+			ret = imgui_input_int("input int",input_i0,1,100,0);
+			if (ret[0]) input_i0 = ret[1];
 			imgui_same_line(0,0);
 			imgui_help_marker(
 				"You can apply arithmetic operators +,*,/ on numerical values.\n" +
@@ -215,13 +228,13 @@ function imgui_show_demo_window_widgets_gml() {
                 "Use +- to subtract."
 			);
 			
-			//static f0 = 0.001;
-			ret = imgui_input_float("input float",f0,0.01,1,"%.3f",0);
-			if (ret[0]) f0 = ret[1];
+			//static input_f0 = 0.001;
+			ret = imgui_input_float("input float",input_f0,0.01,1,"%.3f",0);
+			if (ret[0]) input_f0 = ret[1];
 			
 			//static f1 = 1;
-			ret = imgui_input_float("input scientific",f1,0.0,0.0,"%.0e",0);
-			if (ret[0]) f1 = ret[1];
+			ret = imgui_input_float("input scientific",input_f1,0.0,0.0,"%.0e",0);
+			if (ret[0]) input_f1 = ret[1];
 			imgui_same_line(0,0);
 			imgui_help_marker(
 				"You can input value using the scientific notation,\n" +
@@ -239,6 +252,105 @@ function imgui_show_demo_window_widgets_gml() {
 		
 		{
 			
+			//static i1 = 50;
+			//static i2 = 42;
+			ret = imgui_drag_int("drag int",drag_i1,1,0,0,"%.3f",0);
+			if (ret[0]) drag_i1 = ret[1];
+			imgui_same_line(0,0);
+			imgui_help_marker(
+				"Click and drag to edit value.\n" +
+                "Hold SHIFT/ALT for faster/slower edit.\n" +
+                "Double-click or CTRL+click to input value."
+			);
+			
+			ret = imgui_drag_int("drag int 0..100", drag_i2,1,0,100,"%d%%",ImGuiSliderFlags.ClampOnInput);
+			if (ret[0]) drag_i2 = ret[1];
+			
+			//static f1 = 1;
+			//static f2 = 0.0067;
+			ret = imgui_drag_float("drag float",drag_f1,0.005,0,0,"%.3f",0);
+			if (ret[0]) drag_f1 = ret[1];
+			ret = imgui_drag_float("drag small float",drag_f2,0.00001,0,0,"%.06f ns",0);
+			if (ret[0]) drag_f2 = ret[1];
+			
+		}
+		
+		{
+			//static slider_i1 = 0;
+			ret = imgui_slider_int("slider int", slider_i1, -1,3,"%d",0);
+			if (ret[0]) slider_i1 = ret[1];
+			imgui_same_line(0,0);
+			imgui_help_marker("CTRL+click to input value.");
+			
+			//static slider_f1 = 0.123;
+			//static slider_f2 = 0;
+			ret = imgui_slider_float("slider float", slider_f1, 0.0,1.0,"ratio = %.3f",0);
+			if (ret[0]) slider_f1 = ret[1];
+			ret = imgui_slider_float("slider float (log)", slider_f2, -10.0,10.0,"%.4f",ImGuiSliderFlags.Logarithmic);
+			if (ret[0]) slider_f2 = ret[1];
+			
+			//static angle = 0;
+			ret = imgui_slider_angle("slider angle",angle,-360,360,"%.0f deg",0);
+			if (ret[0]) angle = ret[1];
+			
+			// Using the format string to display a name instead of an integer.
+            // Here we completely omit '%d' from the format string, so it'll only display a name.
+            // This technique can also be used with DragInt().
+			//enum Element { Fire, Earth, Air, Water, COUNT }
+			//static elem = Element.Fire;
+			var elems_names = [ "Fire", "Earth", "Air", "Water" ];
+			var elem_name = (elem >= 0 and elem < Element.COUNT) ? elems_names[elem] : "Unknown";
+			ret = imgui_slider_int("slider enum",elem,0,Element.COUNT - 1, elem_name, 0);
+			if (ret[0]) elem = ret[1];
+			imgui_same_line(0,0);
+			imgui_help_marker("Using the format string parameter to display a name instead of the underlying integer.");
+		}
+		
+		{
+			//static col1 = [ 1, 0, 0.2 ];
+			//static col2 = [ 0.4, 0.7, 0.0, 0.5 ];
+			ret = imgui_color_edit3("color 1", col1, 0);
+			if (ret[0]) {
+				col1[0] = ret[1];
+				col1[1] = ret[2];
+				col1[2] = ret[3];
+			}
+			imgui_same_line(0,0);
+			imgui_help_marker(
+				"Click on the colored square to open a color picker.\n" +
+                "Click and hold to use drag and drop.\n" +
+                "Right-click on the colored square to show options.\n" +
+                "CTRL+click on individual component to input value.\n"
+			);
+			
+			ret = imgui_color_edit4("color 2", col2, 0);
+			if (ret[0]) {
+				col2[0] = ret[1];
+				col2[1] = ret[2];
+				col2[2] = ret[3];
+				col2[3] = ret[4];
+			}
+		}
+		
+		{
+			//List box
+			var list_items = [ "Apple", "Banana", "Cherry", "Kiwi", "Mango", "Orange", "Pineapple", "Strawberry", "Watermelon" ];
+			//static list_item_current = 1;
+			ret = imgui_list_box("listbox\n(single select)",list_item_current,list_items,array_length(list_items),4);
+			if (ret[0]) list_item_current = ret[1];
+		}
+		
+		imgui_tree_pop();
+	}
+	
+	if (imgui_tree_node("Trees")) {
+		
+		if (imgui_tree_node("Basic Trees")) {
+			imgui_tree_pop();
+		}
+		
+		if (imgui_tree_node("Advanced, with Selectable nodes")) {
+			imgui_tree_pop();
 		}
 		
 		imgui_tree_pop();
