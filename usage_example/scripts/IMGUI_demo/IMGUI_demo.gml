@@ -81,7 +81,169 @@ function imgui_show_user_guide_gml() {
 // - imgui_show_demo_window_misc_gml()
 //-----------------------------------------------------------------------------
 
-function imgui_show_demo_window_widgets_gml() {}
+function imgui_show_demo_window_widgets_gml() {
+	static clicked = 0;
+	static check = true;
+	static e = 0;
+	static counter = 0;
+	static item_current = 0;
+	static str0 = "Hello, world!";
+	static str1 = "";
+	static i0 = 123;
+	static f0 = 0.001;
+	static f1 = 1;
+	static vec4a = [ 0.1,0.2,0.3,0.44 ];
+	
+	var ret = imgui_collapsing_header("Widgets",noone,0);
+	if (!ret[0])
+		return;
+	
+	if (imgui_tree_node("Basic")) {
+		//static clicked = 0;
+		if (imgui_button("Button",0,0)) {
+			clicked++;
+		}
+		
+		if (clicked & 1) {
+			imgui_same_line(0,0);
+			imgui_text("Thanks for clicking me!");
+		}
+		
+		//static check = true;
+		ret = imgui_checkbox("checkbox",check);
+		if (ret[0]) check = ret[1];
+		
+		//static e = 0;
+		if (imgui_radio_button("radio a", e == 0)) e = 0; 
+		imgui_same_line(0,0);
+		if (imgui_radio_button("radio b", e == 1)) e = 1; 
+		imgui_same_line(0,0);
+		if (imgui_radio_button("radio c", e == 2)) e = 2;
+		
+		// Color buttons, demonstrate using imgui_push_id() to add unique identifier in the ID stack, and changing style.
+		for (var i = 0; i < 7; ++i) {
+			if (i > 0) imgui_same_line(0,0);
+			
+			imgui_push_id(i);
+			var color = imgui_color_convert_hsv_to_rgb(i/7,0.6,0.6);
+			imgui_push_style_color(ImGuiCol.Button,color[0],color[1],color[2],1);
+			
+			color = imgui_color_convert_hsv_to_rgb(i/7,0.7,0.7);
+			imgui_push_style_color(ImGuiCol.Button,color[0],color[1],color[2],1);
+			
+			color = imgui_color_convert_hsv_to_rgb(i/7,0.8,0.8);
+			imgui_push_style_color(ImGuiCol.Button,color[0],color[1],color[2],1);
+			imgui_button("Click",0,0);
+			imgui_pop_style_color(3);
+			imgui_pop_id();
+		}
+		
+		// Use imgui_align_text_to_frame_padding() to align text baseline to the baseline of framed widgets elements
+        // (otherwise a Text+SameLine+Button sequence will have the text a little too high by default!)
+        // See 'Demo->Layout->Text Baseline Alignment' for details.
+		imgui_align_text_to_frame_padding();
+		imgui_text("Hold to repeat: ");
+		imgui_same_line(0,0);
+		
+		// Arrow buttons with Repeater
+		//static counter = 0;
+		var spacing = imgui_style_get_item_inner_spacing()[0];
+		imgui_push_button_repeat(true);
+		if (imgui_arrow_button("##left",ImGuiDir.Left)) counter--;
+		imgui_same_line(0,spacing);
+		if (imgui_arrow_button("##right",ImGuiDir.Right)) counter++;
+		imgui_pop_button_repeat();
+		imgui_same_line(0,0);
+		imgui_text(string(counter));
+		
+		imgui_text("Hover over me");
+		if (imgui_is_item_hovered()) {
+			imgui_set_tooltip("I am a tooltip");
+		}
+		
+		imgui_same_line(0,0);
+		imgui_text("- or me");
+		if (imgui_is_item_hovered()) {
+			imgui_begin_tooltip();
+			imgui_text("I am a fancy tooltip");
+			var arr = [ 0.6, 0.1, 1, 0.5, 0.92, 0.1, 0.2 ];
+			imgui_plot_lines("Curve",arr,0,noone,noone,noone,0,0);
+			imgui_end_tooltip();
+		}
+		
+		imgui_separator();
+		
+		imgui_label_text("label","Value");
+		
+		{
+			// Using the _simplified_ one-liner Combo() api here
+	        // See "Combo" section for examples of how to use the more complete imgui_begin_combo()/imgui_end_combo() api.
+			var items = [ "AAAA", "BBBB", "CCCC", "DDDD", "EEEE", "FFFF", "GGGG", "HHHH", "IIIIIII", "JJJJ", "KKKKKKK" ];
+			//static item_current = 0;
+			ret = imgui_combo("combo",item_current,items,array_length(items),-1);
+			if (ret[0]) item_current = ret[1];
+			imgui_same_line(0,0);
+			imgui_help_marker("Refer to the \"Combo\" section below for an explanation of the full imgui_begin_combo/imgui_end_combo API, and demonstration of various flags.\n");
+		}
+		
+		{
+			//static str0 = "Hello, world!";
+			ret = imgui_input_text("input text",str0,0);
+			if (ret[0]) str0 = ret[1];
+			imgui_same_line(0,0);
+			imgui_help_marker(
+				"USER:\n" +
+                "Hold SHIFT or use mouse to select text.\n" +
+                "CTRL+Left/Right to word jump.\n" +
+                "CTRL+A or double-click to select all.\n" +
+                "CTRL+X,CTRL+C,CTRL+V clipboard.\n" +
+                "CTRL+Z,CTRL+Y undo/redo.\n" +
+                "ESCAPE to revert."
+			);
+			
+			//static str1 = "";
+			ret = imgui_input_text_with_hint("input text(w/ hint)","enter text here",str1,0);
+			if (ret[0]) str1 = ret[1];
+			
+			//static i0 = 123;
+			ret = imgui_input_int("input int",i0,1,100,0);
+			if (ret[0]) i0 = ret[1];
+			imgui_same_line(0,0);
+			imgui_help_marker(
+				"You can apply arithmetic operators +,*,/ on numerical values.\n" +
+                "  e.g. [ 100 ], input \'*2\', result becomes [ 200 ]\n" +
+                "Use +- to subtract."
+			);
+			
+			//static f0 = 0.001;
+			ret = imgui_input_float("input float",f0,0.01,1,"%.3f",0);
+			if (ret[0]) f0 = ret[1];
+			
+			//static f1 = 1;
+			ret = imgui_input_float("input scientific",f1,0.0,0.0,"%.0e",0);
+			if (ret[0]) f1 = ret[1];
+			imgui_same_line(0,0);
+			imgui_help_marker(
+				"You can input value using the scientific notation,\n" +
+                "  e.g. \"1e+8\" becomes \"100000000\"."
+			);
+			
+			//static vec4a = [ 0.1,0.2,0.3,0.44 ];
+			ret = imgui_input_float3("input float3", vec4a, "%.3f",0);
+			if (ret[0]) {
+				vec4a[0] = ret[1];
+				vec4a[1] = ret[2];
+				vec4a[2] = ret[3];
+			}
+		}
+		
+		{
+			
+		}
+		
+		imgui_tree_pop();
+	}
+}
 function imgui_show_demo_window_layout_gml() {}
 function imgui_show_demo_window_popups_gml() {}
 function imgui_show_demo_window_columns_gml() {}

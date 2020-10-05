@@ -705,7 +705,7 @@ fn_export double imgui_style_colors_light() {
 // Windows
 fn_export double imgui_begin(const char* name, double open, double flags) {
 	bool _open = (bool)open;
-	bool expanded = ImGui::Begin(name,&_open,(ImGuiWindowFlags)flags);
+	bool expanded = ImGui::Begin(name,open < 0 ? 0 : &_open,(ImGuiWindowFlags)flags);
 
 	ext_buffer->seek(0);
 	ext_buffer->write((float)expanded);
@@ -1321,6 +1321,10 @@ fn_export double imgui_invisible_button(const char* str_id, double width, double
 	size.x = width;
 	size.y = height;
 	return (double)(ImGui::InvisibleButton(str_id, size, (ImGuiButtonFlags)flags));
+}
+
+fn_export double imgui_arrow_button(const char* str_id, double dir) {
+	return ImGui::ArrowButton(str_id, (ImGuiDir)dir);
 }
 
 fn_export double imgui_checkbox(const char* label, double checked) {

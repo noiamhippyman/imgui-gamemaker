@@ -1047,6 +1047,10 @@
         {"externalName":"imgui_style_get_color","kind":1,"help":"_imgui_style_get_color(idx)","hidden":false,"returnType":2,"argCount":0,"args":[
             2,
           ],"resourceVersion":"1.0","name":"_imgui_style_get_color","tags":[],"resourceType":"GMExtensionFunction",},
+        {"externalName":"imgui_arrow_button","kind":1,"help":"imgui_arrow_button(str_id,dir)","hidden":false,"returnType":2,"argCount":0,"args":[
+            1,
+            2,
+          ],"resourceVersion":"1.0","name":"imgui_arrow_button","tags":[],"resourceType":"GMExtensionFunction",},
       ],"constants":[],"ProxyFiles":[],"copyToTargets":144150411102650606,"order":[
         {"name":"_extension_setup","path":"extensions/Ext_imgui/Ext_imgui.yy",},
         {"name":"_extension_cleanup","path":"extensions/Ext_imgui/Ext_imgui.yy",},
@@ -1164,6 +1168,7 @@
         {"name":"imgui_button","path":"extensions/Ext_imgui/Ext_imgui.yy",},
         {"name":"imgui_small_button","path":"extensions/Ext_imgui/Ext_imgui.yy",},
         {"name":"imgui_invisible_button","path":"extensions/Ext_imgui/Ext_imgui.yy",},
+        {"name":"imgui_arrow_button","path":"extensions/Ext_imgui/Ext_imgui.yy",},
         {"name":"_imgui_checkbox","path":"extensions/Ext_imgui/Ext_imgui.yy",},
         {"name":"_imgui_checkbox_flags","path":"extensions/Ext_imgui/Ext_imgui.yy",},
         {"name":"imgui_radio_button","path":"extensions/Ext_imgui/Ext_imgui.yy",},
