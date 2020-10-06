@@ -420,7 +420,7 @@ enum ImGuiMouseCursor
 // Enumeration for ImGui::SetWindow***(), SetNextWindow***(), SetNextItem***() functions
 // Represent a condition.
 // Important: Treat as a regular enum! Do NOT combine multiple values using binary operators! All the functions above treat 0 as a shortcut to ImGuiCond_Always.
-enum ImGuiCond_
+enum ImGuiCond
 {
     None          = 0,        // No condition (always set the variable), same as _Always
     Always        = 1 << 0,   // No condition (always set the variable)

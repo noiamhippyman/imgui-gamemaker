@@ -106,6 +106,10 @@ function imgui_show_demo_window_widgets_gml() {
 	static col1 = [ 1, 0, 0.2 ];
 	static col2 = [ 0.4, 0.7, 0.0, 0.5 ];
 	static list_item_current = 1;
+	static base_flags = ImGuiTreeNodeFlags.OpenOnArrow | ImGuiTreeNodeFlags.OpenOnDoubleClick | ImGuiTreeNodeFlags.SpanAvailWidth;
+	static align_label_with_current_x_position = false;
+	static test_drag_and_drop = false;
+	static selection_mask = (1 << 2);
 	
 	var ret = imgui_collapsing_header("Widgets",noone,0);
 	if (!ret[0])
@@ -346,13 +350,111 @@ function imgui_show_demo_window_widgets_gml() {
 	if (imgui_tree_node("Trees")) {
 		
 		if (imgui_tree_node("Basic Trees")) {
+			for (var i = 0; i < 5; ++i) {
+				// Use imgui_set_next_item_open() so set the default state of a node to be open. We could
+                // also use imgui_tree_node_ex() with the ImGuiTreeNodeFlags.DefaultOpen flag to achieve the same thing!
+				if (i == 0) imgui_set_next_item_open(true,ImGuiCond.Once);
+				
+				if (imgui_tree_node("Child " + string(i))) {
+					imgui_text("blah blah");
+					imgui_same_line(0,0);
+					if (imgui_small_button("button")) {}
+					imgui_tree_pop();
+				}
+			}
 			imgui_tree_pop();
 		}
 		
 		if (imgui_tree_node("Advanced, with Selectable nodes")) {
+			
+			imgui_help_marker(
+				"This is a more typical looking tree with selectable nodes.\n" +
+                "Click to select, CTRL+Click to toggle, click on arrows or double-click to open."
+			);
+			
+			//static base_flags = ImGuiTreeNodeFlags.OpenOnArrow | ImGuiTreeNodeFlags.OpenOnDoubleClick | ImGuiTreeNodeFlags.SpanAvailWidth;
+			//static align_label_with_current_x_position = false;
+			//static test_drag_and_drop = false;
+			
+			ret = imgui_checkbox_flags("ImGuiTreeNodeFlags.OpenOnArrow", base_flags, ImGuiTreeNodeFlags.OpenOnArrow);
+			if (ret[0]) base_flags = ret[1];
+			ret = imgui_checkbox_flags("ImGuiTreeNodeFlags.OpenOnDoubleClick", base_flags, ImGuiTreeNodeFlags.OpenOnDoubleClick);
+			if (ret[0]) base_flags = ret[1];
+			ret = imgui_checkbox_flags("ImGuiTreeNodeFlags.SpanAvailWidth", base_flags, ImGuiTreeNodeFlags.SpanAvailWidth);
+			if (ret[0]) base_flags = ret[1];
+			ret = imgui_checkbox_flags("ImGuiTreeNodeFlags.SpanFullWidth", base_flags, ImGuiTreeNodeFlags.SpanFullWidth);
+			if (ret[0]) base_flags = ret[1];
+			ret = imgui_checkbox("Align label with current x position",align_label_with_current_x_position);
+			if (ret[0]) align_label_with_current_x_position = ret[1];
+			ret = imgui_checkbox("Test tree node as drag source",test_drag_and_drop);
+			if (ret[0]) test_drag_and_drop = ret[1];
+			imgui_text("Hello!");
+			if (align_label_with_current_x_position) {
+				imgui_unindent(imgui_get_tree_node_to_label_spacing());
+			}
+			
+			// 'selection_mask' is dumb representation of what may be user-side selection state.
+            //  You may retain selection state inside or outside your objects in whatever format you see fit.
+            // 'node_clicked' is temporary storage of what node we have clicked to process selection at the end
+            /// of the loop. May be a pointer to your own node type, etc.
+			//static selection_mask = (1 << 2);
+			var node_clicked = -1;
+			for (var i = 0; i < 6; ++i) {
+				// Disable the default "open on single-click behavior" + set Selected flag according to our selection.
+				var node_flags = base_flags;
+				var is_selected = (selection_mask & (1 << i)) != 0;
+				if (is_selected) {
+					node_flags |= ImGuiTreeNodeFlags.Selected;
+				}
+				
+				if (i < 3) {
+					// Items 0..2 are Tree Node
+					var node_open = imgui_tree_node_ex("Selectable node " + string(i),node_flags);
+					if (imgui_is_item_clicked(0)) node_clicked = i;
+					
+					if (test_drag_and_drop and imgui_begin_drag_drop_source(0)) {
+						imgui_set_drag_drop_payload("_TREENODE",0);
+						imgui_text("This is a drag and drop source");
+						imgui_end_drag_drop_source();
+					}
+					if (node_open) {
+						imgui_bullet_text("Blah blah\nBlah Blah");
+						imgui_tree_pop();
+					}
+				} else {
+					// Items 3..5 are Tree Leaves
+                    // The only reason we use TreeNode at all is to allow selection of the leaf. Otherwise we can
+                    // use imgui_bullet_text() or advance the cursor by imgui_get_tree_node_to_label_spacing() and call imgui_text().
+                    node_flags |= ImGuiTreeNodeFlags.Leaf | ImGuiTreeNodeFlags.NoTreePushOnOpen; // ImGuiTreeNodeFlags.Bullet
+					imgui_tree_node_ex("Selectable leaf " + string(i),node_flags);
+					if (imgui_is_item_clicked(0)) {
+						node_clicked = i;
+					}
+					if (test_drag_and_drop and imgui_begin_drag_drop_source(0)) {
+						imgui_set_drag_drop_payload("__TREENODE",0);
+						imgui_text("This is a drag and drop source");
+						imgui_end_drag_drop_source();
+					}
+				}
+			}
+			
+			if (node_clicked != -1) {
+				// Update selection state
+                // (process outside of tree loop to avoid visual inconsistencies during the clicking frame)
+				if (imgui_io_get_key_ctrl()) {
+					selection_mask ^= (1 << node_clicked);				// CTRL+click to toggle
+				} else {//if (!(selection_mask & (1 << node_clicked)))	// Depending on selection behavior you want, may want to preserve selection when clicking on item that is part of the selection
+					selection_mask = (1 << node_clicked);				// Click to single-select
+				}
+			}
+			
+			if (align_label_with_current_x_position) {
+				imgui_indent(imgui_get_tree_node_to_label_spacing());
+			}
 			imgui_tree_pop();
 		}
 		
+		// End of "Trees" tree node
 		imgui_tree_pop();
 	}
 }

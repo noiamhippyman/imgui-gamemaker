@@ -1040,6 +1040,32 @@ function imgui_begin_tab_item(label,open,flags) {
 	]);
 }
 
+function imgui_accept_drag_drop_payload(type,flags) {
+	_imgui_accept_drag_drop_payload(type,flags);
+	var data_size = buffer_peek(global.imgui_buffer,0,buffer_f32);
+	var ret = array_create(data_size);
+	var offset = 4;
+	for (var i = 0; i < data_size; ++i) {
+		ret[i] = buffer_peek(global.imgui_buffer,offset,buffer_f32);
+		offset += 4;
+	}
+	
+	return ret;
+}
+
+function imgui_get_drag_drop_payload() {
+	_imgui_get_drag_drop_payload();
+	var data_size = buffer_peek(global.imgui_buffer,0,buffer_f32);
+	var ret = array_create(data_size);
+	var offset = 4;
+	for (var i = 0; i < data_size; ++i) {
+		ret[i] = buffer_peek(global.imgui_buffer,offset,buffer_f32);
+		offset += 4;
+	}
+	
+	return ret;
+}
+
 function imgui_get_item_rect_min() {
 	_imgui_get_item_rect_min();
 	return buffer_return(global.imgui_buffer,[

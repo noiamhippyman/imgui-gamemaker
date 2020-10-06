@@ -168,6 +168,17 @@ fn_export double imgui_io_get_config_windows_move_from_title_bar_only() {
 	return ImGui::GetIO().ConfigWindowsMoveFromTitleBarOnly;
 }
 
+fn_export double imgui_io_get_key_ctrl() {
+	return ImGui::GetIO().KeyCtrl;
+}
+
+fn_export double imgui_io_get_key_shift() {
+	return ImGui::GetIO().KeyShift;
+}
+
+fn_export double imgui_io_get_key_alt() {
+	return ImGui::GetIO().KeyAlt;
+}
 
 // Style Config
 fn_export double imgui_style_set_alpha(double alpha) {
@@ -2408,7 +2419,7 @@ fn_export double imgui_set_tab_item_closed(const char* tab_or_docked_window_labe
 
 
 // Docking
-// TODO: Wrap these functions ya bum
+// TODO: Wrap these
 
 
 // Logging/Capture
@@ -2442,8 +2453,57 @@ fn_export double imgui_log_text(const char* fmt) {
 	return 0.0;
 }
 
+
 // Drag and Drop
-// TODO: Wrap these functions ya bum
+fn_export double imgui_begin_drag_drop_source(double flags) {
+	return ImGui::BeginDragDropSource((ImGuiDragDropFlags)flags);
+}
+
+fn_export double imgui_set_drag_drop_payload(const char* type, double cond) {
+	return ImGui::SetDragDropPayload(type, NULL, 0, (ImGuiCond)cond);
+}
+
+fn_export double imgui_end_drag_drop_source() {
+	ImGui::EndDragDropSource();
+	return 0.0;
+}
+
+fn_export double imgui_begin_drag_drop_target() {
+	return ImGui::BeginDragDropTarget();
+}
+
+fn_export double imgui_accept_drag_drop_payload(const char* type, double flags) {
+	const ImGuiPayload* payload = ImGui::AcceptDragDropPayload(type, (ImGuiDragDropFlags)flags);
+
+	float* data = (float*)payload->Data;
+
+	ext_buffer->seek(0);
+	ext_buffer->write((float)payload->DataSize);
+	for (int i = 0; i < payload->DataSize; ++i) {
+		ext_buffer->write(data[i]);
+	}
+
+	return 0.0;
+}
+
+fn_export double imgui_end_drag_drop_target() {
+	ImGui::EndDragDropTarget();
+	return 0.0;
+}
+
+fn_export double imgui_get_drag_drop_payload() {
+	const ImGuiPayload* payload = ImGui::GetDragDropPayload();
+
+	float* data = (float*)payload->Data;
+
+	ext_buffer->seek(0);
+	ext_buffer->write((float)payload->DataSize);
+	for (int i = 0; i < payload->DataSize; ++i) {
+		ext_buffer->write(data[i]);
+	}
+
+	return 0.0;
+}
 
 
 // Clipping
