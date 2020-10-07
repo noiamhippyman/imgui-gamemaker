@@ -112,6 +112,7 @@ function imgui_show_demo_window_widgets_gml() {
 	static selection_mask = (1 << 2);
 	static closable_group = true;
 	static wrap_width = 200;
+	static buf = "\xe6\x97\xa5\xe6\x9c\xac\xe8\xaa\x9e";
 	
 	var ret = imgui_collapsing_header("Widgets",noone,0);
 	if (!ret[0])
@@ -519,8 +520,55 @@ function imgui_show_demo_window_widgets_gml() {
 			//static wrap_width = 200;
 			ret = imgui_slider_float("Wrap width",wrap_width,-20,600,"%.0f");
 			if (ret[0]) wrap_width = ret[1];
+			
+			for (var n = 0; n < 2; ++n) {
+				imgui_text("Test paragraph " + string(n));
+				var pos = imgui_get_cursor_screen_pos();
+				var marker_min = [ pos[0] + wrap_width, pos[1] ];
+				var marker_max = [ pos[0] + wrap_width + 10, pos[1] + imgui_get_text_line_height() ];
+				imgui_push_text_wrap_pos(imgui_get_cursor_pos()[0] + wrap_width);
+				if (n == 0) {
+					imgui_text("The lazy dog is a good dog. This paragraph should fit within " + string(wrap_width) + " pixels. Testing a 1 character word. The quick brown fox jumps over the lazy dog.");
+				} else {
+					imgui_text("aaaaaaaa bbbbbbbb, c cccccccc,dddddddd. d eeeeeeee   ffffffff. gggggggg!hhhhhhhh");
+				}
+				
+				var rmin = imgui_get_item_rect_min();
+				var rmax = imgui_get_item_rect_max();
+				imgui_drawlist_add_rect(rmin[0],rmin[1],rmax[0],rmax[1],imgui_color_convert_float4_to_u32(1,1,0,1),0,15,1);
+				imgui_drawlist_add_rect_filled(marker_min[0],marker_min[1],marker_max[0],marker_max[1],imgui_color_convert_float4_to_u32(1,0,1,1),0,15);
+				imgui_pop_text_wrap_pos();
+			}
+			
 			imgui_tree_pop();
 		}
+		
+		if (imgui_tree_node("UTF-8 Text"))
+        {
+            // UTF-8 test with Japanese characters
+            // (Needs a suitable font? Try "Google Noto" or "Arial Unicode". See docs/FONTS.md for details.)
+            // - From C++11 you can use the u8"my text" syntax to encode literal strings as UTF-8
+            // - For earlier compiler, you may be able to encode your sources as UTF-8 (e.g. in Visual Studio, you
+            //   can save your source files as 'UTF-8 without signature').
+            // - FOR THIS DEMO FILE ONLY, BECAUSE WE WANT TO SUPPORT OLD COMPILERS, WE ARE *NOT* INCLUDING RAW UTF-8
+            //   CHARACTERS IN THIS SOURCE FILE. Instead we are encoding a few strings with hexadecimal constants.
+            //   Don't do this in your application! Please use u8"text in any language" in your application!
+            // Note that characters values are preserved even by imgui_input_text() if the font cannot be displayed,
+            // so you can safely copy & paste garbled characters into another application.
+            imgui_text_wrapped(
+                "CJK text will only appears if the font was loaded with the appropriate CJK character ranges. " +
+                "Call io.Font->AddFontFromFileTTF() manually to load extra character ranges. " +
+                "Read docs/FONTS.md for details."
+			);
+			
+            imgui_text("Hiragana: \xe3\x81\x8b\xe3\x81\x8d\xe3\x81\x8f\xe3\x81\x91\xe3\x81\x93 (kakikukeko)"); // Normally we would use u8"blah blah" with the proper characters directly in the string.
+            imgui_text("Kanjis: \xe6\x97\xa5\xe6\x9c\xac\xe8\xaa\x9e (nihongo)");
+            
+			//static buf = "\xe6\x97\xa5\xe6\x9c\xac\xe8\xaa\x9e";
+            //static char buf[32] = u8"NIHONGO"; // <- this is how you would write it with C++11, using real kanjis
+            imgui_input_text("UTF-8 input", buf, 0);
+            imgui_tree_pop();
+        }
 		
 		imgui_tree_pop();
 	}

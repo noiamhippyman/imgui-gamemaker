@@ -1231,3 +1231,26 @@ function imgui_style_get_color(idx) {
 		buffer_f32 // A
 	]);
 }
+
+function imgui_drawlist_add_text(x,y,color,text_begin,text_end) {
+	buffer_write_args(global.imgui_buffer,[
+		buffer_f32, x,
+		buffer_f32, y,
+		buffer_f32, color
+	]);
+	_imgui_drawlist_add_text(text_begin,text_end);
+}
+
+function imgui_drawlist_add_polyline(points,num_points,color,closed,thickness) {
+	buffer_write_args(global.imgui_buffer,[
+		buffer_f32, points
+	]);
+	_imgui_drawlist_add_polyline(num_points,color,closed,thickness);
+}
+
+function imgui_drawlist_add_convex_poly_filled(points,num_points,color) {
+	buffer_write_args(global.imgui_buffer,[
+		buffer_f32, points
+	]);
+	_imgui_drawlist_add_convex_poly_filled(num_points,color);
+}

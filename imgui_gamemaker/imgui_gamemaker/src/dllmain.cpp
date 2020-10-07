@@ -13,10 +13,18 @@
 
 #define fn_export extern "C" __declspec(dllexport)
 
+// Global Variables
 Buffer* ext_buffer = nullptr;
+ImVec4 ext_draw_color;
 
 fn_export double extension_setup(void* buffer_ptr, double buffer_size) {
 	ext_buffer = new Buffer(buffer_ptr, buffer_size);
+	
+	ext_draw_color.x = 1.0;
+	ext_draw_color.y = 1.0;
+	ext_draw_color.z = 1.0;
+	ext_draw_color.w = 1.0;
+
 	return 0.0;
 }
 
@@ -41,7 +49,6 @@ LRESULT CALLBACK ImGuiGMSSubclassProc(HWND hWnd, UINT uMsg, WPARAM wParam,
 
 
 // IO Config
-// TODO: Start adding functons to GMS extension
 fn_export double imgui_io_set_config_flags(double flags) {
 	ImGui::GetIO().ConfigFlags = (ImGuiConfigFlags)flags;
 	return 0.0;
@@ -993,6 +1000,39 @@ fn_export double imgui_set_scroll_from_pos_y(double local_y, double center_y_rat
 
 
 // Parameter Stacks (Shared)
+fn_export void* imgui_fonts_add_font_default() {
+	return ImGui::GetIO().Fonts->AddFontDefault();
+}
+
+fn_export void* imgui_fonts_add_font_from_file_ttf(const char* filename, double size_pixels, const char* font_cfg, const char* glyph_ranges) {
+	return (void*)(ImGui::GetIO().Fonts->AddFontFromFileTTF(filename, size_pixels, (ImFontConfig*)font_cfg, (ImWchar*)glyph_ranges));
+}
+
+fn_export double imgui_fonts_build() {
+	return ImGui::GetIO().Fonts->Build();
+}
+
+fn_export double imgui_push_font(void* font) {
+	ImGui::PushFont((ImFont*)font);
+	return 0.0;
+}
+
+fn_export double imgui_pop_font() {
+	ImGui::PopFont();
+	return 0.0;
+}
+
+fn_export void* imgui_get_font() {
+	return (void*)ImGui::GetFont();
+}
+
+fn_export double imgui_set_font(void* font) {
+	ImGui::GetIO().FontDefault = (ImFont*)font;
+	return 0.0;
+}
+
+
+
 fn_export double imgui_push_style_color(double id, double r, double g, double b, double a) {
 	ImVec4 col;
 	col.x = r;
@@ -2822,7 +2862,6 @@ fn_export double imgui_set_clipboard_text(const char* text) {
 }
 
 
-
 // Settings/.INI Utilities
 fn_export double imgui_load_ini_settings_from_disk(const char* ini_filename) {
 	ImGui::LoadIniSettingsFromDisk(ini_filename);
@@ -2834,6 +2873,334 @@ fn_export double imgui_save_ini_settings_to_disk(const char* ini_filename) {
 	return 0.0;
 }
 
+
+// ImDrawList Custom Rendering
+fn_export double imgui_drawlist_add_line(double x1, double y1, double x2, double y2, double color, double thickness) {
+	ImVec2 p1;
+	p1.x = x1;
+	p1.y = y1;
+
+	ImVec2 p2;
+	p2.x = x2;
+	p2.y = y2;
+
+	ImGui::GetWindowDrawList()->AddLine(p1, p2, (ImU32)color, thickness);
+
+	return 0.0;
+}
+
+fn_export double imgui_drawlist_add_rect(double x1, double y1, double x2, double y2, double color, double rounding, double rounding_corners, double thickness) {
+	ImVec2 p_min;
+	p_min.x = x1;
+	p_min.y = y1;
+
+	ImVec2 p_max;
+	p_max.x = x2;
+	p_max.y = y2;
+
+	ImGui::GetWindowDrawList()->AddRect(p_min, p_max, (ImU32)color, rounding, (ImDrawCornerFlags)rounding_corners, thickness);
+
+	return 0.0;
+}
+
+fn_export double imgui_drawlist_add_rect_filled(double x1, double y1, double x2, double y2, double color, double rounding, double rounding_corners) {
+	ImVec2 p_min;
+	p_min.x = x1;
+	p_min.y = y1;
+
+	ImVec2 p_max;
+	p_max.x = x2;
+	p_max.y = y2;
+
+	ImGui::GetWindowDrawList()->AddRectFilled(p_min, p_max, (ImU32)color, rounding, (ImDrawCornerFlags)rounding_corners);
+
+	return 0.0;
+}
+
+fn_export double imgui_drawlist_add_rect_multicolor(double x1, double y1, double x2, double y2, double col_upr_left, double col_upr_right, double col_btm_right, double col_btm_left) {
+
+	ImVec2 p_min;
+	p_min.x = x1;
+	p_min.y = y1;
+
+	ImVec2 p_max;
+	p_max.x = x2;
+	p_max.y = y2;
+
+	ImGui::GetWindowDrawList()->AddRectFilledMultiColor(p_min, p_max, (ImU32)col_upr_left, (ImU32)col_upr_right, (ImU32)col_btm_right, (ImU32)col_btm_left);
+
+	return 0.0;
+}
+
+fn_export double imgui_drawlist_add_quad(double x1, double y1, double x2, double y2, double x3, double y3, double x4, double y4, double color, double thickness) {
+	ImVec2 p1;
+	p1.x = x1;
+	p1.y = y1;
+
+	ImVec2 p2;
+	p2.x = x2;
+	p2.y = y2;
+
+	ImVec2 p3;
+	p3.x = x3;
+	p3.y = y3;
+
+	ImVec2 p4;
+	p4.x = x4;
+	p4.y = y4;
+
+	ImGui::GetWindowDrawList()->AddQuad(p1, p2, p3, p4, (ImU32)color, thickness);
+
+	return 0.0;
+}
+
+fn_export double imgui_drawlist_add_quad_filled(double x1, double y1, double x2, double y2, double x3, double y3, double x4, double y4, double color) {
+	ImVec2 p1;
+	p1.x = x1;
+	p1.y = y1;
+
+	ImVec2 p2;
+	p2.x = x2;
+	p2.y = y2;
+
+	ImVec2 p3;
+	p3.x = x3;
+	p3.y = y3;
+
+	ImVec2 p4;
+	p4.x = x4;
+	p4.y = y4;
+
+	ImGui::GetWindowDrawList()->AddQuadFilled(p1, p2, p3, p4, (ImU32)color);
+
+	return 0.0;
+}
+
+fn_export double imgui_drawlist_add_triangle(double x1, double y1, double x2, double y2, double x3, double y3, double color, double thickness) {
+	ImVec2 p1;
+	p1.x = x1;
+	p1.y = y1;
+
+	ImVec2 p2;
+	p2.x = x2;
+	p2.y = y2;
+
+	ImVec2 p3;
+	p3.x = x3;
+	p3.y = y3;
+
+	ImGui::GetWindowDrawList()->AddTriangle(p1, p2, p3, (ImU32)color, thickness);
+
+	return 0.0;
+}
+
+fn_export double imgui_drawlist_add_triangle_filled(double x1, double y1, double x2, double y2, double x3, double y3, double color) {
+	ImVec2 p1;
+	p1.x = x1;
+	p1.y = y1;
+
+	ImVec2 p2;
+	p2.x = x2;
+	p2.y = y2;
+
+	ImVec2 p3;
+	p3.x = x3;
+	p3.y = y3;
+
+	ImGui::GetWindowDrawList()->AddTriangleFilled(p1, p2, p3, (ImU32)color);
+
+	return 0.0;
+}
+
+fn_export double imgui_drawlist_add_circle(double x, double y, double radius, double color, double num_segments, double thickness) {
+	ImVec2 center;
+	center.x = x;
+	center.y = y;
+
+	ImGui::GetWindowDrawList()->AddCircle(center, radius, color, num_segments, thickness);
+
+	return 0.0;
+}
+
+fn_export double imgui_drawlist_add_circle_filled(double x, double y, double radius, double color, double num_segments) {
+	ImVec2 center;
+	center.x = x;
+	center.y = y;
+
+	ImGui::GetWindowDrawList()->AddCircleFilled(center, radius, color, num_segments);
+
+	return 0.0;
+}
+
+fn_export double imgui_drawlist_add_ngon(double x, double y, double radius, double color, double num_segments, double thickness) {
+	ImVec2 center;
+	center.x = x;
+	center.y = y;
+
+	ImGui::GetWindowDrawList()->AddNgon(center, radius, color, num_segments, thickness);
+
+	return 0.0;
+}
+
+fn_export double imgui_drawlist_add_ngon_filled(double x, double y, double radius, double color, double num_segments) {
+	ImVec2 center;
+	center.x = x;
+	center.y = y;
+
+	ImGui::GetWindowDrawList()->AddNgonFilled(center, radius, color, num_segments);
+
+	return 0.0;
+}
+
+fn_export double imgui_drawlist_add_text(const char* text_begin, const char* text_end) {
+	
+	ext_buffer->seek(0);
+	ImVec2 pos;
+	pos.x = ext_buffer->read_float();
+	pos.y = ext_buffer->read_float();
+
+	ImU32 color = ext_buffer->read_float();
+
+	ImGui::GetWindowDrawList()->AddText(pos, color, text_begin, text_end);
+
+	return 0.0;
+}
+
+fn_export double imgui_drawlist_add_polyline(double num_points, double color, double closed, double thickness) {
+	
+	ext_buffer->seek(0);
+	std::vector<ImVec2> points;
+	for (int i = 0; i < num_points; ++i) {
+		ImVec2 v;
+		v.x = ext_buffer->read_float();
+		v.y = ext_buffer->read_float();
+		points.push_back(v);
+	}
+	
+	ImGui::GetWindowDrawList()->AddPolyline(&points[0], num_points, color, closed, thickness);
+
+	return 0.0;
+}
+
+fn_export double imgui_drawlist_add_convex_poly_filled(double num_points, double color) {
+
+	ext_buffer->seek(0);
+	std::vector<ImVec2> points;
+	for (int i = 0; i < num_points; ++i) {
+		ImVec2 v;
+		v.x = ext_buffer->read_float();
+		v.y = ext_buffer->read_float();
+		points.push_back(v);
+	}
+
+	ImGui::GetWindowDrawList()->AddConvexPolyFilled(&points[0], num_points, color);
+
+	return 0.0;
+}
+
+fn_export double imgui_drawlist_add_bezier_curve(double x1, double y1, double x2, double y2, double x3, double y3, double x4, double y4, double color, double thickness, double num_segments) {
+	
+	ImVec2 p1;
+	p1.x = x1;
+	p1.y = y1;
+
+	ImVec2 p2;
+	p2.x = x2;
+	p2.y = y2;
+
+	ImVec2 p3;
+	p3.x = x3;
+	p3.y = y3;
+
+	ImVec2 p4;
+	p4.x = x4;
+	p4.y = y4;
+
+	ImGui::GetWindowDrawList()->AddBezierCurve(p1, p2, p3, p4, (ImU32)color, thickness, num_segments);
+
+	return 0.0;
+}
+
+fn_export double imgui_drawlist_path_clear() {
+	ImGui::GetWindowDrawList()->PathClear();
+	return 0.0;
+}
+
+fn_export double imgui_drawlist_path_line_to(double x, double y) {
+	ImVec2 pos;
+	pos.x = x;
+	pos.y = y;
+	ImGui::GetWindowDrawList()->PathLineTo(pos);
+	return 0.0;
+}
+
+fn_export double imgui_drawlist_path_line_to_merge_duplicate(double x, double y) {
+	ImVec2 pos;
+	pos.x = x;
+	pos.y = y;
+	ImGui::GetWindowDrawList()->PathLineToMergeDuplicate(pos);
+	return 0.0;
+}
+
+fn_export double imgui_drawlist_path_fill_convex(double color) {
+	ImGui::GetWindowDrawList()->PathFillConvex((ImU32)color);
+	return 0.0;
+}
+
+fn_export double imgui_drawlist_path_stroke(double color, double closed, double thickness) {
+	ImGui::GetWindowDrawList()->PathStroke((ImU32)color, closed, thickness);
+	return 0.0;
+}
+
+fn_export double imgui_drawlist_path_arc_to(double x, double y, double radius, double a_min, double a_max, double num_segments) {
+	ImVec2 center;
+	center.x = x;
+	center.y = y;
+	ImGui::GetWindowDrawList()->PathArcTo(center, radius, a_min, a_max, num_segments);
+	return 0.0;
+}
+
+fn_export double imgui_drawlist_path_arc_to_fast(double x, double y, double radius, double a_min_of_12, double a_max_of_12) {
+	ImVec2 center;
+	center.x = x;
+	center.y = y;
+	ImGui::GetWindowDrawList()->PathArcToFast(center, radius, a_min_of_12, a_max_of_12);
+	return 0.0;
+}
+
+fn_export double imgui_drawlist_path_bezier_curve_to(double x2, double y2, double x3, double y3, double x4, double y4, double num_segments) {
+
+	ImVec2 p2;
+	p2.x = x2;
+	p2.y = y2;
+
+	ImVec2 p3;
+	p3.x = x3;
+	p3.y = y3;
+
+	ImVec2 p4;
+	p4.x = x4;
+	p4.y = y4;
+
+	ImGui::GetWindowDrawList()->PathBezierCurveTo(p2, p3, p4, num_segments);
+
+	return 0.0;
+}
+
+fn_export double imgui_drawlist_path_rect(double x1, double y1, double x2, double y2, double rounding, double rounding_corners) {
+	
+	ImVec2 rect_min;
+	rect_min.x = x1;
+	rect_min.y = y1;
+	
+	ImVec2 rect_max;
+	rect_max.x = x1;
+	rect_max.y = y1;
+	
+	ImGui::GetWindowDrawList()->PathRect(rect_min, rect_max, rounding, (ImDrawCornerFlags)rounding_corners);
+	
+	return 0.0;
+}
 
 // Pretty sure I don't need this.
 BOOL WINAPI DllMain(
