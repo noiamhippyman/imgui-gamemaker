@@ -180,6 +180,7 @@ fn_export double imgui_io_get_key_alt() {
 	return ImGui::GetIO().KeyAlt;
 }
 
+
 // Style Config
 fn_export double imgui_style_set_alpha(double alpha) {
 	ImGui::GetStyle().Alpha = alpha;
@@ -2141,13 +2142,13 @@ fn_export double imgui_get_tree_node_to_label_spacing() {
 }
 
 fn_export double imgui_collapsing_header(const char* label, double  open, double flags) {
-	bool is_null = open == -4;
+	bool is_null = open < 0;
 	bool b = (bool)open;
 	bool collapsed = ImGui::CollapsingHeader(label, is_null ? NULL : &b, (ImGuiTreeNodeFlags)flags);
 
 	ext_buffer->seek(0);
 	ext_buffer->write((float)collapsed);
-	ext_buffer->write(is_null ? -4.0 : (float)b);
+	ext_buffer->write(is_null ? open : (float)b);
 
 	return 0.0;
 }

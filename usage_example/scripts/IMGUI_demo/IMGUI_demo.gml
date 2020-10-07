@@ -110,6 +110,8 @@ function imgui_show_demo_window_widgets_gml() {
 	static align_label_with_current_x_position = false;
 	static test_drag_and_drop = false;
 	static selection_mask = (1 << 2);
+	static closable_group = true;
+	static wrap_width = 200;
 	
 	var ret = imgui_collapsing_header("Widgets",noone,0);
 	if (!ret[0])
@@ -431,7 +433,7 @@ function imgui_show_demo_window_widgets_gml() {
 						node_clicked = i;
 					}
 					if (test_drag_and_drop and imgui_begin_drag_drop_source(0)) {
-						imgui_set_drag_drop_payload("__TREENODE",0);
+						imgui_set_drag_drop_payload("_TREENODE",0);
 						imgui_text("This is a drag and drop source");
 						imgui_end_drag_drop_source();
 					}
@@ -454,7 +456,72 @@ function imgui_show_demo_window_widgets_gml() {
 			imgui_tree_pop();
 		}
 		
-		// End of "Trees" tree node
+		imgui_tree_pop();
+	}
+	
+	if (imgui_tree_node("Collapsing Headers")) {
+		
+		//static closable_group = true;
+		ret = imgui_checkbox("Show 2nd header",closable_group);
+		if (ret[0]) closable_group = ret[1];
+		ret = imgui_collapsing_header("Header",noone,ImGuiTreeNodeFlags.None);
+		if (ret[0]) {
+			imgui_text("Is Item Hovered: " + string(imgui_is_item_hovered()));
+			for (var i = 0; i < 5; ++i) {
+				imgui_text("Some content " + string(i));
+			}
+		}
+		
+		ret = imgui_collapsing_header("Header 2",closable_group,0);
+		if (ret[0]) {
+			imgui_text("Is Item Hovered: " + string(imgui_is_item_hovered()));
+			for (var i = 0; i < 5; ++i) {
+				imgui_text("More content " + string(i));
+			}
+		}
+		closable_group = ret[1];
+		
+		imgui_tree_pop();
+	}
+	
+	if (imgui_tree_node("Bullets")) {
+		
+		imgui_bullet_text("Bullet point 1");
+		imgui_bullet_text("Bullet point 2\nOn multiple lines");
+		if (imgui_tree_node("Tree node")) {
+			imgui_bullet_text("Another bullet point");
+			imgui_tree_pop();
+		}
+		imgui_bullet(); imgui_text("Bullet point 3 (two calls)");
+		imgui_bullet(); imgui_small_button("Button");
+		
+		imgui_tree_pop();
+	}
+	
+	if (imgui_tree_node("Text")) {
+		
+		if (imgui_tree_node("Colored Text")) {
+			// Using shortcut. You can use imgui_push_style_color()/imgui_pop_style_color() for more flexibility.
+			imgui_text_colored(1,0,1,1,"Pink");
+			imgui_text_colored(1,1,0,1,"Yellow");
+			imgui_text_disabled("Disabled");
+			imgui_same_line(0,0); imgui_help_marker("The TextDisabled color is stored in ImGuiStyle");
+			imgui_tree_pop();
+		}
+		
+		if (imgui_tree_node("Word Wrapping")) {
+			imgui_text_wrapped(
+				"This text should automatically wrap on the edge of the window. The current implementation " +
+                "for text wrapping follows simple rules suitable for English and possibly other languages."
+			);
+			imgui_spacing();
+			
+			//static wrap_width = 200;
+			ret = imgui_slider_float("Wrap width",wrap_width,-20,600,"%.0f");
+			if (ret[0]) wrap_width = ret[1];
+			imgui_tree_pop();
+		}
+		
 		imgui_tree_pop();
 	}
 }

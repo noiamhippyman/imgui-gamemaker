@@ -968,8 +968,8 @@ function imgui_collapsing_header(label,open,flags) {
 	_imgui_collapsing_header(label,open,flags);
 	
 	return buffer_return(global.imgui_buffer,[
-		buffer_f32,
-		buffer_f32
+		buffer_f32, // Checked
+		buffer_f32 // Open
 	]);
 }
 
