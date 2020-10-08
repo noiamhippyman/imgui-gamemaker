@@ -112,7 +112,7 @@ function imgui_show_demo_window_widgets_gml() {
 	static selection_mask = (1 << 2);
 	static closable_group = true;
 	static wrap_width = 200;
-	static buf = "\xe6\x97\xa5\xe6\x9c\xac\xe8\xaa\x9e";
+	static buf = "日本語";
 	
 	var ret = imgui_collapsing_header("Widgets",noone,0);
 	if (!ret[0])
@@ -518,7 +518,7 @@ function imgui_show_demo_window_widgets_gml() {
 			imgui_spacing();
 			
 			//static wrap_width = 200;
-			ret = imgui_slider_float("Wrap width",wrap_width,-20,600,"%.0f");
+			ret = imgui_slider_float("Wrap width",wrap_width,-20,600,"%.0f",0);
 			if (ret[0]) wrap_width = ret[1];
 			
 			for (var n = 0; n < 2; ++n) {
@@ -543,8 +543,7 @@ function imgui_show_demo_window_widgets_gml() {
 			imgui_tree_pop();
 		}
 		
-		if (imgui_tree_node("UTF-8 Text"))
-        {
+		if (imgui_tree_node("UTF-8 Text")) {
             // UTF-8 test with Japanese characters
             // (Needs a suitable font? Try "Google Noto" or "Arial Unicode". See docs/FONTS.md for details.)
             // - From C++11 you can use the u8"my text" syntax to encode literal strings as UTF-8
@@ -561,14 +560,29 @@ function imgui_show_demo_window_widgets_gml() {
                 "Read docs/FONTS.md for details."
 			);
 			
-            imgui_text("Hiragana: \xe3\x81\x8b\xe3\x81\x8d\xe3\x81\x8f\xe3\x81\x91\xe3\x81\x93 (kakikukeko)"); // Normally we would use u8"blah blah" with the proper characters directly in the string.
-            imgui_text("Kanjis: \xe6\x97\xa5\xe6\x9c\xac\xe8\xaa\x9e (nihongo)");
+			imgui_push_font(font3);
             
-			//static buf = "\xe6\x97\xa5\xe6\x9c\xac\xe8\xaa\x9e";
-            //static char buf[32] = u8"NIHONGO"; // <- this is how you would write it with C++11, using real kanjis
+			imgui_text("Hiragana: カキクケコ (kakikukeko)"); // i don't think this is right. 
+			imgui_text("Kanjis: 日本語 (nihongo)");
+			imgui_text("I used Google translate. I have no idea if these are correct\nI just wanted to show you can use fonts with different languages.");
+			
+			//static buf = "日本語";
             imgui_input_text("UTF-8 input", buf, 0);
+			
+			imgui_pop_font();
             imgui_tree_pop();
         }
+		
+		imgui_tree_pop();
+	}
+	
+	if (imgui_tree_node("Images")) {
+		
+		imgui_text_wrapped(
+			"Below we are displaying the font texture (which is the only texture we have access to in this demo). " +
+            "Use the 'ImTextureID' type as storage to pass pointers or identifier to your own texture data. " +
+            "Hover the texture for a zoomed view!"
+		);
 		
 		imgui_tree_pop();
 	}
