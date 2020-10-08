@@ -4,6 +4,7 @@
     {"id":{"name":"TestStruct","path":"scripts/TestStruct/TestStruct.yy",},"order":3,},
     {"id":{"name":"Obj_IMGUI_demo","path":"objects/Obj_IMGUI_demo/Obj_IMGUI_demo.yy",},"order":4,},
     {"id":{"name":"IMGUI_EnumsAndMacros","path":"scripts/IMGUI_EnumsAndMacros/IMGUI_EnumsAndMacros.yy",},"order":2,},
+    {"id":{"name":"Spr_Test","path":"sprites/Spr_Test/Spr_Test.yy",},"order":5,},
     {"id":{"name":"TODO","path":"notes/TODO/TODO.yy",},"order":4,},
     {"id":{"name":"Obj_ImGuiTesting","path":"objects/Obj_ImGuiTesting/Obj_ImGuiTesting.yy",},"order":1,},
     {"id":{"name":"Obj_ImGuiExample","path":"objects/Obj_ImGuiExample/Obj_ImGuiExample.yy",},"order":0,},

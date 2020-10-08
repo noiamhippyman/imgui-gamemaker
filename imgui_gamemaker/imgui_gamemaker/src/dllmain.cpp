@@ -1000,20 +1000,24 @@ fn_export double imgui_set_scroll_from_pos_y(double local_y, double center_y_rat
 
 
 // Parameter Stacks (Shared)
-fn_export void* imgui_fonts_add_font_default() {
-	return ImGui::GetIO().Fonts->AddFontDefault();
+fn_export double imgui_fonts_add_font_default() {
+	ImFont* font = ImGui::GetIO().Fonts->AddFontDefault();
+	return reinterpret_cast<int>(font);
 }
 
-fn_export void* imgui_fonts_add_font_from_file_ttf(const char* filename, double size_pixels, const char* font_cfg, const char* glyph_ranges) {
-	return (void*)(ImGui::GetIO().Fonts->AddFontFromFileTTF(filename, size_pixels, (ImFontConfig*)font_cfg, (ImWchar*)glyph_ranges));
+fn_export double imgui_fonts_add_font_from_file_ttf(const char* filename, double size_pixels, const char* font_cfg, const char* glyph_ranges) {
+	ImFont* font = ImGui::GetIO().Fonts->AddFontFromFileTTF(filename, size_pixels, (ImFontConfig*)font_cfg, (ImWchar*)glyph_ranges);
+	return reinterpret_cast<int>(font);
 }
 
 fn_export double imgui_fonts_build() {
 	return ImGui::GetIO().Fonts->Build();
 }
 
-fn_export double imgui_push_font(void* font) {
-	ImGui::PushFont((ImFont*)font);
+fn_export double imgui_push_font(double font) {
+	int ptri = (int)font;
+	ImFont* _font = reinterpret_cast<ImFont*>(ptri);
+	ImGui::PushFont(_font);
 	return 0.0;
 }
 
@@ -1022,12 +1026,15 @@ fn_export double imgui_pop_font() {
 	return 0.0;
 }
 
-fn_export void* imgui_get_font() {
-	return (void*)ImGui::GetFont();
+fn_export double imgui_get_font() {
+	ImFont* font = ImGui::GetFont();
+	return reinterpret_cast<int>(font);
 }
 
-fn_export double imgui_set_font(void* font) {
-	ImGui::GetIO().FontDefault = (ImFont*)font;
+fn_export double imgui_set_font(double font) {
+	int ptri = (int)font;
+	ImFont* _font = reinterpret_cast<ImFont*>(ptri);
+	ImGui::GetIO().FontDefault = _font;
 	return 0.0;
 }
 
@@ -1460,6 +1467,7 @@ fn_export double imgui_combo(const char* label) {
 
 	return 0.0;
 }
+
 
 // Widgets: Drag Sliders
 fn_export double imgui_drag_float(const char* label, const char* format, double flags) {

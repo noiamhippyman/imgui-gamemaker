@@ -1253,21 +1253,21 @@
             2,
             2,
           ],"resourceVersion":"1.0","name":"imgui_drawlist_path_rect","tags":[],"resourceType":"GMExtensionFunction",},
-        {"externalName":"imgui_fonts_add_font_from_file_ttf","kind":1,"help":"imgui_fonts_add_font_from_file_ttf(filename,size_pixels,font_cfg,glyph_ranges)","hidden":false,"returnType":1,"argCount":0,"args":[
+        {"externalName":"imgui_fonts_add_font_from_file_ttf","kind":1,"help":"imgui_fonts_add_font_from_file_ttf(filename,size_pixels,font_cfg,glyph_ranges)","hidden":false,"returnType":2,"argCount":0,"args":[
             1,
             2,
             1,
             1,
           ],"resourceVersion":"1.0","name":"imgui_fonts_add_font_from_file_ttf","tags":[],"resourceType":"GMExtensionFunction",},
         {"externalName":"imgui_push_font","kind":1,"help":"imgui_push_font(font)","hidden":false,"returnType":2,"argCount":0,"args":[
-            1,
+            2,
           ],"resourceVersion":"1.0","name":"imgui_push_font","tags":[],"resourceType":"GMExtensionFunction",},
         {"externalName":"imgui_pop_font","kind":1,"help":"imgui_pop_font()","hidden":false,"returnType":2,"argCount":0,"args":[],"resourceVersion":"1.0","name":"imgui_pop_font","tags":[],"resourceType":"GMExtensionFunction",},
-        {"externalName":"imgui_get_font","kind":1,"help":"imgui_get_font()","hidden":false,"returnType":1,"argCount":0,"args":[],"resourceVersion":"1.0","name":"imgui_get_font","tags":[],"resourceType":"GMExtensionFunction",},
-        {"externalName":"imgui_fonts_add_font_default","kind":1,"help":"imgui_fonts_add_font_default()","hidden":false,"returnType":1,"argCount":0,"args":[],"resourceVersion":"1.0","name":"imgui_fonts_add_font_default","tags":[],"resourceType":"GMExtensionFunction",},
+        {"externalName":"imgui_get_font","kind":1,"help":"imgui_get_font()","hidden":false,"returnType":2,"argCount":0,"args":[],"resourceVersion":"1.0","name":"imgui_get_font","tags":[],"resourceType":"GMExtensionFunction",},
+        {"externalName":"imgui_fonts_add_font_default","kind":1,"help":"imgui_fonts_add_font_default()","hidden":false,"returnType":2,"argCount":0,"args":[],"resourceVersion":"1.0","name":"imgui_fonts_add_font_default","tags":[],"resourceType":"GMExtensionFunction",},
         {"externalName":"imgui_fonts_build","kind":1,"help":"imgui_fonts_build()","hidden":false,"returnType":2,"argCount":0,"args":[],"resourceVersion":"1.0","name":"imgui_fonts_build","tags":[],"resourceType":"GMExtensionFunction",},
         {"externalName":"imgui_set_font","kind":1,"help":"imgui_set_font(font)","hidden":false,"returnType":2,"argCount":0,"args":[
-            1,
+            2,
           ],"resourceVersion":"1.0","name":"imgui_set_font","tags":[],"resourceType":"GMExtensionFunction",},
       ],"constants":[],"ProxyFiles":[],"copyToTargets":144150411102650606,"order":[
         {"name":"_extension_setup","path":"extensions/Ext_imgui/Ext_imgui.yy",},
