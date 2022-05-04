@@ -1255,18 +1255,31 @@ function imgui_drawlist_add_convex_poly_filled(points,num_points,color) {
 	_imgui_drawlist_add_convex_poly_filled(num_points,color);
 }
 
-function imgui_image(sprite,width,height,u0=0,v0=0,u1=1,v1=1,tintR=1,tintG=1,tintB=1,tintA=1,borderR=0,borderG=0,borderB=0,borderA=0) {
+function imgui_load_image(sprite,name = sprite_get_name(sprite)) {
 	var d3d_device = os_get_info()[? "video_d3d11_device"];
-	var spr = sprite;
-	var spr_w = sprite_get_width(spr);
-	var spr_h = sprite_get_height(spr);
+	var spr_w = sprite_get_width(sprite);
+	var spr_h = sprite_get_height(sprite);
 	var surf = surface_create(spr_w,spr_h);
 	surface_set_target(surf);
-	draw_sprite(spr,0,0,0);
+	draw_sprite(sprite,0,0,0);
 	surface_reset_target();
-	var test_buffer = buffer_create(spr_w*spr_h*4,buffer_fixed,1);
-	buffer_get_surface(test_buffer,surf,0);
+	var buffer = buffer_create(spr_w*spr_h*4,buffer_fixed,1);
+	buffer_get_surface(buffer,surf,0);
 	surface_free(surf);
+	var buffer_ptr = buffer_get_address(buffer);
+	
+	buffer_write_args(global.imgui_buffer, [
+		buffer_f32, spr_w,
+		buffer_f32, spr_h
+	]);
+	
+	_imgui_load_image(name,buffer_ptr,d3d_device);
+	
+	buffer_delete(buffer);
+}
+
+function imgui_image(name,width,height,u0=0,v0=0,u1=1,v1=1,tintR=1,tintG=1,tintB=1,tintA=1,borderR=0,borderG=0,borderB=0,borderA=0) {
+	
 	
 	buffer_write_args(global.imgui_buffer, [
 		buffer_f32,  width,
@@ -1285,6 +1298,5 @@ function imgui_image(sprite,width,height,u0=0,v0=0,u1=1,v1=1,tintR=1,tintG=1,tin
 		buffer_f32,  borderA
 	]);
 		
-	_imgui_image(buffer_get_address(test_buffer),d3d_device);
-	buffer_delete(test_buffer);
+	_imgui_image(name);
 }

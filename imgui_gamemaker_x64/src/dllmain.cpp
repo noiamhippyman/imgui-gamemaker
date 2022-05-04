@@ -2,6 +2,7 @@
 #include <Windows.h>
 #include <commctrl.h>
 #include <vector>
+#include <map>
 #include <d3d11.h>
 #pragma comment(lib, "comctl32.lib")
 
@@ -16,7 +17,7 @@
 
 // Global Variables
 Buffer* ext_buffer = nullptr;
-std::vector<Buffer> img_buffers;
+std::map<std::string,ID3D11ShaderResourceView*> image_map;
 ImVec4 ext_draw_color;
 
 fn_export double extension_setup(void* buffer_ptr, double buffer_size) {
@@ -3253,25 +3254,19 @@ fn_export double imgui_fonts_get_glyph_range_vietnamese() {
 }
 
 // Images
-fn_export double imgui_image(void* buffer_ptr, void* d3d_device) {
+bool _imgui_is_image_loaded(const char* name) {
+	return image_map.count(name) > 0;
+}
+
+fn_export double imgui_load_image(const char* name, void* buffer_ptr, void* d3d_device) {
+	if (_imgui_is_image_loaded(name)) return 0.0;
+
 	unsigned char* image_data = (unsigned char*)buffer_ptr;
 	ID3D11Device* device = (ID3D11Device*)d3d_device;
 
 	ext_buffer->seek(0);
 	int imgW = ext_buffer->read_float();
 	int imgH = ext_buffer->read_float();
-	int imgU0 = ext_buffer->read_float();
-	int imgV0 = ext_buffer->read_float();
-	int imgU1 = ext_buffer->read_float();
-	int imgV1 = ext_buffer->read_float();
-	int tintR = ext_buffer->read_float();
-	int tintG = ext_buffer->read_float();
-	int tintB = ext_buffer->read_float();
-	int tintA = ext_buffer->read_float();
-	int borderR = ext_buffer->read_float();
-	int borderG = ext_buffer->read_float();
-	int borderB = ext_buffer->read_float();
-	int borderA = ext_buffer->read_float();
 
 	// Create texture
 	D3D11_TEXTURE2D_DESC desc;
@@ -3304,6 +3299,36 @@ fn_export double imgui_image(void* buffer_ptr, void* d3d_device) {
 	device->CreateShaderResourceView(pTexture, &srvDesc, &texID);
 	pTexture->Release();
 
+	image_map[name] = texID;
+
+	return 0.0;
+}
+
+fn_export double imgui_image(const char* name) {
+	/*unsigned char* image_data = (unsigned char*)buffer_ptr;
+	ID3D11Device* device = (ID3D11Device*)d3d_device;*/
+
+	ext_buffer->seek(0);
+	int imgW = ext_buffer->read_float();
+	int imgH = ext_buffer->read_float();
+	int imgU0 = ext_buffer->read_float();
+	int imgV0 = ext_buffer->read_float();
+	int imgU1 = ext_buffer->read_float();
+	int imgV1 = ext_buffer->read_float();
+	int tintR = ext_buffer->read_float();
+	int tintG = ext_buffer->read_float();
+	int tintB = ext_buffer->read_float();
+	int tintA = ext_buffer->read_float();
+	int borderR = ext_buffer->read_float();
+	int borderG = ext_buffer->read_float();
+	int borderB = ext_buffer->read_float();
+	int borderA = ext_buffer->read_float();
+
+	ID3D11ShaderResourceView* texID = nullptr;
+	if (_imgui_is_image_loaded(name)) {
+		texID = image_map[name];
+	}
+	
 	ImGui::Image(texID, ImVec2(imgW, imgH), ImVec2(imgU0, imgV0), ImVec2(imgU1, imgV1), ImVec4(tintR, tintG, tintB, tintA), ImVec4(borderR, borderG, borderB, borderA));
 
 	return 0.0;

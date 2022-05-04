@@ -8,6 +8,7 @@ font2 = imgui_fonts_add_font_from_file_ttf(@"C:\Users\brand\Downloads\TestFonts\
 font3 = imgui_fonts_add_font_from_file_ttf(@"C:\Users\brand\Downloads\TestFonts\NotoSansMonoCJKjp-Regular.otf",20,0,imgui_fonts_get_glyph_range_japanese());
 imgui_fonts_build();
 
+imgui_load_image(Spr_Test);
 
 //var spr = Spr_Test;
 //var spr_w = sprite_get_width(spr);

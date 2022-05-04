@@ -584,7 +584,7 @@ function imgui_show_demo_window_widgets_gml() {
             "Hover the texture for a zoomed view!"
 		);
 		
-		imgui_image(Spr_Test,64,64);
+		imgui_image("Spr_Test",64,64);
 		
 		imgui_tree_pop();
 	}

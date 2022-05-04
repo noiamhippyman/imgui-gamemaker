@@ -1277,10 +1277,14 @@
         {"externalName":"imgui_fonts_get_glyph_range_cyrillic","kind":1,"help":"imgui_fonts_get_glyph_range_cyrillic()","hidden":false,"returnType":2,"argCount":0,"args":[],"resourceVersion":"1.0","name":"imgui_fonts_get_glyph_range_cyrillic","tags":[],"resourceType":"GMExtensionFunction",},
         {"externalName":"imgui_fonts_get_glyph_range_thai","kind":1,"help":"imgui_fonts_get_glyph_range_thai()","hidden":false,"returnType":2,"argCount":0,"args":[],"resourceVersion":"1.0","name":"imgui_fonts_get_glyph_range_thai","tags":[],"resourceType":"GMExtensionFunction",},
         {"externalName":"imgui_fonts_get_glyph_range_vietnamese","kind":1,"help":"imgui_fonts_get_glyph_range_vietnamese()","hidden":false,"returnType":2,"argCount":0,"args":[],"resourceVersion":"1.0","name":"imgui_fonts_get_glyph_range_vietnamese","tags":[],"resourceType":"GMExtensionFunction",},
-        {"externalName":"imgui_image","kind":1,"help":"_imgui_image(buffer_ptr,d3d_device);","hidden":false,"returnType":2,"argCount":0,"args":[
-            1,
+        {"externalName":"imgui_image","kind":1,"help":"_imgui_image(name);","hidden":false,"returnType":2,"argCount":0,"args":[
             1,
           ],"resourceVersion":"1.0","name":"_imgui_image","tags":[],"resourceType":"GMExtensionFunction",},
+        {"externalName":"imgui_load_image","kind":1,"help":"_imgui_load_image(name,buffer_ptr,d3d_device);","hidden":false,"returnType":2,"argCount":0,"args":[
+            1,
+            1,
+            1,
+          ],"resourceVersion":"1.0","name":"_imgui_load_image","tags":[],"resourceType":"GMExtensionFunction",},
       ],"constants":[],"ProxyFiles":[],"copyToTargets":144150411102650606,"order":[
         {"name":"_extension_setup","path":"extensions/Ext_imgui/Ext_imgui.yy",},
         {"name":"_extension_cleanup","path":"extensions/Ext_imgui/Ext_imgui.yy",},
@@ -1704,6 +1708,7 @@
         {"name":"imgui_fonts_get_glyph_range_thai","path":"extensions/Ext_imgui/Ext_imgui.yy",},
         {"name":"imgui_fonts_get_glyph_range_vietnamese","path":"extensions/Ext_imgui/Ext_imgui.yy",},
         {"name":"_imgui_image","path":"extensions/Ext_imgui/Ext_imgui.yy",},
+        {"name":"_imgui_load_image","path":"extensions/Ext_imgui/Ext_imgui.yy",},
       ],"resourceVersion":"1.0","name":"","tags":[],"resourceType":"GMExtensionFile",},
   ],
   "classname": "",
