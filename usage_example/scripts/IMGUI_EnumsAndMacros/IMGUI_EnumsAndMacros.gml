@@ -1,4 +1,4 @@
-#macro IMGUI_BUFFER_SIZE 4096
+#macro IMGUI_BUFFER_SIZE 4096 // size in bytes
 
 // Flags for ImGui::Begin()
 enum ImGuiWindowFlags

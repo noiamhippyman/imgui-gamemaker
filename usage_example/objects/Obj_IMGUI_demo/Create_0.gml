@@ -9,6 +9,18 @@ font3 = imgui_fonts_add_font_from_file_ttf(@"C:\Users\brand\Downloads\TestFonts\
 imgui_fonts_build();
 
 
+//var spr = Spr_Test;
+//var spr_w = sprite_get_width(spr);
+//var spr_h = sprite_get_height(spr);
+//var surf = surface_create(spr_w,spr_h);
+//surface_set_target(surf);
+//draw_sprite(spr,0,0,0);
+//surface_reset_target();
+//test_buffer = buffer_create(spr_w*spr_h*4,buffer_fixed,1);
+//buffer_get_surface(test_buffer,surf,0);
+//surface_free(surf);
+
+
 //show_message("font0: " + string(font0));
 //show_message("font1: " + string(font1));
 //show_message("font2: " + string(font2));

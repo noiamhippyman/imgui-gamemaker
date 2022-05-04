@@ -1254,3 +1254,37 @@ function imgui_drawlist_add_convex_poly_filled(points,num_points,color) {
 	]);
 	_imgui_drawlist_add_convex_poly_filled(num_points,color);
 }
+
+function imgui_image(sprite,width,height,u0=0,v0=0,u1=1,v1=1,tintR=1,tintG=1,tintB=1,tintA=1,borderR=0,borderG=0,borderB=0,borderA=0) {
+	var d3d_device = os_get_info()[? "video_d3d11_device"];
+	var spr = sprite;
+	var spr_w = sprite_get_width(spr);
+	var spr_h = sprite_get_height(spr);
+	var surf = surface_create(spr_w,spr_h);
+	surface_set_target(surf);
+	draw_sprite(spr,0,0,0);
+	surface_reset_target();
+	var test_buffer = buffer_create(spr_w*spr_h*4,buffer_fixed,1);
+	buffer_get_surface(test_buffer,surf,0);
+	surface_free(surf);
+	
+	buffer_write_args(global.imgui_buffer, [
+		buffer_f32,  width,
+		buffer_f32,  height,
+		buffer_f32,  u0,
+		buffer_f32,  v0,
+		buffer_f32,  u1,
+		buffer_f32,  v1,
+		buffer_f32,  tintR,
+		buffer_f32,  tintG,
+		buffer_f32,  tintB,
+		buffer_f32,  tintA,
+		buffer_f32,  borderR,
+		buffer_f32,  borderG,
+		buffer_f32,  borderB,
+		buffer_f32,  borderA
+	]);
+		
+	_imgui_image(buffer_get_address(test_buffer),d3d_device);
+	buffer_delete(test_buffer);
+}
