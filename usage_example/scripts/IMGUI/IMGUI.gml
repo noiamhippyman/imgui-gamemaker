@@ -1278,24 +1278,24 @@ function imgui_load_image(sprite,name = sprite_get_name(sprite)) {
 	buffer_delete(buffer);
 }
 
-function imgui_image(name,width,height,u0=0,v0=0,u1=1,v1=1,tintR=1,tintG=1,tintB=1,tintA=1,borderR=0,borderG=0,borderB=0,borderA=0) {
+function imgui_image(name,size,uv0=[0,0],uv1=[1,1],tint_col=[1,1,1,1],border_col=[0,0,0,0]) {
 	
 	
 	buffer_write_args(global.imgui_buffer, [
-		buffer_f32,  width,
-		buffer_f32,  height,
-		buffer_f32,  u0,
-		buffer_f32,  v0,
-		buffer_f32,  u1,
-		buffer_f32,  v1,
-		buffer_f32,  tintR,
-		buffer_f32,  tintG,
-		buffer_f32,  tintB,
-		buffer_f32,  tintA,
-		buffer_f32,  borderR,
-		buffer_f32,  borderG,
-		buffer_f32,  borderB,
-		buffer_f32,  borderA
+		buffer_f32,  size[0],
+		buffer_f32,  size[1],
+		buffer_f32,  uv0[0],
+		buffer_f32,  uv0[1],
+		buffer_f32,  uv1[0],
+		buffer_f32,  uv1[1],
+		buffer_f32,  tint_col[0],
+		buffer_f32,  tint_col[1],
+		buffer_f32,  tint_col[2],
+		buffer_f32,  tint_col[3],
+		buffer_f32,  border_col[0],
+		buffer_f32,  border_col[1],
+		buffer_f32,  border_col[2],
+		buffer_f32,  border_col[3]
 	]);
 		
 	_imgui_image(name);

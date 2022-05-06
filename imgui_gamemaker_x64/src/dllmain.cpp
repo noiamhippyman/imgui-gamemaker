@@ -3311,18 +3311,18 @@ fn_export double imgui_image(const char* name) {
 	ext_buffer->seek(0);
 	int imgW = ext_buffer->read_float();
 	int imgH = ext_buffer->read_float();
-	int imgU0 = ext_buffer->read_float();
-	int imgV0 = ext_buffer->read_float();
-	int imgU1 = ext_buffer->read_float();
-	int imgV1 = ext_buffer->read_float();
-	int tintR = ext_buffer->read_float();
-	int tintG = ext_buffer->read_float();
-	int tintB = ext_buffer->read_float();
-	int tintA = ext_buffer->read_float();
-	int borderR = ext_buffer->read_float();
-	int borderG = ext_buffer->read_float();
-	int borderB = ext_buffer->read_float();
-	int borderA = ext_buffer->read_float();
+	float imgU0 = ext_buffer->read_float();
+	float imgV0 = ext_buffer->read_float();
+	float imgU1 = ext_buffer->read_float();
+	float imgV1 = ext_buffer->read_float();
+	float tintR = ext_buffer->read_float();
+	float tintG = ext_buffer->read_float();
+	float tintB = ext_buffer->read_float();
+	float tintA = ext_buffer->read_float();
+	float borderR = ext_buffer->read_float();
+	float borderG = ext_buffer->read_float();
+	float borderB = ext_buffer->read_float();
+	float borderA = ext_buffer->read_float();
 
 	ID3D11ShaderResourceView* texID = nullptr;
 	if (_imgui_is_image_loaded(name)) {

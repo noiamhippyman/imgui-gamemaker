@@ -576,15 +576,47 @@ function imgui_show_demo_window_widgets_gml() {
 		imgui_tree_pop();
 	}
 	
+	
 	if (imgui_tree_node("Images")) {
 		
 		imgui_text_wrapped(
-			"Below we are displaying the font texture (which is the only texture we have access to in this demo). " +
-            "Use the 'ImTextureID' type as storage to pass pointers or identifier to your own texture data. " +
-            "Hover the texture for a zoomed view!"
+			"Images work a bit differently in GameMaker. You need to preload the images first with imgui_load_image. This only needs to be called one time at the start of your game. Then use the name you loaded it with to render it. Hover the texture for a zoomed view!"
 		);
 		
-		imgui_image("Spr_Test",64,64);
+		var tex_size = [sprite_get_width(Spr_Test),sprite_get_height(Spr_Test)];
+		
+		var pos = imgui_get_cursor_screen_pos();
+		var uv_min = [0,0];
+		var uv_max = [1,1];
+		var tint_col = [1,1,1,1];
+		var border_col = [1,1,1,0.5];
+		
+		imgui_text(string(tex_size[0]) + " x " + string(tex_size[1]));
+		
+		imgui_image("Spr_Test",tex_size,uv_min,uv_max,tint_col,border_col);
+		
+		
+		if (imgui_is_item_hovered()) {
+			imgui_begin_tooltip();
+			var region_sz = 32;
+			var mpos = imgui_get_mouse_pos();
+			var region_x = mpos[0] - pos[0] - (region_sz * 0.5);
+			var region_y = mpos[1] - pos[1] - (region_sz * 0.5);
+			var zoom = 4;
+			region_x = clamp(region_x,0,tex_size[0]-region_sz);
+			region_y = clamp(region_y,0,tex_size[1]-region_sz);
+			imgui_text("Mouse: " + string(mpos));
+			imgui_text("Screen cursor: " + string(pos));
+			imgui_text("Min: " + string(region_x) + ", " + string(region_y));
+			imgui_text("Max: " + string(region_x + region_sz) + ", " + string(region_y + region_sz));
+			
+			var uv0 = [ region_x / tex_size[0], region_y / tex_size[1] ];
+			var uv1 = [ (region_x + region_sz) / tex_size[0], (region_y + region_sz) / tex_size[1] ];
+			imgui_text("UV0: " + +string(uv0));
+			imgui_text("UV1: " + +string(uv1));
+			imgui_image("Spr_Test",[region_sz * zoom, region_sz * zoom],uv0,uv1,tint_col,border_col);
+			imgui_end_tooltip();
+		}
 		
 		imgui_tree_pop();
 	}
