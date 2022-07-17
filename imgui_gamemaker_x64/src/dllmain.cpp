@@ -2199,7 +2199,14 @@ fn_export double imgui_list_box(const char* label) {
 	return 0.0;
 }
 
+fn_export double imgui_begin_list_box(const char* label, double width, double height) {
+	return ImGui::BeginListBox(label, ImVec2(width, height));
+}
 
+fn_export double imgui_end_list_box() {
+	ImGui::EndListBox();
+	return 0.0;
+}
 
 
 // Widgets: Data Plotting

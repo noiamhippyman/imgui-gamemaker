@@ -566,7 +566,6 @@ function imgui_show_demo_window_widgets_gml() {
 			imgui_text("Kanjis: 日本語 (nihongo)");
 			imgui_text("I used Google translate. I have no idea if these are correct\nI just wanted to show you can use fonts with different languages.");
 			
-			//static buf = "日本語";
             imgui_input_text("UTF-8 input", buf, 0);
 			
 			imgui_pop_font();
@@ -617,7 +616,7 @@ function imgui_show_demo_window_widgets_gml() {
 		}
 		
 		imgui_text_wrapped("And now some textured buttons..");
-		static pressed_count = 0;
+		static image_button_pressed_count = 0;
 		for (var i = 0; i < 8; ++i) {
 			imgui_push_id(i);
 			var frame_padding = -1 + i;
@@ -627,48 +626,48 @@ function imgui_show_demo_window_widgets_gml() {
 			var bg_col = [0,0,0,1];
 			var tint_col = [1,1,1,1];
 			if (imgui_image_button("Spr_Test",size,uv0,uv1,frame_padding,bg_col,tint_col)) {
-				pressed_count += 1;
+				image_button_pressed_count += 1;
 			}
 			imgui_pop_id();
 			imgui_same_line(0,-1);
 		}
 		
 		imgui_new_line();
-		imgui_text("Pressed " + string(pressed_count) + " times.");
+		imgui_text("Pressed " + string(image_button_pressed_count) + " times.");
 		imgui_tree_pop();
 	}
 	
 	if (imgui_tree_node("Combo"))
     {
         // Expose flags as checkbox for the demo
-        static flags = 0;
-        ret = imgui_checkbox_flags("ImGuiComboFlags.PopupAlignLeft", flags, ImGuiComboFlags.PopupAlignLeft);
-		if (ret[0]) flags = ret[1];
+        static combo_flags = 0;
+        ret = imgui_checkbox_flags("ImGuiComboFlags.PopupAlignLeft", combo_flags, ImGuiComboFlags.PopupAlignLeft);
+		if (ret[0]) combo_flags = ret[1];
         imgui_same_line(0,-1); imgui_help_marker("Only makes a difference if the popup is larger than the combo");
-		ret = imgui_checkbox_flags("ImGuiComboFlags.NoArrowButton", flags, ImGuiComboFlags.NoArrowButton); 
+		ret = imgui_checkbox_flags("ImGuiComboFlags.NoArrowButton", combo_flags, ImGuiComboFlags.NoArrowButton); 
         if (ret[0]) {
-			flags = ret[1];
-            flags &= ~ImGuiComboFlags.NoPreview;     // Clear the other flag, as we cannot combine both
+			combo_flags = ret[1];
+            combo_flags &= ~ImGuiComboFlags.NoPreview;     // Clear the other flag, as we cannot combine both
 		}
-		ret = imgui_checkbox_flags("ImGuiComboFlags.NoPreview", flags, ImGuiComboFlags.NoPreview);
+		ret = imgui_checkbox_flags("ImGuiComboFlags.NoPreview", combo_flags, ImGuiComboFlags.NoPreview);
         if (ret[0]) {
-			flags = ret[1];
-            flags &= ~ImGuiComboFlags.NoArrowButton; // Clear the other flag, as we cannot combine both
+			combo_flags = ret[1];
+            combo_flags &= ~ImGuiComboFlags.NoArrowButton; // Clear the other flag, as we cannot combine both
 		}
 
         // Using the generic BeginCombo() API, you have full control over how to display the combo contents.
         // (your selection data could be an index, a pointer to the object, an id for the object, a flag intrusively
         // stored in the object itself, etc.)
         var items = [ "AAAA", "BBBB", "CCCC", "DDDD", "EEEE", "FFFF", "GGGG", "HHHH", "IIII", "JJJJ", "KKKK", "LLLLLLL", "MMMM", "OO BIG OLD GIANT ENTRY TO TEST OUT LEFT ALIGNMENT FLAG OOOOOLALALALALALALALALALLAOOOOO" ];
-        static item_current_idx = 0; // Here we store our selection data as an index.
-        var combo_preview_value = items[item_current_idx];  // Pass in the preview value visible before opening the combo (it could be anything)
-        if (imgui_begin_combo("combo 1", combo_preview_value, flags))
+        static combo_item_current_idx = 0; // Here we store our selection data as an index.
+        var combo_preview_value = items[combo_item_current_idx];  // Pass in the preview value visible before opening the combo (it could be anything)
+        if (imgui_begin_combo("combo 1", combo_preview_value, combo_flags))
         {
             for (var n = 0; n < array_length(items); n++)
             {
-                var is_selected = (item_current_idx == n);
+                var is_selected = (combo_item_current_idx == n);
                 if (imgui_selectable(items[n], is_selected))
-                    item_current_idx = n;
+                    combo_item_current_idx = n;
 
                 // Set the initial focus when opening the combo (scrolling + keyboard navigation focus)
                 if (is_selected)
@@ -681,54 +680,54 @@ function imgui_show_demo_window_widgets_gml() {
 		// maybe if you beg enough I'll jump through more hoops. nobody will beg for this though. lol
         // Simplified one-liner Combo() using an array of const char*
         // This is not very useful (may obsolete): prefer using BeginCombo()/EndCombo() for full control.
-        static item_current_3 = -1; // If the selection isn't within 0..count, Combo won't display a preview
-        ret = imgui_combo("combo 3 (array)", item_current_3, items, array_length(items),-1);
-		if (ret[0]) item_current_3 = ret[1];
+        static combo_item_current_oneliner = -1; // If the selection isn't within 0..count, Combo won't display a preview
+        ret = imgui_combo("combo 3 (array)", combo_item_current_oneliner, items, array_length(items),-1);
+		if (ret[0]) combo_item_current_oneliner = ret[1];
 
        imgui_tree_pop();
     }
 	
-	//if (imgui_tree_node("List boxes"))
-    //{
-    //    // Using the generic BeginListBox() API, you have full control over how to display the combo contents.
-    //    // (your selection data could be an index, a pointer to the object, an id for the object, a flag intrusively
-    //    // stored in the object itself, etc.)
-    //    var items = [ "AAAA", "BBBB", "CCCC", "DDDD", "EEEE", "FFFF", "GGGG", "HHHH", "IIII", "JJJJ", "KKKK", "LLLLLLL", "MMMM", "OOOOOOO" ];
-    //    static item_current_idx = 0; // Here we store our selection data as an index.
-    //    if (imgui_begin_list_box("listbox 1"))
-    //    {
-    //        for (int n = 0; n < IM_ARRAYSIZE(items); n++)
-    //        {
-    //            const bool is_selected = (item_current_idx == n);
-    //            if (ImGui::Selectable(items[n], is_selected))
-    //                item_current_idx = n;
+	if (imgui_tree_node("List boxes"))
+    {
+        // Using the generic BeginListBox() API, you have full control over how to display the combo contents.
+        // (your selection data could be an index, a pointer to the object, an id for the object, a flag intrusively
+        // stored in the object itself, etc.)
+        var items = [ "AAAA", "BBBB", "CCCC", "DDDD", "EEEE", "FFFF", "GGGG", "HHHH", "IIII", "JJJJ", "KKKK", "LLLLLLL", "MMMM", "OOOOOOO" ];
+        static listbox_item_current_idx = 0; // Here we store our selection data as an index.
+        if (imgui_begin_list_box("listbox 1",0,0))
+        {
+            for (var n = 0; n < array_length(items); n++)
+            {
+                var is_selected = (listbox_item_current_idx == n);
+                if (imgui_selectable(items[n], is_selected))
+                    listbox_item_current_idx = n;
 
-    //            // Set the initial focus when opening the combo (scrolling + keyboard navigation focus)
-    //            if (is_selected)
-    //                ImGui::SetItemDefaultFocus();
-    //        }
-    //        ImGui::EndListBox();
-    //    }
+                // Set the initial focus when opening the combo (scrolling + keyboard navigation focus)
+                if (is_selected)
+					imgui_set_item_default_focus()
+            }
+            imgui_end_list_box();
+        }
 
-    //    // Custom size: use all width, 5 items tall
-    //    ImGui::Text("Full-width:");
-    //    if (imgui_begin_list_box("##listbox 2", ImVec2(-FLT_MIN, 5 * ImGui::GetTextLineHeightWithSpacing())))
-    //    {
-    //        for (int n = 0; n < IM_ARRAYSIZE(items); n++)
-    //        {
-    //            const bool is_selected = (item_current_idx == n);
-    //            if (ImGui::Selectable(items[n], is_selected))
-    //                item_current_idx = n;
+        // Custom size: use all width, 5 items tall. any width value less than 0 seems to work. any value greater than zero will set the exact width
+        imgui_text("Full-width:");
+        if (imgui_begin_list_box("##listbox 2", -1, 5 * imgui_get_text_line_height_with_spacing()))
+        {
+            for (var n = 0; n < array_length(items); n++)
+            {
+                var is_selected = (listbox_item_current_idx == n);
+                if (imgui_selectable(items[n], is_selected))
+                    listbox_item_current_idx = n;
 
-    //            // Set the initial focus when opening the combo (scrolling + keyboard navigation focus)
-    //            if (is_selected)
-    //                ImGui::SetItemDefaultFocus();
-    //        }
-    //        ImGui::EndListBox();
-    //    }
+                // Set the initial focus when opening the combo (scrolling + keyboard navigation focus)
+                if (is_selected)
+					imgui_set_item_default_focus();
+            }
+            imgui_end_list_box();
+        }
 
-    //    ImGui::TreePop();
-    //}
+        imgui_tree_pop();
+    }
 	
 }
 function imgui_show_demo_window_layout_gml() {}
