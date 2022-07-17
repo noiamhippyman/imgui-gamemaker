@@ -838,64 +838,68 @@ function imgui_show_demo_window_widgets_gml() {
             imgui_tree_pop();
         }
 		
+        if (imgui_tree_node("Grid"))
+        {
+            static selected_grid = [ [ 1, 0, 0, 0 ], [ 0, 1, 0, 0 ], [ 0, 0, 1, 0 ], [ 0, 0, 0, 1 ] ];
+
+            // Add in a bit of silly fun...
+            var time = imgui_get_time();
+            var winning_state = true;
+			for (var i = 0; i < 4; ++i) {
+				for (var j = 0; j < 4; ++j) {
+					if (selected_grid[i][j] == 0) {
+						winning_state = false;
+						break;
+					}
+				}
+			}
+			
+            if (winning_state)
+				imgui_push_style_var_f2(ImGuiStyleVar.SelectableTextAlign, 0.5 + (0.5 * cos(time * 2.0)), 0.5 + (0.5 * sin(time * 3.0)));
+
+            for (var i = 0; i < 4; i++)
+                for (var j = 0; j < 4; j++)
+                {
+                    if (j > 0)
+                        imgui_same_line(0,-1);
+                    imgui_push_id(i * 4 + j);
+                    if (imgui_selectable("Sailor", selected_grid[i][j] != 0, 0, 50, 50))
+                    {
+                        // Toggle clicked cell + toggle neighbors
+                        selected_grid[i][j] ^= 1;
+                        if (j > 0) { selected_grid[i][j - 1] ^= 1; }
+                        if (j < 3) { selected_grid[i][j + 1] ^= 1; }
+                        if (i > 0) { selected_grid[i - 1][j] ^= 1; }
+                        if (i < 3) { selected_grid[i + 1][j] ^= 1; }
+                    }
+                    imgui_pop_id();
+                }
+
+            if (winning_state)
+				imgui_pop_style_var(1);
+            imgui_tree_pop();
+        }
 		
-        //IMGUI_DEMO_MARKER("Widgets/Selectables/Grid");
-        //if (imgui_tree_node("Grid"))
-        //{
-        //    static selected = [ [ 1, 0, 0, 0 ], [ 0, 1, 0, 0 ], [ 0, 0, 1, 0 ], [ 0, 0, 0, 1 ] ];
-
-        //    // Add in a bit of silly fun...
-        //    var time = imgui_get_time();
-        //    const bool winning_state = memchr(selected, 0, sizeof(selected)) == NULL; // If all cells are selected...
-        //    if (winning_state)
-        //        imgui_push_style_var_f2(ImGuiStyleVar_SelectableTextAlign, ImVec2(0.5f + 0.5f * cosf(time * 2.0f), 0.5f + 0.5f * sinf(time * 3.0f)));
-
-        //    for (int y = 0; y < 4; y++)
-        //        for (int x = 0; x < 4; x++)
-        //        {
-        //            if (x > 0)
-        //                imgui_same_line(0,-1);
-        //            imgui_push_id(y * 4 + x);
-        //            if (imgui_selectable("Sailor", selected[y][x] != 0, 0, ImVec2(50, 50)))
-        //            {
-        //                // Toggle clicked cell + toggle neighbors
-        //                selected[y][x] ^= 1;
-        //                if (x > 0) { selected[y][x - 1] ^= 1; }
-        //                if (x < 3) { selected[y][x + 1] ^= 1; }
-        //                if (y > 0) { selected[y - 1][x] ^= 1; }
-        //                if (y < 3) { selected[y + 1][x] ^= 1; }
-        //            }
-        //            imgui_pop_id();
-        //        }
-
-        //    if (winning_state)
-        //        imgui_pop_style_var();
-        //    imgui_tree_pop();
-        //}
-		
-        //IMGUI_DEMO_MARKER("Widgets/Selectables/Alignment");
-        //if (imgui_tree_node("Alignment"))
-        //{
-        //    imgui_help_marker(
-        //        @"By default, Selectables uses style.SelectableTextAlign but it can be overridden on a per-item 
-        //        basis using PushStyleVar(). You'll probably want to always keep your default situation to 
-        //        left-align otherwise it becomes difficult to layout multiple items on a same line");
-        //    static selected = [ true, false, true, false, true, false, true, false, true ];
-        //    for (var y = 0; y < 3; y++)
-        //    {
-        //        for (var x = 0; x < 3; x++)
-        //        {
-        //            ImVec2 alignment = ImVec2((float)x / 2.0f, (float)y / 2.0f);
-        //            char name[32];
-        //            sprintf(name, "(%.1f,%.1f)", alignment.x, alignment.y);
-        //            if (x > 0) imgui_same_line(0,-1);
-        //            imgui_push_style_var_f2(ImGuiStyleVar_SelectableTextAlign, alignment);
-        //            imgui_selectable(name, &selected[3 * y + x], ImGuiSelectableFlags_None, ImVec2(80, 80));
-        //            imgui_pop_style_var();
-        //        }
-        //    }
-        //    imgui_tree_pop();
-        //}
+        if (imgui_tree_node("Alignment"))
+        {
+            imgui_help_marker("By default, Selectables uses style.SelectableTextAlign but it can be overridden on a per-item basis using PushStyleVar(). You'll probably want to always keep your default situation to left-align otherwise it becomes difficult to layout multiple items on a same line");
+            static selected_align = [ true, false, true, false, true, false, true, false, true ];
+            for (var i = 0; i < 3; i++)
+            {
+                for (var j = 0; j < 3; j++)
+                {
+                    var alignment = [j / 2.0, i / 2.0];
+                    //char name[32];
+                    //sprintf(name, "(%.1f,%.1f)", alignment.j, alignment.i);
+					var name = string(alignment);
+                    if (j > 0) imgui_same_line(0,-1);
+                    imgui_push_style_var_f2(ImGuiStyleVar.SelectableTextAlign, alignment[0],alignment[1]);
+                    if (imgui_selectable(name, selected_align[3 * i + j], ImGuiSelectableFlags.None, 80, 80)) selected_align[3 * i + j] = !selected_align[3 * i + j];
+                    imgui_pop_style_var();
+                }
+            }
+            imgui_tree_pop();
+        }
         imgui_tree_pop();
     }
 	

@@ -299,6 +299,7 @@ enum ImGuiStyleVar
 {
     // Enum name --------------------- // Member in ImGuiStyle structure (see ImGuiStyle for descriptions)
     Alpha,               // float     Alpha
+    DisabledAlpha,       // float     DisabledAlpha
     WindowPadding,       // ImVec2    WindowPadding
     WindowRounding,      // float     WindowRounding
     WindowBorderSize,    // float     WindowBorderSize
@@ -314,6 +315,7 @@ enum ImGuiStyleVar
     ItemSpacing,         // ImVec2    ItemSpacing
     ItemInnerSpacing,    // ImVec2    ItemInnerSpacing
     IndentSpacing,       // float     IndentSpacing
+    CellPadding,         // ImVec2    CellPadding
     ScrollbarSize,       // float     ScrollbarSize
     ScrollbarRounding,   // float     ScrollbarRounding
     GrabMinSize,         // float     GrabMinSize
