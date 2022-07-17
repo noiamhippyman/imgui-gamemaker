@@ -729,6 +729,176 @@ function imgui_show_demo_window_widgets_gml() {
         imgui_tree_pop();
     }
 	
+	if (imgui_tree_node("Selectables"))
+    {
+        // Selectable() has 2 overloads:
+        // - The one taking "bool selected" as a read-only selection information.
+        //   When Selectable() has been clicked it returns true and you can alter selection state accordingly.
+        // - The one taking "bool* p_selected" as a read-write selection information (convenient in some cases)
+        // The earlier is more flexible, as in real application your selection may be stored in many different ways
+        // and not necessarily inside a bool value (e.g. in flags within objects, as an external list, etc).
+        //IMGUI_DEMO_MARKER("Widgets/Selectables/Basic");
+        if (imgui_tree_node("Basic"))
+        {
+            static selection_basic = [ false, true, false, false, false ];
+            if (imgui_selectable("1. I am selectable", selection_basic[0])) selection_basic[0] = !selection_basic[0];
+			if (imgui_selectable("2. I am selectable", selection_basic[1])) selection_basic[1] = !selection_basic[1];
+            imgui_text("(I am not selectable)");
+			if (imgui_selectable("4. I am selectable", selection_basic[3])) selection_basic[3] = !selection_basic[3];
+            if (imgui_selectable("5. I am double clickable", selection_basic[4], ImGuiSelectableFlags.AllowDoubleClick))
+                if (imgui_is_mouse_double_clicked(0))
+                    selection_basic[4] = !selection_basic[4];
+            imgui_tree_pop();
+        }
+        //IMGUI_DEMO_MARKER("Widgets/Selectables/Single Selection");
+        if (imgui_tree_node("Selection State: Single Selection"))
+        {
+            static selected_single = -1;
+            for (var n = 0; n < 5; n++)
+            {
+                //char buf[32];
+                //sprintf(buf, "Object %d", n);
+				var buf = "Object " + string(n);
+                if (imgui_selectable(buf, selected_single == n))
+                    selected_single = n;
+            }
+            imgui_tree_pop();
+        }
+        //IMGUI_DEMO_MARKER("Widgets/Selectables/Multiple Selection");
+        if (imgui_tree_node("Selection State: Multiple Selection"))
+        {
+            imgui_help_marker("Hold CTRL and click to select multiple items.");
+            static selection_multi = [ false, false, false, false, false ];
+            for (var n = 0; n < 5; n++)
+            {
+                var buf = "Object " + string(n);
+                if (imgui_selectable(buf, selection_multi[n]))
+                {
+                    if (!imgui_io_get_key_ctrl()) {// Clear selection when CTRL is not held
+                        //memset(selection_multi, 0, sizeof(selection_multi));
+						for (var i = 0; i < array_length(selection_multi); ++i) {
+							selection_multi[i] = 0;
+						}
+					}
+                    selection_multi[n] ^= 1;
+                }
+            }
+            imgui_tree_pop();
+        }
+        //IMGUI_DEMO_MARKER("Widgets/Selectables/Rendering more text into the same line");
+        if (imgui_tree_node("Rendering more text into the same line"))
+        {
+            // Using the Selectable() override that takes "bool* p_selected" parameter,
+            // this function toggle your bool value automatically.
+            static selected_sameline = [ false, false, false ];
+            if (imgui_selectable("main.c",    selected_sameline[0])) selected_sameline[0] = !selected_sameline[0]; 
+			imgui_same_line(300,-1); imgui_text(" 2,345 bytes");
+			
+            if (imgui_selectable("Hello.cpp", selected_sameline[1])) selected_sameline[1] = !selected_sameline[1];
+			imgui_same_line(300,-1); imgui_text("12,345 bytes");
+			
+            if (imgui_selectable("Hello.h",   selected_sameline[2])) selected_sameline[2] = !selected_sameline[2];
+			imgui_same_line(300,-1); imgui_text(" 2,345 bytes");
+			
+            imgui_tree_pop();
+        }
+		
+		
+        //IMGUI_DEMO_MARKER("Widgets/Selectables/In columns");
+        if (imgui_tree_node("In columns"))
+        {
+            static selected_in_columns = array_create(10,0);
+
+            if (imgui_begin_table("split1", 3, ImGuiTableFlags.Resizable | ImGuiTableFlags.NoSavedSettings | ImGuiTableFlags.Borders))
+            {
+                for (var i = 0; i < 10; i++)
+                {
+					var label = "Item " + string(i);
+                    imgui_table_next_column();
+                    if (imgui_selectable(label, selected_in_columns[i])) selected_in_columns[i] = !selected_in_columns[i]; // FIXME-TABLE: Selection overlap
+                }
+                imgui_end_table();
+            }
+            imgui_spacing();
+            if (imgui_begin_table("split2", 3, ImGuiTableFlags.Resizable | ImGuiTableFlags.NoSavedSettings | ImGuiTableFlags.Borders))
+            {
+                for (var i = 0; i < 10; i++)
+                {
+					var label = "Item " + string(i);
+                    imgui_table_next_row();
+                    imgui_table_next_column();
+                    if (imgui_selectable(label, selected_in_columns[i], ImGuiSelectableFlags.SpanAllColumns)) selected_in_columns[i] = !selected_in_columns[i];
+                    imgui_table_next_column();
+                    imgui_text("Some other contents");
+                    imgui_table_next_column();
+                    imgui_text("123456");
+                }
+                imgui_end_table();
+            }
+            imgui_tree_pop();
+        }
+		
+		
+        //IMGUI_DEMO_MARKER("Widgets/Selectables/Grid");
+        //if (imgui_tree_node("Grid"))
+        //{
+        //    static selected = [ [ 1, 0, 0, 0 ], [ 0, 1, 0, 0 ], [ 0, 0, 1, 0 ], [ 0, 0, 0, 1 ] ];
+
+        //    // Add in a bit of silly fun...
+        //    var time = imgui_get_time();
+        //    const bool winning_state = memchr(selected, 0, sizeof(selected)) == NULL; // If all cells are selected...
+        //    if (winning_state)
+        //        imgui_push_style_var_f2(ImGuiStyleVar_SelectableTextAlign, ImVec2(0.5f + 0.5f * cosf(time * 2.0f), 0.5f + 0.5f * sinf(time * 3.0f)));
+
+        //    for (int y = 0; y < 4; y++)
+        //        for (int x = 0; x < 4; x++)
+        //        {
+        //            if (x > 0)
+        //                imgui_same_line(0,-1);
+        //            imgui_push_id(y * 4 + x);
+        //            if (imgui_selectable("Sailor", selected[y][x] != 0, 0, ImVec2(50, 50)))
+        //            {
+        //                // Toggle clicked cell + toggle neighbors
+        //                selected[y][x] ^= 1;
+        //                if (x > 0) { selected[y][x - 1] ^= 1; }
+        //                if (x < 3) { selected[y][x + 1] ^= 1; }
+        //                if (y > 0) { selected[y - 1][x] ^= 1; }
+        //                if (y < 3) { selected[y + 1][x] ^= 1; }
+        //            }
+        //            imgui_pop_id();
+        //        }
+
+        //    if (winning_state)
+        //        imgui_pop_style_var();
+        //    imgui_tree_pop();
+        //}
+		
+        //IMGUI_DEMO_MARKER("Widgets/Selectables/Alignment");
+        //if (imgui_tree_node("Alignment"))
+        //{
+        //    imgui_help_marker(
+        //        @"By default, Selectables uses style.SelectableTextAlign but it can be overridden on a per-item 
+        //        basis using PushStyleVar(). You'll probably want to always keep your default situation to 
+        //        left-align otherwise it becomes difficult to layout multiple items on a same line");
+        //    static selected = [ true, false, true, false, true, false, true, false, true ];
+        //    for (var y = 0; y < 3; y++)
+        //    {
+        //        for (var x = 0; x < 3; x++)
+        //        {
+        //            ImVec2 alignment = ImVec2((float)x / 2.0f, (float)y / 2.0f);
+        //            char name[32];
+        //            sprintf(name, "(%.1f,%.1f)", alignment.x, alignment.y);
+        //            if (x > 0) imgui_same_line(0,-1);
+        //            imgui_push_style_var_f2(ImGuiStyleVar_SelectableTextAlign, alignment);
+        //            imgui_selectable(name, &selected[3 * y + x], ImGuiSelectableFlags_None, ImVec2(80, 80));
+        //            imgui_pop_style_var();
+        //        }
+        //    }
+        //    imgui_tree_pop();
+        //}
+        imgui_tree_pop();
+    }
+	
 }
 function imgui_show_demo_window_layout_gml() {}
 function imgui_show_demo_window_popups_gml() {}

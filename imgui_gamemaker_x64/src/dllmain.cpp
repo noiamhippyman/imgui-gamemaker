@@ -2356,6 +2356,65 @@ fn_export double imgui_is_popup_open(const char* str_id, double flags) {
 }
 
 
+// Tables
+fn_export double imgui_begin_table(const char* str_id) {
+	ext_buffer->seek(0);
+	int column = ext_buffer->read_float();
+	int flags = ext_buffer->read_float();
+	float outerW = ext_buffer->read_float();
+	float outerH = ext_buffer->read_float();
+	float innerW = ext_buffer->read_float();
+	return ImGui::BeginTable(str_id, column, (ImGuiTableFlags)flags, ImVec2(outerW, outerH), innerW);
+}
+
+fn_export double imgui_end_table() {
+	ImGui::EndTable();
+	return 0.0;
+}
+
+fn_export double imgui_table_next_row() {
+	ext_buffer->seek(0);
+	int row_flags = ext_buffer->read_float();
+	float min_row_height = ext_buffer->read_float();
+	ImGui::TableNextRow(row_flags, min_row_height);
+	return 0.0;
+}
+
+fn_export double imgui_table_next_column() {
+	return ImGui::TableNextColumn();
+}
+
+fn_export double imgui_table_set_column_index(double column_n) {
+	return ImGui::TableSetColumnIndex(column_n);
+}
+
+fn_export double imgui_table_setup_column(const char* label) {
+	ext_buffer->seek(0);
+	int flags = ext_buffer->read_float();
+	float init_width_or_weight = ext_buffer->read_float();
+	ImGuiID user_id = ext_buffer->read_float();
+
+	ImGui::TableSetupColumn(label, flags, init_width_or_weight, user_id);
+	return 0.0;
+}
+
+fn_export double imgui_table_setup_scroll_freeze(double cols, double rows) {
+	ImGui::TableSetupScrollFreeze(cols, rows);
+	return 0.0;
+}
+
+fn_export double imgui_table_headers_row() {
+	ImGui::TableHeadersRow();
+	return 0.0;
+}
+
+fn_export double imgui_table_header(const char* label) {
+	ImGui::TableHeader(label);
+	return 0.0;
+}
+
+
+
 // Columns
 fn_export double imgui_columns(double count, const char* id, double border) {
 	ImGui::Columns(count, id, border);
@@ -3169,6 +3228,7 @@ fn_export double imgui_drawlist_path_rect(double x1, double y1, double x2, doubl
 
 	return 0.0;
 }
+
 
 // Fonts
 fn_export double imgui_fonts_add_font_default() {

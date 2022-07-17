@@ -1287,6 +1287,26 @@
             2,
           ],"resourceVersion":"1.0","name":"imgui_begin_list_box","tags":[],"resourceType":"GMExtensionFunction",},
         {"externalName":"imgui_end_list_box","kind":1,"help":"imgui_end_list_box();","hidden":false,"returnType":2,"argCount":0,"args":[],"resourceVersion":"1.0","name":"imgui_end_list_box","tags":[],"resourceType":"GMExtensionFunction",},
+        {"externalName":"imgui_begin_table","kind":1,"help":"_imgui_begin_table(str_id)","hidden":false,"returnType":2,"argCount":0,"args":[
+            1,
+          ],"resourceVersion":"1.0","name":"_imgui_begin_table","tags":[],"resourceType":"GMExtensionFunction",},
+        {"externalName":"imgui_end_table","kind":1,"help":"imgui_end_table();","hidden":false,"returnType":2,"argCount":0,"args":[],"resourceVersion":"1.0","name":"imgui_end_table","tags":[],"resourceType":"GMExtensionFunction",},
+        {"externalName":"imgui_table_next_row","kind":1,"help":"_imgui_table_next_row()","hidden":false,"returnType":2,"argCount":0,"args":[],"resourceVersion":"1.0","name":"_imgui_table_next_row","tags":[],"resourceType":"GMExtensionFunction",},
+        {"externalName":"imgui_table_next_column","kind":1,"help":"imgui_table_next_column()","hidden":false,"returnType":2,"argCount":0,"args":[],"resourceVersion":"1.0","name":"imgui_table_next_column","tags":[],"resourceType":"GMExtensionFunction",},
+        {"externalName":"imgui_table_set_column_index","kind":1,"help":"imgui_table_set_column_index(column_n);","hidden":false,"returnType":2,"argCount":0,"args":[
+            2,
+          ],"resourceVersion":"1.0","name":"imgui_table_set_column_index","tags":[],"resourceType":"GMExtensionFunction",},
+        {"externalName":"imgui_table_setup_column","kind":1,"help":"_imgui_table_setup_column(label);","hidden":false,"returnType":2,"argCount":0,"args":[
+            1,
+          ],"resourceVersion":"1.0","name":"_imgui_table_setup_column","tags":[],"resourceType":"GMExtensionFunction",},
+        {"externalName":"imgui_table_setup_scroll_freeze","kind":1,"help":"imgui_table_setup_scroll_freeze(cols,rows)","hidden":false,"returnType":2,"argCount":0,"args":[
+            2,
+            2,
+          ],"resourceVersion":"1.0","name":"imgui_table_setup_scroll_freeze","tags":[],"resourceType":"GMExtensionFunction",},
+        {"externalName":"imgui_table_headers_row","kind":1,"help":"imgui_table_headers_row();","hidden":false,"returnType":2,"argCount":0,"args":[],"resourceVersion":"1.0","name":"imgui_table_headers_row","tags":[],"resourceType":"GMExtensionFunction",},
+        {"externalName":"imgui_table_header","kind":1,"help":"imgui_table_header(label)","hidden":false,"returnType":2,"argCount":0,"args":[
+            1,
+          ],"resourceVersion":"1.0","name":"imgui_table_header","tags":[],"resourceType":"GMExtensionFunction",},
       ],"constants":[],"ProxyFiles":[],"copyToTargets":64,"order":[
         {"name":"_extension_setup","path":"extensions/Ext_imgui/Ext_imgui.yy",},
         {"name":"_extension_cleanup","path":"extensions/Ext_imgui/Ext_imgui.yy",},
@@ -1711,6 +1731,15 @@
         {"name":"_imgui_image_button","path":"extensions/Ext_imgui/Ext_imgui.yy",},
         {"name":"imgui_begin_list_box","path":"extensions/Ext_imgui/Ext_imgui.yy",},
         {"name":"imgui_end_list_box","path":"extensions/Ext_imgui/Ext_imgui.yy",},
+        {"name":"_imgui_begin_table","path":"extensions/Ext_imgui/Ext_imgui.yy",},
+        {"name":"imgui_end_table","path":"extensions/Ext_imgui/Ext_imgui.yy",},
+        {"name":"_imgui_table_next_row","path":"extensions/Ext_imgui/Ext_imgui.yy",},
+        {"name":"imgui_table_next_column","path":"extensions/Ext_imgui/Ext_imgui.yy",},
+        {"name":"imgui_table_set_column_index","path":"extensions/Ext_imgui/Ext_imgui.yy",},
+        {"name":"_imgui_table_setup_column","path":"extensions/Ext_imgui/Ext_imgui.yy",},
+        {"name":"imgui_table_setup_scroll_freeze","path":"extensions/Ext_imgui/Ext_imgui.yy",},
+        {"name":"imgui_table_headers_row","path":"extensions/Ext_imgui/Ext_imgui.yy",},
+        {"name":"imgui_table_header","path":"extensions/Ext_imgui/Ext_imgui.yy",},
       ],"resourceVersion":"1.0","name":"","tags":[],"resourceType":"GMExtensionFile",},
   ],
   "classname": "",

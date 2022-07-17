@@ -1321,3 +1321,34 @@ function imgui_image_button(name,size,uv0=[0,0],uv1=[1,1],frame_padding=-1,bg_co
 	
 	return _imgui_image_button(name);
 }
+
+function imgui_begin_table(str_id,column,flags=0,outer_size=[0,0],inner_width=0) {
+	buffer_write_args(global.imgui_buffer, [
+		buffer_f32, column,
+		buffer_f32, flags,
+		buffer_f32, outer_size[0],
+		buffer_f32, outer_size[1],
+		buffer_f32, inner_width
+	]);
+	
+	return _imgui_begin_table(str_id);
+}
+
+function imgui_table_next_row(row_flags=0, min_row_height=0) {
+	buffer_write_args(global.imgui_buffer, [
+		buffer_f32, row_flags,
+		buffer_f32, min_row_height
+	]);
+	
+	_imgui_table_next_row();
+}
+
+function imgui_table_setup_column(label, flags=0, init_width_or_weight=0, user_id=0) {
+	buffer_write_args(global.imgui_buffer, [
+		buffer_f32, flags,
+		buffer_f32, init_width_or_weight,
+		buffer_f32, user_id
+	]);
+	
+	_imgui_table_setup_column(label);
+}
