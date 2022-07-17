@@ -13,6 +13,7 @@
 
 #include "Buffer.h"
 
+#define int64 unsigned long long int
 #define fn_export extern "C" __declspec(dllexport)
 
 // Global Variables
@@ -3175,14 +3176,14 @@ fn_export double imgui_drawlist_path_rect(double x1, double y1, double x2, doubl
 // Fonts
 fn_export double imgui_fonts_add_font_default() {
 	ImFont* font = ImGui::GetIO().Fonts->AddFontDefault();
-	return reinterpret_cast<int>(font);
+	return reinterpret_cast<int64>(font);
 }
 
 fn_export double imgui_fonts_add_font_from_file_ttf(const char* filename, double size_pixels, const char* font_cfg, double glyph_ranges) {
-	int ptri = (int)glyph_ranges;
+	int64 ptri = (int64)glyph_ranges;
 	ImWchar* _glyph_ranges = reinterpret_cast<ImWchar*>(ptri);
 	ImFont* font = ImGui::GetIO().Fonts->AddFontFromFileTTF(filename, size_pixels, (ImFontConfig*)font_cfg, _glyph_ranges);
-	return reinterpret_cast<int>(font);
+	return reinterpret_cast<int64>(font);
 }
 
 fn_export double imgui_fonts_build() {
@@ -3190,7 +3191,7 @@ fn_export double imgui_fonts_build() {
 }
 
 fn_export double imgui_push_font(double font) {
-	int ptri = (int)font;
+	int64 ptri = (int64)font;
 	ImFont* _font = reinterpret_cast<ImFont*>(ptri);
 	ImGui::PushFont(_font);
 	return 0.0;
@@ -3203,11 +3204,11 @@ fn_export double imgui_pop_font() {
 
 fn_export double imgui_get_font() {
 	ImFont* font = ImGui::GetFont();
-	return reinterpret_cast<int>(font);
+	return reinterpret_cast<int64>(font);
 }
 
 fn_export double imgui_set_font(double font) {
-	int ptri = (int)font;
+	int64 ptri = (int64)font;
 	ImFont* _font = reinterpret_cast<ImFont*>(ptri);
 	ImGui::GetIO().FontDefault = _font;
 	return 0.0;
@@ -3215,42 +3216,42 @@ fn_export double imgui_set_font(double font) {
 
 fn_export double imgui_fonts_get_glyph_range_default() {
 	const ImWchar* glyph_range = ImGui::GetIO().Fonts->GetGlyphRangesDefault();
-	return reinterpret_cast<int>(glyph_range);
+	return reinterpret_cast<int64>(glyph_range);
 }
 
 fn_export double imgui_fonts_get_glyph_range_korean() {
 	const ImWchar* glyph_range = ImGui::GetIO().Fonts->GetGlyphRangesKorean();
-	return reinterpret_cast<int>(glyph_range);
+	return reinterpret_cast<int64>(glyph_range);
 }
 
 fn_export double imgui_fonts_get_glyph_range_japanese() {
 	const ImWchar* glyph_range = ImGui::GetIO().Fonts->GetGlyphRangesJapanese();
-	return reinterpret_cast<int>(glyph_range);
+	return reinterpret_cast<int64>(glyph_range);
 }
 
 fn_export double imgui_fonts_get_glyph_range_chinese_full() {
 	const ImWchar* glyph_range = ImGui::GetIO().Fonts->GetGlyphRangesChineseFull();
-	return reinterpret_cast<int>(glyph_range);
+	return reinterpret_cast<int64>(glyph_range);
 }
 
 fn_export double imgui_fonts_get_glyph_range_chinese_simplified_common() {
 	const ImWchar* glyph_range = ImGui::GetIO().Fonts->GetGlyphRangesChineseSimplifiedCommon();
-	return reinterpret_cast<int>(glyph_range);
+	return reinterpret_cast<int64>(glyph_range);
 }
 
 fn_export double imgui_fonts_get_glyph_range_cyrillic() {
 	const ImWchar* glyph_range = ImGui::GetIO().Fonts->GetGlyphRangesCyrillic();
-	return reinterpret_cast<int>(glyph_range);
+	return reinterpret_cast<int64>(glyph_range);
 }
 
 fn_export double imgui_fonts_get_glyph_range_thai() {
 	const ImWchar* glyph_range = ImGui::GetIO().Fonts->GetGlyphRangesThai();
-	return reinterpret_cast<int>(glyph_range);
+	return reinterpret_cast<int64>(glyph_range);
 }
 
 fn_export double imgui_fonts_get_glyph_range_vietnamese() {
 	const ImWchar* glyph_range = ImGui::GetIO().Fonts->GetGlyphRangesVietnamese();
-	return reinterpret_cast<int>(glyph_range);
+	return reinterpret_cast<int64>(glyph_range);
 }
 
 // Images

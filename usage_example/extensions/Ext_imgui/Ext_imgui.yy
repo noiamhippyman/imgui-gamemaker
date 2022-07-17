@@ -1285,7 +1285,7 @@
             1,
             1,
           ],"resourceVersion":"1.0","name":"_imgui_load_image","tags":[],"resourceType":"GMExtensionFunction",},
-      ],"constants":[],"ProxyFiles":[],"copyToTargets":144150411102650606,"order":[
+      ],"constants":[],"ProxyFiles":[],"copyToTargets":64,"order":[
         {"name":"_extension_setup","path":"extensions/Ext_imgui/Ext_imgui.yy",},
         {"name":"_extension_cleanup","path":"extensions/Ext_imgui/Ext_imgui.yy",},
         {"name":"_imgui_setup","path":"extensions/Ext_imgui/Ext_imgui.yy",},
@@ -1739,7 +1739,7 @@
   "tvosThirdPartyFrameworkEntries": [],
   "IncludedResources": [],
   "androidPermissions": [],
-  "copyToTargets": 144150376742912238,
+  "copyToTargets": 64,
   "iosCocoaPods": "",
   "tvosCocoaPods": "",
   "iosCocoaPodDependencies": "",

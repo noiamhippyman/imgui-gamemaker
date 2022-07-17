@@ -12,19 +12,6 @@ imgui_begin("Test",noone,0);
 
 imgui_show_demo_window_widgets_gml();
 
-//imgui_text("Default text");
-
-//imgui_push_font(font1);
-//imgui_text("Font 1");
-//imgui_pop_font();
-
-//imgui_push_font(font2);
-//imgui_text("Font 2");
-//imgui_pop_font();
-
-//imgui_push_font(font3);
-//imgui_text("Font 3 /w Japanese Glyph Range こんにちは世界");
-//imgui_pop_font();
 
 imgui_end();
 

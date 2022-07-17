@@ -556,13 +556,13 @@ function imgui_show_demo_window_widgets_gml() {
             // so you can safely copy & paste garbled characters into another application.
             imgui_text_wrapped(
                 "CJK text will only appears if the font was loaded with the appropriate CJK character ranges. " +
-                "Call io.Font->AddFontFromFileTTF() manually to load extra character ranges. " +
+                "Call imgui_fonts_add_font_from_file_ttf() manually to load extra character ranges. " +
                 "Read docs/FONTS.md for details."
 			);
 			
 			imgui_push_font(font3);
             
-			imgui_text("Hiragana: カキクケコ (kakikukeko)"); // i don't think this is right. 
+			imgui_text("Hiragana: カキクケコ (kakikukeko)"); // idk if this is right. 
 			imgui_text("Kanjis: 日本語 (nihongo)");
 			imgui_text("I used Google translate. I have no idea if these are correct\nI just wanted to show you can use fonts with different languages.");
 			

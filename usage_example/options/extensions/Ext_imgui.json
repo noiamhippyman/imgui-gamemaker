@@ -1,0 +1,9 @@
+{
+  "extensionId": {
+    "name": "Ext_imgui",
+    "path": "extensions/Ext_imgui/Ext_imgui.yy"
+  },
+  "resourceVersion": "1.0",
+  "resourceType": "GMExtensionConfigSet",
+  "configurables": null
+}
