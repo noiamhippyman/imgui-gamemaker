@@ -949,9 +949,9 @@ fn_export double imgui_get_window_content_region_max() {
 	return 0.0;
 }
 
-fn_export double imgui_get_window_content_region_width() {
-	return ImGui::GetWindowContentRegionWidth();
-}
+//fn_export double imgui_get_window_content_region_width() {
+//	return ImGui::GetWindowContentRegionWidth();
+//}
 
 
 // Windows Scrolling
@@ -2199,17 +2199,7 @@ fn_export double imgui_list_box(const char* label) {
 	return 0.0;
 }
 
-fn_export double imgui_list_box_header(const char* label, double width, double height) {
-	ImVec2 size;
-	size.x = width;
-	size.y = height;
-	return ImGui::ListBoxHeader(label, size);
-}
 
-fn_export double imgui_list_box_footer() {
-	ImGui::ListBoxFooter();
-	return 0.0;
-}
 
 
 // Widgets: Data Plotting
@@ -2869,7 +2859,7 @@ fn_export double imgui_drawlist_add_rect(double x1, double y1, double x2, double
 	p_max.x = x2;
 	p_max.y = y2;
 
-	ImGui::GetWindowDrawList()->AddRect(p_min, p_max, (ImU32)color, rounding, (ImDrawCornerFlags)rounding_corners, thickness);
+	ImGui::GetWindowDrawList()->AddRect(p_min, p_max, (ImU32)color, rounding, (ImDrawFlags)rounding_corners, thickness);
 
 	return 0.0;
 }
@@ -2883,7 +2873,7 @@ fn_export double imgui_drawlist_add_rect_filled(double x1, double y1, double x2,
 	p_max.x = x2;
 	p_max.y = y2;
 
-	ImGui::GetWindowDrawList()->AddRectFilled(p_min, p_max, (ImU32)color, rounding, (ImDrawCornerFlags)rounding_corners);
+	ImGui::GetWindowDrawList()->AddRectFilled(p_min, p_max, (ImU32)color, rounding, (ImDrawFlags)rounding_corners);
 
 	return 0.0;
 }
@@ -3069,7 +3059,7 @@ fn_export double imgui_drawlist_add_convex_poly_filled(double num_points, double
 	return 0.0;
 }
 
-fn_export double imgui_drawlist_add_bezier_curve(double x1, double y1, double x2, double y2, double x3, double y3, double x4, double y4, double color, double thickness, double num_segments) {
+fn_export double imgui_drawlist_add_bezier_cubic_curve(double x1, double y1, double x2, double y2, double x3, double y3, double x4, double y4, double color, double thickness, double num_segments) {
 
 	ImVec2 p1;
 	p1.x = x1;
@@ -3087,7 +3077,7 @@ fn_export double imgui_drawlist_add_bezier_curve(double x1, double y1, double x2
 	p4.x = x4;
 	p4.y = y4;
 
-	ImGui::GetWindowDrawList()->AddBezierCurve(p1, p2, p3, p4, (ImU32)color, thickness, num_segments);
+	ImGui::GetWindowDrawList()->AddBezierCubic(p1, p2, p3, p4, (ImU32)color, thickness, num_segments);
 
 	return 0.0;
 }
@@ -3139,7 +3129,7 @@ fn_export double imgui_drawlist_path_arc_to_fast(double x, double y, double radi
 	return 0.0;
 }
 
-fn_export double imgui_drawlist_path_bezier_curve_to(double x2, double y2, double x3, double y3, double x4, double y4, double num_segments) {
+fn_export double imgui_drawlist_path_bezier_cubic_curve_to(double x2, double y2, double x3, double y3, double x4, double y4, double num_segments) {
 
 	ImVec2 p2;
 	p2.x = x2;
@@ -3153,7 +3143,7 @@ fn_export double imgui_drawlist_path_bezier_curve_to(double x2, double y2, doubl
 	p4.x = x4;
 	p4.y = y4;
 
-	ImGui::GetWindowDrawList()->PathBezierCurveTo(p2, p3, p4, num_segments);
+	ImGui::GetWindowDrawList()->PathBezierCubicCurveTo(p2, p3, p4, num_segments);
 
 	return 0.0;
 }
@@ -3168,7 +3158,7 @@ fn_export double imgui_drawlist_path_rect(double x1, double y1, double x2, doubl
 	rect_max.x = x1;
 	rect_max.y = y1;
 
-	ImGui::GetWindowDrawList()->PathRect(rect_min, rect_max, rounding, (ImDrawCornerFlags)rounding_corners);
+	ImGui::GetWindowDrawList()->PathRect(rect_min, rect_max, rounding, (ImDrawFlags)rounding_corners);
 
 	return 0.0;
 }

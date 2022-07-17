@@ -146,7 +146,6 @@
         {"externalName":"imgui_get_content_region_avail","kind":1,"help":"_imgui_get_content_region_avail()","hidden":false,"returnType":2,"argCount":0,"args":[],"resourceVersion":"1.0","name":"_imgui_get_content_region_avail","tags":[],"resourceType":"GMExtensionFunction",},
         {"externalName":"imgui_get_window_content_region_min","kind":1,"help":"_imgui_get_window_content_region_min()","hidden":false,"returnType":2,"argCount":0,"args":[],"resourceVersion":"1.0","name":"_imgui_get_window_content_region_min","tags":[],"resourceType":"GMExtensionFunction",},
         {"externalName":"imgui_get_window_content_region_max","kind":1,"help":"_imgui_get_window_content_region_max()","hidden":false,"returnType":2,"argCount":0,"args":[],"resourceVersion":"1.0","name":"_imgui_get_window_content_region_max","tags":[],"resourceType":"GMExtensionFunction",},
-        {"externalName":"imgui_get_window_content_region_width","kind":1,"help":"imgui_get_window_content_region_width()","hidden":false,"returnType":2,"argCount":0,"args":[],"resourceVersion":"1.0","name":"imgui_get_window_content_region_width","tags":[],"resourceType":"GMExtensionFunction",},
         {"externalName":"imgui_get_scroll_x","kind":1,"help":"imgui_get_scroll_x()","hidden":false,"returnType":2,"argCount":0,"args":[],"resourceVersion":"1.0","name":"imgui_get_scroll_x","tags":[],"resourceType":"GMExtensionFunction",},
         {"externalName":"imgui_get_scroll_y","kind":1,"help":"imgui_get_scroll_y()","hidden":false,"returnType":2,"argCount":0,"args":[],"resourceVersion":"1.0","name":"imgui_get_scroll_y","tags":[],"resourceType":"GMExtensionFunction",},
         {"externalName":"imgui_get_scroll_max_x","kind":1,"help":"imgui_get_scroll_max_x()","hidden":false,"returnType":2,"argCount":0,"args":[],"resourceVersion":"1.0","name":"imgui_get_scroll_max_x","tags":[],"resourceType":"GMExtensionFunction",},
@@ -568,12 +567,6 @@
         {"externalName":"imgui_list_box","kind":1,"help":"_imgui_list_box(label)","hidden":false,"returnType":2,"argCount":0,"args":[
             1,
           ],"resourceVersion":"1.0","name":"_imgui_list_box","tags":[],"resourceType":"GMExtensionFunction",},
-        {"externalName":"imgui_list_box_header","kind":1,"help":"imgui_list_box_header(label,width,height)","hidden":false,"returnType":2,"argCount":0,"args":[
-            1,
-            2,
-            2,
-          ],"resourceVersion":"1.0","name":"imgui_list_box_header","tags":[],"resourceType":"GMExtensionFunction",},
-        {"externalName":"imgui_list_box_footer","kind":1,"help":"imgui_list_box_footer()","hidden":false,"returnType":2,"argCount":0,"args":[],"resourceVersion":"1.0","name":"imgui_list_box_footer","tags":[],"resourceType":"GMExtensionFunction",},
         {"externalName":"imgui_plot_lines","kind":1,"help":"_imgui_plot_lines(label,overlay)","hidden":false,"returnType":2,"argCount":0,"args":[
             1,
             1,
@@ -1191,7 +1184,7 @@
             2,
             2,
           ],"resourceVersion":"1.0","name":"_imgui_drawlist_add_convex_poly_filled","tags":[],"resourceType":"GMExtensionFunction",},
-        {"externalName":"imgui_drawlist_add_bezier_curve","kind":1,"help":"imgui_drawlist_add_bezier_curve(x1,y1,x2,y2,x3,y3,x4,y4,color,thickness,num_segments)","hidden":false,"returnType":2,"argCount":0,"args":[
+        {"externalName":"imgui_drawlist_add_bezier_cubic_curve","kind":1,"help":"imgui_drawlist_add_bezier_cubic_curve(x1,y1,x2,y2,x3,y3,x4,y4,color,thickness,num_segments)","hidden":false,"returnType":2,"argCount":0,"args":[
             2,
             2,
             2,
@@ -1203,7 +1196,7 @@
             2,
             2,
             2,
-          ],"resourceVersion":"1.0","name":"imgui_drawlist_add_bezier_curve","tags":[],"resourceType":"GMExtensionFunction",},
+          ],"resourceVersion":"1.0","name":"imgui_drawlist_add_bezier_cubic_curve","tags":[],"resourceType":"GMExtensionFunction",},
         {"externalName":"imgui_drawlist_path_clear","kind":1,"help":"imgui_drawlist_path_clear()","hidden":false,"returnType":2,"argCount":0,"args":[],"resourceVersion":"1.0","name":"imgui_drawlist_path_clear","tags":[],"resourceType":"GMExtensionFunction",},
         {"externalName":"imgui_drawlist_path_line_to","kind":1,"help":"imgui_drawlist_path_line_to(x,y)","hidden":false,"returnType":2,"argCount":0,"args":[
             2,
@@ -1236,7 +1229,7 @@
             2,
             2,
           ],"resourceVersion":"1.0","name":"imgui_drawlist_path_arc_to_fast","tags":[],"resourceType":"GMExtensionFunction",},
-        {"externalName":"imgui_drawlist_path_bezier_curve_to","kind":1,"help":"imgui_drawlist_path_bezier_curve_to(x2,y2,x3,y3,x4,y4,num_segments)","hidden":false,"returnType":2,"argCount":0,"args":[
+        {"externalName":"imgui_drawlist_path_bezier_cubic_curve_to","kind":1,"help":"imgui_drawlist_path_bezier_cubic_curve_to(x2,y2,x3,y3,x4,y4,num_segments)","hidden":false,"returnType":2,"argCount":0,"args":[
             2,
             2,
             2,
@@ -1244,7 +1237,7 @@
             2,
             2,
             2,
-          ],"resourceVersion":"1.0","name":"imgui_drawlist_path_bezier_curve_to","tags":[],"resourceType":"GMExtensionFunction",},
+          ],"resourceVersion":"1.0","name":"imgui_drawlist_path_bezier_cubic_curve_to","tags":[],"resourceType":"GMExtensionFunction",},
         {"externalName":"imgui_drawlist_path_rect","kind":1,"help":"imgui_drawlist_path_rect(x1,y1,x2,y2,rounding,rounding_corners)","hidden":false,"returnType":2,"argCount":0,"args":[
             2,
             2,
@@ -1335,7 +1328,6 @@
         {"name":"_imgui_get_content_region_avail","path":"extensions/Ext_imgui/Ext_imgui.yy",},
         {"name":"_imgui_get_window_content_region_min","path":"extensions/Ext_imgui/Ext_imgui.yy",},
         {"name":"_imgui_get_window_content_region_max","path":"extensions/Ext_imgui/Ext_imgui.yy",},
-        {"name":"imgui_get_window_content_region_width","path":"extensions/Ext_imgui/Ext_imgui.yy",},
         {"name":"imgui_get_scroll_x","path":"extensions/Ext_imgui/Ext_imgui.yy",},
         {"name":"imgui_get_scroll_y","path":"extensions/Ext_imgui/Ext_imgui.yy",},
         {"name":"imgui_get_scroll_max_x","path":"extensions/Ext_imgui/Ext_imgui.yy",},
@@ -1462,8 +1454,6 @@
         {"name":"imgui_set_next_item_open","path":"extensions/Ext_imgui/Ext_imgui.yy",},
         {"name":"_imgui_selectable","path":"extensions/Ext_imgui/Ext_imgui.yy",},
         {"name":"_imgui_list_box","path":"extensions/Ext_imgui/Ext_imgui.yy",},
-        {"name":"imgui_list_box_header","path":"extensions/Ext_imgui/Ext_imgui.yy",},
-        {"name":"imgui_list_box_footer","path":"extensions/Ext_imgui/Ext_imgui.yy",},
         {"name":"_imgui_plot_lines","path":"extensions/Ext_imgui/Ext_imgui.yy",},
         {"name":"_imgui_plot_histogram","path":"extensions/Ext_imgui/Ext_imgui.yy",},
         {"name":"imgui_begin_menu_bar","path":"extensions/Ext_imgui/Ext_imgui.yy",},
@@ -1685,7 +1675,7 @@
         {"name":"_imgui_drawlist_add_text","path":"extensions/Ext_imgui/Ext_imgui.yy",},
         {"name":"_imgui_drawlist_add_polyline","path":"extensions/Ext_imgui/Ext_imgui.yy",},
         {"name":"_imgui_drawlist_add_convex_poly_filled","path":"extensions/Ext_imgui/Ext_imgui.yy",},
-        {"name":"imgui_drawlist_add_bezier_curve","path":"extensions/Ext_imgui/Ext_imgui.yy",},
+        {"name":"imgui_drawlist_add_bezier_cubic_curve","path":"extensions/Ext_imgui/Ext_imgui.yy",},
         {"name":"imgui_drawlist_path_clear","path":"extensions/Ext_imgui/Ext_imgui.yy",},
         {"name":"imgui_drawlist_path_line_to","path":"extensions/Ext_imgui/Ext_imgui.yy",},
         {"name":"imgui_drawlist_path_line_to_merge_duplicate","path":"extensions/Ext_imgui/Ext_imgui.yy",},
@@ -1693,7 +1683,7 @@
         {"name":"imgui_drawlist_path_stroke","path":"extensions/Ext_imgui/Ext_imgui.yy",},
         {"name":"imgui_drawlist_path_arc_to","path":"extensions/Ext_imgui/Ext_imgui.yy",},
         {"name":"imgui_drawlist_path_arc_to_fast","path":"extensions/Ext_imgui/Ext_imgui.yy",},
-        {"name":"imgui_drawlist_path_bezier_curve_to","path":"extensions/Ext_imgui/Ext_imgui.yy",},
+        {"name":"imgui_drawlist_path_bezier_cubic_curve_to","path":"extensions/Ext_imgui/Ext_imgui.yy",},
         {"name":"imgui_drawlist_path_rect","path":"extensions/Ext_imgui/Ext_imgui.yy",},
         {"name":"imgui_fonts_add_font_default","path":"extensions/Ext_imgui/Ext_imgui.yy",},
         {"name":"imgui_fonts_add_font_from_file_ttf","path":"extensions/Ext_imgui/Ext_imgui.yy",},

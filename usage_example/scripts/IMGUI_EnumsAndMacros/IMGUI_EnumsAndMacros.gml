@@ -428,3 +428,34 @@ enum ImGuiCond
     FirstUseEver  = 1 << 2,   // Set the variable if the object/window has no persistently saved data (no entry in .ini file)
     Appearing     = 1 << 3    // Set the variable if the object/window is appearing after being hidden/inactive (or the first time)
 };
+
+//// Flags for ImDrawList functions
+//// (Legacy: bit 0 must always correspond to ImDrawFlags_Closed to be backward compatible with old API using a bool. Bits 1..3 must be unused)
+//enum ImGuiDrawFlags
+//{
+//    None                        = 0,
+//    Closed                      = 1 << 0, // PathStroke(), AddPolyline(): specify that shape should be closed (Important: this is always == 1 for legacy reason)
+//    RoundCornersTopLeft         = 1 << 4, // AddRect(), AddRectFilled(), PathRect(): enable rounding top-left corner only (when rounding > 0.0f, we default to all corners). Was 0x01.
+//    RoundCornersTopRight        = 1 << 5, // AddRect(), AddRectFilled(), PathRect(): enable rounding top-right corner only (when rounding > 0.0f, we default to all corners). Was 0x02.
+//    RoundCornersBottomLeft      = 1 << 6, // AddRect(), AddRectFilled(), PathRect(): enable rounding bottom-left corner only (when rounding > 0.0f, we default to all corners). Was 0x04.
+//    RoundCornersBottomRight     = 1 << 7, // AddRect(), AddRectFilled(), PathRect(): enable rounding bottom-right corner only (when rounding > 0.0f, we default to all corners). Wax 0x08.
+//    RoundCornersNone            = 1 << 8, // AddRect(), AddRectFilled(), PathRect(): disable rounding on all corners (when rounding > 0.0f). This is NOT zero, NOT an implicit flag!
+//    RoundCornersTop             = ImGuiDrawFlags.RoundCornersTopLeft | ImGuiDrawFlags.RoundCornersTopRight,
+//    RoundCornersBottom          = ImGuiDrawFlags.RoundCornersBottomLeft | ImGuiDrawFlags.RoundCornersBottomRight,
+//    RoundCornersLeft            = ImGuiDrawFlags.RoundCornersBottomLeft | ImGuiDrawFlags.RoundCornersTopLeft,
+//    RoundCornersRight           = ImGuiDrawFlags.RoundCornersBottomRight | ImGuiDrawFlags.RoundCornersTopRight,
+//    RoundCornersAll             = ImGuiDrawFlags.RoundCornersTopLeft | ImGuiDrawFlags.RoundCornersTopRight | ImGuiDrawFlags.RoundCornersBottomLeft | ImGuiDrawFlags.RoundCornersBottomRight,
+//    RoundCornersDefault_        = ImGuiDrawFlags.RoundCornersAll, // Default to ALL corners if none of the _RoundCornersXX flags are specified.
+//    RoundCornersMask_           = ImGuiDrawFlags.RoundCornersAll | ImGuiDrawFlags.RoundCornersNone
+//};
+
+//// Flags for ImDrawList instance. Those are set automatically by ImGui:: functions from ImGuiIO settings, and generally not manipulated directly.
+//// It is however possible to temporarily alter flags between calls to ImDrawList:: functions.
+//enum ImGuiDrawListFlags
+//{
+//    None                    = 0,
+//    AntiAliasedLines        = 1 << 0,  // Enable anti-aliased lines/borders (*2 the number of triangles for 1.0f wide line or lines thin enough to be drawn using textures, otherwise *3 the number of triangles)
+//    AntiAliasedLinesUseTex  = 1 << 1,  // Enable anti-aliased lines/borders using textures when possible. Require backend to render with bilinear filtering (NOT point/nearest filtering).
+//    AntiAliasedFill         = 1 << 2,  // Enable anti-aliased edge around filled shapes (rounded rectangles, circles).
+//    AllowVtxOffset          = 1 << 3,  // Can emit 'VtxOffset > 0' to allow large meshes. Set when 'ImGuiBackendFlags_RendererHasVtxOffset' is enabled.
+//};
