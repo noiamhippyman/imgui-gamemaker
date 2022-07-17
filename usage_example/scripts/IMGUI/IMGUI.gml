@@ -973,7 +973,7 @@ function imgui_collapsing_header(label,open,flags) {
 	]);
 }
 
-function imgui_selectable(label,selected,flags,width,height) {
+function imgui_selectable(label,selected,flags=0,width=0,height=0) {
 	buffer_write_args(global.imgui_buffer,[
 		buffer_f32, width,
 		buffer_f32, height,
@@ -1279,8 +1279,7 @@ function imgui_load_image(sprite,name = sprite_get_name(sprite)) {
 }
 
 function imgui_image(name,size,uv0=[0,0],uv1=[1,1],tint_col=[1,1,1,1],border_col=[0,0,0,0]) {
-	
-	
+		
 	buffer_write_args(global.imgui_buffer, [
 		buffer_f32,  size[0],
 		buffer_f32,  size[1],
@@ -1299,4 +1298,26 @@ function imgui_image(name,size,uv0=[0,0],uv1=[1,1],tint_col=[1,1,1,1],border_col
 	]);
 		
 	_imgui_image(name);
+}
+
+function imgui_image_button(name,size,uv0=[0,0],uv1=[1,1],frame_padding=-1,bg_col=[0,0,0,0],tint_col=[1,1,1,1]) {
+	buffer_write_args(global.imgui_buffer, [
+		buffer_f32, size[0],
+		buffer_f32, size[1],
+		buffer_f32, uv0[0],
+		buffer_f32, uv0[1],
+		buffer_f32, uv1[0],
+		buffer_f32, uv1[1],
+		buffer_f32, frame_padding,
+		buffer_f32, bg_col[0],
+		buffer_f32, bg_col[1],
+		buffer_f32, bg_col[2],
+		buffer_f32, bg_col[3],
+		buffer_f32, tint_col[0],
+		buffer_f32, tint_col[1],
+		buffer_f32, tint_col[2],
+		buffer_f32, tint_col[3]
+	]);
+	
+	return _imgui_image_button(name);
 }

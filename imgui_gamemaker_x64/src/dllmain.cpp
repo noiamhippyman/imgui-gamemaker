@@ -3335,6 +3335,34 @@ fn_export double imgui_image(const char* name) {
 	return 0.0;
 }
 
+fn_export double imgui_image_button(const char* name) {
+
+	ext_buffer->seek(0);
+	int imgW = ext_buffer->read_float();
+	int imgH = ext_buffer->read_float();
+	float imgU0 = ext_buffer->read_float();
+	float imgV0 = ext_buffer->read_float();
+	float imgU1 = ext_buffer->read_float();
+	float imgV1 = ext_buffer->read_float();
+	int frame_padding = ext_buffer->read_float();
+	float bgR = ext_buffer->read_float();
+	float bgG = ext_buffer->read_float();
+	float bgB = ext_buffer->read_float();
+	float bgA = ext_buffer->read_float();
+	float tintR = ext_buffer->read_float();
+	float tintG = ext_buffer->read_float();
+	float tintB = ext_buffer->read_float();
+	float tintA = ext_buffer->read_float();
+
+	ID3D11ShaderResourceView* texID = nullptr;
+	if (_imgui_is_image_loaded(name)) {
+		texID = image_map[name];
+	}
+
+	return ImGui::ImageButton(texID, ImVec2(imgW, imgH), ImVec2(imgU0, imgV0), ImVec2(imgU1, imgV1), frame_padding, ImVec4(bgR, bgG, bgB, bgA), ImVec4(tintR, tintG, tintB, tintA));
+}
+
+
 
 // Pretty sure I don't need this.
 BOOL WINAPI DllMain(

@@ -1285,6 +1285,9 @@
             1,
             1,
           ],"resourceVersion":"1.0","name":"_imgui_load_image","tags":[],"resourceType":"GMExtensionFunction",},
+        {"externalName":"imgui_image_button","kind":1,"help":"_imgui_image_button(name);","hidden":false,"returnType":2,"argCount":0,"args":[
+            1,
+          ],"resourceVersion":"1.0","name":"_imgui_image_button","tags":[],"resourceType":"GMExtensionFunction",},
       ],"constants":[],"ProxyFiles":[],"copyToTargets":64,"order":[
         {"name":"_extension_setup","path":"extensions/Ext_imgui/Ext_imgui.yy",},
         {"name":"_extension_cleanup","path":"extensions/Ext_imgui/Ext_imgui.yy",},
@@ -1709,6 +1712,7 @@
         {"name":"imgui_fonts_get_glyph_range_vietnamese","path":"extensions/Ext_imgui/Ext_imgui.yy",},
         {"name":"_imgui_image","path":"extensions/Ext_imgui/Ext_imgui.yy",},
         {"name":"_imgui_load_image","path":"extensions/Ext_imgui/Ext_imgui.yy",},
+        {"name":"_imgui_image_button","path":"extensions/Ext_imgui/Ext_imgui.yy",},
       ],"resourceVersion":"1.0","name":"","tags":[],"resourceType":"GMExtensionFile",},
   ],
   "classname": "",
