@@ -19,15 +19,9 @@
 // Global Variables
 Buffer* ext_buffer = nullptr;
 std::map<std::string,ID3D11ShaderResourceView*> image_map;
-ImVec4 ext_draw_color;
 
 fn_export double extension_setup(void* buffer_ptr, double buffer_size) {
 	ext_buffer = new Buffer(buffer_ptr, buffer_size);
-
-	ext_draw_color.x = 1.0;
-	ext_draw_color.y = 1.0;
-	ext_draw_color.z = 1.0;
-	ext_draw_color.w = 1.0;
 
 	return 0.0;
 }
@@ -948,10 +942,6 @@ fn_export double imgui_get_window_content_region_max() {
 
 	return 0.0;
 }
-
-//fn_export double imgui_get_window_content_region_width() {
-//	return ImGui::GetWindowContentRegionWidth();
-//}
 
 
 // Windows Scrolling
