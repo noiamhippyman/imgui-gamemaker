@@ -16,7 +16,7 @@ function buffer_write_args(buffer,args) {
 		if (is_array(val)) {
 			var val_count = array_length(val);
 			for (var j = 0; j < val_count; ++j) {
-				var v = val[j];
+				var v = val[(val_count-1)-j];
 				buffer_poke(buffer,offset,type,v);
 				switch (type) {
 					case buffer_f32:
@@ -486,22 +486,418 @@ function imgui_progress_bar(fraction,size=[-1,0],overlay=imgui_null()) {
 	_imgui_progress_bar(overlay);
 }
 
+function imgui_begin_combo(label,preview_value,flags=0) {
+	return _imgui_begin_combo(label,preview_value,flags);
+}
 
+function imgui_combo(label,current_item,items,item_count,popup_max_height_in_items=-1) {
+	buffer_write_args(global.imgui_buffer,[
+		buffer_f32, popup_max_height_in_items,
+		buffer_f32, current_item,
+		buffer_f32, item_count,
+		buffer_string, items
+	]);
+	
+	_imgui_combo(label);
+	
+	return buffer_return(global.imgui_buffer,[
+		buffer_f32, // Changed
+		buffer_f32 // Current Item
+	]);
+}
 
+function imgui_drag_float(label,v,v_speed=1,v_min=0,v_max=0,format="%.3f",flags=0) {
+	buffer_write_args(global.imgui_buffer,[
+		buffer_f32, v,
+		buffer_f32, v_speed,
+		buffer_f32, v_min,
+		buffer_f32, v_max,
+		buffer_f32, flags
+	]);
+	
+	_imgui_drag_float(label,format);
+	
+	return buffer_return(global.imgui_buffer,[
+		buffer_f32, // Changed
+		buffer_f32  // V
+	]);
+}
 
+function imgui_drag_float2(label,v,v_speed=1,v_min=0,v_max=0,format="%.3f",flags=0) {
+	buffer_write_args(global.imgui_buffer,[
+		buffer_f32, v,
+		buffer_f32, v_speed,
+		buffer_f32, v_min,
+		buffer_f32, v_max,
+		buffer_f32, flags
+	]);
+	
+	_imgui_drag_float2(label,format);
+	
+	return buffer_return(global.imgui_buffer,[
+		buffer_f32, // Changed
+		buffer_f32, // V[0]
+		buffer_f32  // V[1]
+	]);
+}
 
+function imgui_drag_float3(label,v,v_speed=1,v_min=0,v_max=0,format="%.3f",flags=0) {
+	buffer_write_args(global.imgui_buffer,[
+		buffer_f32, v,
+		buffer_f32, v_speed,
+		buffer_f32, v_min,
+		buffer_f32, v_max,
+		buffer_f32, flags
+	]);
+	
+	_imgui_drag_float3(label,format);
+	
+	return buffer_return(global.imgui_buffer,[
+		buffer_f32, // Changed
+		buffer_f32, // V[0]
+		buffer_f32, // V[1]
+		buffer_f32  // V[2]
+	]);
+}
 
+function imgui_drag_float4(label,v,v_speed=1,v_min=0,v_max=0,format="%.3f",flags=0) {
+	buffer_write_args(global.imgui_buffer,[
+		buffer_f32, v,
+		buffer_f32, v_speed,
+		buffer_f32, v_min,
+		buffer_f32, v_max,
+		buffer_f32, flags
+	]);
+	
+	_imgui_drag_float4(label,format);
+	
+	return buffer_return(global.imgui_buffer,[
+		buffer_f32, // Changed
+		buffer_f32, // V[0]
+		buffer_f32, // V[1]
+		buffer_f32, // V[2]
+		buffer_f32  // V[3]
+	]);
+}
 
+function imgui_drag_float_range2(label,v_current_min,v_current_max,v_speed=1,v_min=0,v_max=0,format="%.3f",format_max=imgui_null(),flags=0) {
+	buffer_write_args(global.imgui_buffer,[
+		buffer_f32, v_current_min,
+		buffer_f32, v_current_max,
+		buffer_f32, v_speed,
+		buffer_f32, v_min,
+		buffer_f32, v_max,
+		buffer_f32, flags
+	]);
+	
+	_imgui_drag_float_range2(label,format,format_max);
+	
+	return buffer_return(global.imgui_buffer,[
+		buffer_f32, // Changed
+		buffer_f32, // Current Min
+		buffer_f32  // Current Max
+	]);
+}
 
+function imgui_drag_int(label,v,v_speed=1,v_min=0,v_max=0,format="%d",flags=0) {
+	buffer_write_args(global.imgui_buffer,[
+		buffer_f32, v,
+		buffer_f32, v_speed,
+		buffer_f32, v_min,
+		buffer_f32, v_max,
+		buffer_f32, flags
+	]);
+	
+	_imgui_drag_int(label,format);
+	
+	return buffer_return(global.imgui_buffer,[
+		buffer_f32, // Changed
+		buffer_f32  // V
+	]);
+}
 
+function imgui_drag_int2(label,v,v_speed=1,v_min=0,v_max=0,format="%d",flags=0) {
+	buffer_write_args(global.imgui_buffer,[
+		buffer_f32, v,
+		buffer_f32, v_speed,
+		buffer_f32, v_min,
+		buffer_f32, v_max,
+		buffer_f32, flags
+	]);
+	
+	_imgui_drag_int2(label,format);
+	
+	return buffer_return(global.imgui_buffer,[
+		buffer_f32, // Changed
+		buffer_f32, // V[0]
+		buffer_f32  // V[1]
+	]);
+}
 
+function imgui_drag_int3(label,v,v_speed=1,v_min=0,v_max=0,format="%d",flags=0) {
+	buffer_write_args(global.imgui_buffer,[
+		buffer_f32, v,
+		buffer_f32, v_speed,
+		buffer_f32, v_min,
+		buffer_f32, v_max,
+		buffer_f32, flags
+	]);
+	
+	_imgui_drag_int3(label,format);
+	
+	return buffer_return(global.imgui_buffer,[
+		buffer_f32, // Changed
+		buffer_f32, // V[0]
+		buffer_f32, // V[1]
+		buffer_f32  // V[2]
+	]);
+}
 
+function imgui_drag_int4(label,v,v_speed=1,v_min=0,v_max=0,format="%d",flags=0) {
+	buffer_write_args(global.imgui_buffer,[
+		buffer_f32, v,
+		buffer_f32, v_speed,
+		buffer_f32, v_min,
+		buffer_f32, v_max,
+		buffer_f32, flags
+	]);
+	
+	_imgui_drag_int4(label,format);
+	
+	return buffer_return(global.imgui_buffer,[
+		buffer_f32, // Changed
+		buffer_f32, // V[0]
+		buffer_f32, // V[1]
+		buffer_f32, // V[2]
+		buffer_f32  // V[3]
+	]);
+}
 
+function imgui_drag_int_range2(label,v_current_min,v_current_max,v_speed=1,v_min=0,v_max=0,format="%d",format_max=imgui_null(),flags=0) {
+	buffer_write_args(global.imgui_buffer,[
+		buffer_f32, v_current_min,
+		buffer_f32, v_current_max,
+		buffer_f32, v_speed,
+		buffer_f32, v_min,
+		buffer_f32, v_max,
+		buffer_f32, flags
+	]);
+	
+	_imgui_drag_int_range2(label,format,format_max);
+	
+	return buffer_return(global.imgui_buffer,[
+		buffer_f32, // Changed
+		buffer_f32, // Current Min
+		buffer_f32  // Current Max
+	]);
+}
 
+//function imgui_drag_scalar_s8(label,v,v_speed=1,v_min=0,v_max=0,format=imgui_null(),flags=0) {
+//	buffer_write_args(global.imgui_buffer,[
+//		buffer_f32,v,
+//		buffer_f32,v_speed,
+//		buffer_f32,v_min,
+//		buffer_f32,v_max,
+//		buffer_f32,flags
+//	]);
+	
+//	_imgui_drag_scalar_s8(label,format);
+	
+//	return buffer_return(global.imgui_buffer,[
+//		buffer_f32, // Changed
+//		buffer_f32  // Current Value (v)
+//	]);
+//}
 
+function imgui_slider_float(label,v,v_speed=1,v_min=0,v_max=0,format="%.3f",flags=0) {
+	buffer_write_args(global.imgui_buffer,[
+		buffer_f32, v,
+		buffer_f32, v_min,
+		buffer_f32, v_max,
+		buffer_f32, flags
+	]);
+	
+	_imgui_slider_float(label,format);
+	
+	return buffer_return(global.imgui_buffer,[
+		buffer_f32, // Changed
+		buffer_f32  // V
+	]);
+}
 
+function imgui_slider_float2(label,v,v_speed=1,v_min=0,v_max=0,format="%.3f",flags=0) {
+	buffer_write_args(global.imgui_buffer,[
+		buffer_f32, v,
+		buffer_f32, v_min,
+		buffer_f32, v_max,
+		buffer_f32, flags
+	]);
+	
+	_imgui_slider_float2(label,format);
+	
+	return buffer_return(global.imgui_buffer,[
+		buffer_f32, // Changed
+		buffer_f32, // V[0]
+		buffer_f32  // V[1]
+	]);
+}
 
+function imgui_slider_float3(label,v,v_speed=1,v_min=0,v_max=0,format="%.3f",flags=0) {
+	buffer_write_args(global.imgui_buffer,[
+		buffer_f32, v,
+		buffer_f32, v_min,
+		buffer_f32, v_max,
+		buffer_f32, flags
+	]);
+	
+	_imgui_slider_float3(label,format);
+	
+	return buffer_return(global.imgui_buffer,[
+		buffer_f32, // Changed
+		buffer_f32, // V[0]
+		buffer_f32, // V[1]
+		buffer_f32  // V[2]
+	]);
+}
 
+function imgui_slider_float4(label,v,v_speed=1,v_min=0,v_max=0,format="%.3f",flags=0) {
+	buffer_write_args(global.imgui_buffer,[
+		buffer_f32, v,
+		buffer_f32, v_min,
+		buffer_f32, v_max,
+		buffer_f32, flags
+	]);
+	
+	_imgui_slider_float4(label,format);
+	
+	return buffer_return(global.imgui_buffer,[
+		buffer_f32, // Changed
+		buffer_f32, // V[0]
+		buffer_f32, // V[1]
+		buffer_f32, // V[2]
+		buffer_f32  // V[3]
+	]);
+}
+
+function imgui_slider_angle(label,v_rad,v_degrees_min=-360,v_degrees_max=360,format="%.0f deg",flags=0) {
+	buffer_write_args(global.imgui_buffer,[
+		buffer_f32, v_rad,
+		buffer_f32, v_degrees_min,
+		buffer_f32, v_degrees_max,
+		buffer_f32, flags
+	]);
+	
+	_imgui_slider_angle(label,format);
+	
+	return buffer_return(global.imgui_buffer,[
+		buffer_f32, // Changed
+		buffer_f32, // Radians
+	]);
+}
+
+function imgui_slider_int(label,v,v_speed=1,v_min=0,v_max=0,format="%d",flags=0) {
+	buffer_write_args(global.imgui_buffer,[
+		buffer_f32, v,
+		buffer_f32, v_min,
+		buffer_f32, v_max,
+		buffer_f32, flags
+	]);
+	
+	_imgui_slider_int(label,format);
+	
+	return buffer_return(global.imgui_buffer,[
+		buffer_f32, // Changed
+		buffer_f32  // V
+	]);
+}
+
+function imgui_slider_int2(label,v,v_speed=1,v_min=0,v_max=0,format="%d",flags=0) {
+	buffer_write_args(global.imgui_buffer,[
+		buffer_f32, v,
+		buffer_f32, v_min,
+		buffer_f32, v_max,
+		buffer_f32, flags
+	]);
+	
+	_imgui_slider_int2(label,format);
+	
+	return buffer_return(global.imgui_buffer,[
+		buffer_f32, // Changed
+		buffer_f32, // V[0]
+		buffer_f32  // V[1]
+	]);
+}
+
+function imgui_slider_int3(label,v,v_speed=1,v_min=0,v_max=0,format="%d",flags=0) {
+	buffer_write_args(global.imgui_buffer,[
+		buffer_f32, v,
+		buffer_f32, v_min,
+		buffer_f32, v_max,
+		buffer_f32, flags
+	]);
+	
+	_imgui_slider_int3(label,format);
+	
+	return buffer_return(global.imgui_buffer,[
+		buffer_f32, // Changed
+		buffer_f32, // V[0]
+		buffer_f32, // V[1]
+		buffer_f32  // V[2]
+	]);
+}
+
+function imgui_slider_int4(label,v,v_speed=1,v_min=0,v_max=0,format="%d",flags=0) {
+	buffer_write_args(global.imgui_buffer,[
+		buffer_f32, v,
+		buffer_f32, v_min,
+		buffer_f32, v_max,
+		buffer_f32, flags
+	]);
+	
+	_imgui_slider_int4(label,format);
+	
+	return buffer_return(global.imgui_buffer,[
+		buffer_f32, // Changed
+		buffer_f32, // V[0]
+		buffer_f32, // V[1]
+		buffer_f32, // V[2]
+		buffer_f32  // V[3]
+	]);
+}
+
+function imgui_vslider_float(label,size,v,v_min,v_max,format="%.3f",flags=0) {
+	buffer_write_args(global.imgui_buffer,[
+		buffer_f32, size,
+		buffer_f32, v,
+		buffer_f32, v_min,
+		buffer_f32, v_max,
+		buffer_f32, flags
+	]);
+	
+	_imgui_vslider_float(label,format);
+	
+	return buffer_return(global.imgui_buffer,[
+		buffer_f32, // Changed
+		buffer_f32  // Value
+	]);
+}
+
+function imgui_vslider_int(label,size,v,v_min,v_max,format="%d",flags=0) {
+	buffer_write_args(global.imgui_buffer,[
+		buffer_f32, size,
+		buffer_f32, v,
+		buffer_f32, v_min,
+		buffer_f32, v_max,
+		buffer_f32, flags
+	]);
+	
+	_imgui_vslider_int(label,format);
+	
+	return buffer_return(global.imgui_buffer,[
+		buffer_f32, // Changed
+		buffer_f32  // Value
+	]);
+}
 
 
 

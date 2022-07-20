@@ -356,21 +356,21 @@ enum ImGuiDragDropFlags
 #macro IMGUI_PAYLOAD_TYPE_COLOR_3F     "_COL3F"    // float[3]: Standard type for colors, without alpha. User code may use this type.
 #macro IMGUI_PAYLOAD_TYPE_COLOR_4F     "_COL4F"    // float[4]: Standard type for colors. User code may use this type.
 
-// A primary data type (probably don't need these for GML side)
-//enum ImGuiDataType
-//{
-//    S8,       // signed char / char (with sensible compilers)
-//    U8,       // unsigned char
-//    S16,      // short
-//    U16,      // unsigned short
-//    S32,      // int
-//    U32,      // unsigned int
-//    S64,      // long long / __int64
-//    U64,      // unsigned long long / unsigned __int64
-//    Float,    // float
-//    Double,   // double
-//    COUNT
-//};
+// A primary data type
+enum ImGuiDataType
+{
+    S8,       // signed char / char (with sensible compilers)
+    U8,       // unsigned char
+    S16,      // short
+    U16,      // unsigned short
+    S32,      // int
+    U32,      // unsigned int
+    S64,      // long long / __int64
+    U64,      // unsigned long long / unsigned __int64
+    Float,    // float
+    Double,   // double
+    COUNT
+};
 
 // A cardinal direction
 enum ImGuiDir

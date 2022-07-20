@@ -283,6 +283,101 @@
             1,
           ],"resourceVersion":"1.0","name":"_imgui_progress_bar","tags":[],"resourceType":"GMExtensionFunction",},
         {"externalName":"imgui_bullet","kind":1,"help":"imgui_bullet()","hidden":false,"returnType":2,"argCount":0,"args":[],"resourceVersion":"1.0","name":"imgui_bullet","tags":[],"resourceType":"GMExtensionFunction",},
+        {"externalName":"_imgui_begin_combo","kind":1,"help":"_imgui_begin_combo(label,preview_value,flags)","hidden":false,"returnType":2,"argCount":0,"args":[
+            1,
+            1,
+            2,
+          ],"resourceVersion":"1.0","name":"_imgui_begin_combo","tags":[],"resourceType":"GMExtensionFunction",},
+        {"externalName":"imgui_end_combo","kind":1,"help":"imgui_end_combo()","hidden":false,"returnType":2,"argCount":0,"args":[],"resourceVersion":"1.0","name":"imgui_end_combo","tags":[],"resourceType":"GMExtensionFunction",},
+        {"externalName":"_imgui_combo","kind":1,"help":"_imgui_combo(label)","hidden":false,"returnType":2,"argCount":0,"args":[
+            1,
+          ],"resourceVersion":"1.0","name":"_imgui_combo","tags":[],"resourceType":"GMExtensionFunction",},
+        {"externalName":"_imgui_drag_float","kind":1,"help":"_imgui_drag_float(label,format)","hidden":false,"returnType":2,"argCount":0,"args":[
+            1,
+            1,
+          ],"resourceVersion":"1.0","name":"_imgui_drag_float","tags":[],"resourceType":"GMExtensionFunction",},
+        {"externalName":"_imgui_drag_float2","kind":1,"help":"_imgui_drag_float2(label,format)","hidden":false,"returnType":2,"argCount":0,"args":[
+            1,
+            1,
+          ],"resourceVersion":"1.0","name":"_imgui_drag_float2","tags":[],"resourceType":"GMExtensionFunction",},
+        {"externalName":"_imgui_drag_float3","kind":1,"help":"_imgui_drag_float3(label,format)","hidden":false,"returnType":2,"argCount":0,"args":[
+            1,
+            1,
+          ],"resourceVersion":"1.0","name":"_imgui_drag_float3","tags":[],"resourceType":"GMExtensionFunction",},
+        {"externalName":"_imgui_drag_float4","kind":1,"help":"_imgui_drag_float4(label,format)","hidden":false,"returnType":2,"argCount":0,"args":[
+            1,
+            1,
+          ],"resourceVersion":"1.0","name":"_imgui_drag_float4","tags":[],"resourceType":"GMExtensionFunction",},
+        {"externalName":"_imgui_drag_float_range2","kind":1,"help":"_imgui_drag_float_range2(label,format,format_max)","hidden":false,"returnType":2,"argCount":0,"args":[
+            1,
+            1,
+            1,
+          ],"resourceVersion":"1.0","name":"_imgui_drag_float_range2","tags":[],"resourceType":"GMExtensionFunction",},
+        {"externalName":"_imgui_drag_int","kind":1,"help":"_imgui_drag_int(label,format)","hidden":false,"returnType":2,"argCount":0,"args":[
+            1,
+            1,
+          ],"resourceVersion":"1.0","name":"_imgui_drag_int","tags":[],"resourceType":"GMExtensionFunction",},
+        {"externalName":"_imgui_drag_int2","kind":1,"help":"_imgui_drag_int2(label,format)","hidden":false,"returnType":2,"argCount":0,"args":[
+            1,
+            1,
+          ],"resourceVersion":"1.0","name":"_imgui_drag_int2","tags":[],"resourceType":"GMExtensionFunction",},
+        {"externalName":"_imgui_drag_int3","kind":1,"help":"_imgui_drag_int3(label,format)","hidden":false,"returnType":2,"argCount":0,"args":[
+            1,
+            1,
+          ],"resourceVersion":"1.0","name":"_imgui_drag_int3","tags":[],"resourceType":"GMExtensionFunction",},
+        {"externalName":"_imgui_drag_int4","kind":1,"help":"_imgui_drag_int4(label,format)","hidden":false,"returnType":2,"argCount":0,"args":[
+            1,
+            1,
+          ],"resourceVersion":"1.0","name":"_imgui_drag_int4","tags":[],"resourceType":"GMExtensionFunction",},
+        {"externalName":"_imgui_drag_int_range2","kind":1,"help":"_imgui_drag_int_range2(label,format,format_max)","hidden":false,"returnType":2,"argCount":0,"args":[
+            1,
+            1,
+            1,
+          ],"resourceVersion":"1.0","name":"_imgui_drag_int_range2","tags":[],"resourceType":"GMExtensionFunction",},
+        {"externalName":"_imgui_slider_float","kind":1,"help":"_imgui_slider_float(label,format)","hidden":false,"returnType":2,"argCount":0,"args":[
+            1,
+            1,
+          ],"resourceVersion":"1.0","name":"_imgui_slider_float","tags":[],"resourceType":"GMExtensionFunction",},
+        {"externalName":"_imgui_slider_float2","kind":1,"help":"_imgui_slider_float2(label,format)","hidden":false,"returnType":2,"argCount":0,"args":[
+            1,
+            1,
+          ],"resourceVersion":"1.0","name":"_imgui_slider_float2","tags":[],"resourceType":"GMExtensionFunction",},
+        {"externalName":"_imgui_slider_float3","kind":1,"help":"_imgui_slider_float3(label,format)","hidden":false,"returnType":2,"argCount":0,"args":[
+            1,
+            1,
+          ],"resourceVersion":"1.0","name":"_imgui_slider_float3","tags":[],"resourceType":"GMExtensionFunction",},
+        {"externalName":"_imgui_slider_float4","kind":1,"help":"_imgui_slider_float4(label,format)","hidden":false,"returnType":2,"argCount":0,"args":[
+            1,
+            1,
+          ],"resourceVersion":"1.0","name":"_imgui_slider_float4","tags":[],"resourceType":"GMExtensionFunction",},
+        {"externalName":"_imgui_slider_angle","kind":1,"help":"_imgui_slider_angle(label,format)","hidden":false,"returnType":2,"argCount":0,"args":[
+            1,
+            1,
+          ],"resourceVersion":"1.0","name":"_imgui_slider_angle","tags":[],"resourceType":"GMExtensionFunction",},
+        {"externalName":"_imgui_slider_int","kind":1,"help":"_imgui_slider_int(label,format)","hidden":false,"returnType":2,"argCount":0,"args":[
+            1,
+            1,
+          ],"resourceVersion":"1.0","name":"_imgui_slider_int","tags":[],"resourceType":"GMExtensionFunction",},
+        {"externalName":"_imgui_slider_int2","kind":1,"help":"_imgui_slider_int2(label,format)","hidden":false,"returnType":2,"argCount":0,"args":[
+            1,
+            1,
+          ],"resourceVersion":"1.0","name":"_imgui_slider_int2","tags":[],"resourceType":"GMExtensionFunction",},
+        {"externalName":"_imgui_slider_int3","kind":1,"help":"_imgui_slider_int3(label,format)","hidden":false,"returnType":2,"argCount":0,"args":[
+            1,
+            1,
+          ],"resourceVersion":"1.0","name":"_imgui_slider_int3","tags":[],"resourceType":"GMExtensionFunction",},
+        {"externalName":"_imgui_slider_int4","kind":1,"help":"_imgui_slider_int4(label,format)","hidden":false,"returnType":2,"argCount":0,"args":[
+            1,
+            1,
+          ],"resourceVersion":"1.0","name":"_imgui_slider_int4","tags":[],"resourceType":"GMExtensionFunction",},
+        {"externalName":"_imgui_vslider_float","kind":1,"help":"_imgui_vslider_float(label,format)","hidden":false,"returnType":2,"argCount":0,"args":[
+            1,
+            1,
+          ],"resourceVersion":"1.0","name":"_imgui_vslider_float","tags":[],"resourceType":"GMExtensionFunction",},
+        {"externalName":"_imgui_vslider_int","kind":1,"help":"_imgui_vslider_int(label,format)","hidden":false,"returnType":2,"argCount":0,"args":[
+            1,
+            1,
+          ],"resourceVersion":"1.0","name":"_imgui_vslider_int","tags":[],"resourceType":"GMExtensionFunction",},
       ],"constants":[],"ProxyFiles":[],"copyToTargets":-1,"order":[
         {"name":"imgui_null","path":"extensions/Ext_ImGui/Ext_ImGui.yy",},
         {"name":"imgui_load_image","path":"extensions/Ext_ImGui/Ext_ImGui.yy",},
@@ -414,6 +509,30 @@
         {"name":"_imgui_radio_button_int","path":"extensions/Ext_ImGui/Ext_ImGui.yy",},
         {"name":"_imgui_progress_bar","path":"extensions/Ext_ImGui/Ext_ImGui.yy",},
         {"name":"imgui_bullet","path":"extensions/Ext_ImGui/Ext_ImGui.yy",},
+        {"name":"_imgui_begin_combo","path":"extensions/Ext_ImGui/Ext_ImGui.yy",},
+        {"name":"imgui_end_combo","path":"extensions/Ext_ImGui/Ext_ImGui.yy",},
+        {"name":"_imgui_combo","path":"extensions/Ext_ImGui/Ext_ImGui.yy",},
+        {"name":"_imgui_drag_float","path":"extensions/Ext_ImGui/Ext_ImGui.yy",},
+        {"name":"_imgui_drag_float2","path":"extensions/Ext_ImGui/Ext_ImGui.yy",},
+        {"name":"_imgui_drag_float3","path":"extensions/Ext_ImGui/Ext_ImGui.yy",},
+        {"name":"_imgui_drag_float4","path":"extensions/Ext_ImGui/Ext_ImGui.yy",},
+        {"name":"_imgui_drag_float_range2","path":"extensions/Ext_ImGui/Ext_ImGui.yy",},
+        {"name":"_imgui_drag_int","path":"extensions/Ext_ImGui/Ext_ImGui.yy",},
+        {"name":"_imgui_drag_int2","path":"extensions/Ext_ImGui/Ext_ImGui.yy",},
+        {"name":"_imgui_drag_int3","path":"extensions/Ext_ImGui/Ext_ImGui.yy",},
+        {"name":"_imgui_drag_int4","path":"extensions/Ext_ImGui/Ext_ImGui.yy",},
+        {"name":"_imgui_drag_int_range2","path":"extensions/Ext_ImGui/Ext_ImGui.yy",},
+        {"name":"_imgui_slider_float","path":"extensions/Ext_ImGui/Ext_ImGui.yy",},
+        {"name":"_imgui_slider_float2","path":"extensions/Ext_ImGui/Ext_ImGui.yy",},
+        {"name":"_imgui_slider_float3","path":"extensions/Ext_ImGui/Ext_ImGui.yy",},
+        {"name":"_imgui_slider_float4","path":"extensions/Ext_ImGui/Ext_ImGui.yy",},
+        {"name":"_imgui_slider_angle","path":"extensions/Ext_ImGui/Ext_ImGui.yy",},
+        {"name":"_imgui_slider_int","path":"extensions/Ext_ImGui/Ext_ImGui.yy",},
+        {"name":"_imgui_slider_int2","path":"extensions/Ext_ImGui/Ext_ImGui.yy",},
+        {"name":"_imgui_slider_int3","path":"extensions/Ext_ImGui/Ext_ImGui.yy",},
+        {"name":"_imgui_slider_int4","path":"extensions/Ext_ImGui/Ext_ImGui.yy",},
+        {"name":"_imgui_vslider_float","path":"extensions/Ext_ImGui/Ext_ImGui.yy",},
+        {"name":"_imgui_vslider_int","path":"extensions/Ext_ImGui/Ext_ImGui.yy",},
       ],"resourceVersion":"1.0","name":"","tags":[],"resourceType":"GMExtensionFile",},
   ],
   "classname": "",
