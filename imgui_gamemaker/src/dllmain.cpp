@@ -20,6 +20,60 @@
 Buffer* ext_buffer = nullptr;
 std::map<std::string, ID3D11ShaderResourceView*> ext_loaded_image_map;
 
+fn_export const char* imgui_null() {
+	return (const char*)0;
+}
+
+bool _imgui_is_image_loaded(const char* name) {
+	return ext_loaded_image_map.count(name) > 0;
+}
+
+fn_export double imgui_load_image(const char* name, void* buffer_ptr, void* d3d_device) {
+	if (_imgui_is_image_loaded(name)) return 0.0;
+
+	unsigned char* image_data = (unsigned char*)buffer_ptr;
+	ID3D11Device* device = (ID3D11Device*)d3d_device;
+
+	ext_buffer->seek(0);
+	int imgW = ext_buffer->read_float();
+	int imgH = ext_buffer->read_float();
+
+	// Create texture
+	D3D11_TEXTURE2D_DESC desc;
+	ZeroMemory(&desc, sizeof(desc));
+	desc.Width = imgW;
+	desc.Height = imgH;
+	desc.MipLevels = 1;
+	desc.ArraySize = 1;
+	desc.Format = DXGI_FORMAT_R8G8B8A8_UNORM;
+	desc.SampleDesc.Count = 1;
+	desc.Usage = D3D11_USAGE_DEFAULT;
+	desc.BindFlags = D3D11_BIND_SHADER_RESOURCE;
+	desc.CPUAccessFlags = 0;
+
+	ID3D11Texture2D* pTexture = nullptr;
+	D3D11_SUBRESOURCE_DATA subResource;
+	subResource.pSysMem = image_data;
+	subResource.SysMemPitch = desc.Width * 4;
+	subResource.SysMemSlicePitch = 0;
+	device->CreateTexture2D(&desc, &subResource, &pTexture);
+
+	// Create texture view
+	D3D11_SHADER_RESOURCE_VIEW_DESC srvDesc;
+	ID3D11ShaderResourceView* texID;
+	ZeroMemory(&srvDesc, sizeof(srvDesc));
+	srvDesc.Format = DXGI_FORMAT_R8G8B8A8_UNORM;
+	srvDesc.ViewDimension = D3D11_SRV_DIMENSION_TEXTURE2D;
+	srvDesc.Texture2D.MipLevels = desc.MipLevels;
+	srvDesc.Texture2D.MostDetailedMip = 0;
+	device->CreateShaderResourceView(pTexture, &srvDesc, &texID);
+	pTexture->Release();
+
+	ext_loaded_image_map[name] = texID;
+
+	return 0.0;
+}
+
 fn_export double _extension_setup(void* buffer_ptr, double buffer_size) {
 	ext_buffer = new Buffer(buffer_ptr, buffer_size);
 
@@ -748,8 +802,155 @@ fn_export double imgui_get_id_begin_end(const char* str_id_begin, const char* st
 }
 
 
+// Widgets: Text
+fn_export double _imgui_text_unformatted(const char* text, const char* text_end) {
+	ImGui::TextUnformatted(text,text_end);
+	return 0.0;
+}
+
+fn_export double imgui_text(const char* text) {
+	ImGui::Text(text);
+	return 0.0;
+}
+
+fn_export double _imgui_text_colored(const char* text) {
+	ext_buffer->seek(0);
+	ImVec4 col( ext_buffer->read_float(), ext_buffer->read_float(), ext_buffer->read_float(), ext_buffer->read_float() );
+	ImGui::TextColored(col, text);
+	return 0.0;
+}
+
+fn_export double imgui_text_disabled(const char* text) {
+	ImGui::TextDisabled(text);
+	return 0.0;
+}
+
+fn_export double imgui_text_wrapped(const char* text) {
+	ImGui::TextWrapped(text);
+	return 0.0;
+}
+
+fn_export double imgui_label_text(const char* label, const char* text) {
+	ImGui::LabelText(label, text);
+	return 0.0;
+}
+
+fn_export double imgui_bullet_text(const char* text) {
+	ImGui::BulletText(text);
+	return 0.0;
+}
 
 
+// Widgets: Main
+fn_export double _imgui_button(const char* label) {
+	ext_buffer->seek(0);
+	ImVec2 size(ext_buffer->read_float(), ext_buffer->read_float());
+	return ImGui::Button(label, size);
+}
+
+fn_export double imgui_small_button(const char* label) {
+	return ImGui::SmallButton(label);
+}
+
+fn_export double _imgui_invisible_button(const char* str_id) {
+	ext_buffer->seek(0);
+	ImVec2 size(ext_buffer->read_float(), ext_buffer->read_float());
+	ImGuiButtonFlags flags = ext_buffer->read_float();
+	return ImGui::InvisibleButton(str_id, size, flags);
+}
+
+// using ImGuiDir
+fn_export double imgui_arrow_button(const char* str_id, double dir) {
+	return ImGui::ArrowButton(str_id, dir);
+}
+
+fn_export double _imgui_image(const char* name) {
+
+	ext_buffer->seek(0);
+	ImVec2 size(ext_buffer->read_float(), ext_buffer->read_float());
+	ImVec2 uv0(ext_buffer->read_float(), ext_buffer->read_float());
+	ImVec2 uv1(ext_buffer->read_float(), ext_buffer->read_float());
+	ImVec4 tint_col(ext_buffer->read_float(), ext_buffer->read_float(), ext_buffer->read_float(), ext_buffer->read_float());
+	ImVec4 border_col(ext_buffer->read_float(), ext_buffer->read_float(), ext_buffer->read_float(), ext_buffer->read_float());
+
+	ID3D11ShaderResourceView* texID = nullptr;
+	if (_imgui_is_image_loaded(name)) {
+		texID = ext_loaded_image_map[name];
+	}
+
+	ImGui::Image(texID, size, uv0, uv1, tint_col, border_col);
+
+	return 0.0;
+}
+
+fn_export double _imgui_image_button(const char* name) {
+
+	ext_buffer->seek(0);
+	ImVec2 size(ext_buffer->read_float(), ext_buffer->read_float());
+	ImVec2 uv0(ext_buffer->read_float(), ext_buffer->read_float());
+	ImVec2 uv1(ext_buffer->read_float(), ext_buffer->read_float());
+	int frame_padding = ext_buffer->read_float();
+	ImVec4 bg_col(ext_buffer->read_float(), ext_buffer->read_float(), ext_buffer->read_float(), ext_buffer->read_float());
+	ImVec4 tint_col(ext_buffer->read_float(), ext_buffer->read_float(), ext_buffer->read_float(), ext_buffer->read_float());
+
+	ID3D11ShaderResourceView* texID = nullptr;
+	if (_imgui_is_image_loaded(name)) {
+		texID = ext_loaded_image_map[name];
+	}
+
+	return ImGui::ImageButton(texID, size, uv0, uv1, frame_padding, bg_col, tint_col);
+}
+
+fn_export double _imgui_checkbox(const char* label, double checked) {
+	bool v = checked;
+	bool changed = ImGui::Checkbox(label, &v);
+
+	ext_buffer->seek(0);
+	ext_buffer->write(changed);
+	ext_buffer->write(v);
+
+	return 0.0;
+}
+
+fn_export double _imgui_checkbox_flags(const char* label, double flags, double flags_value) {
+	int _flags = flags;
+	bool changed = ImGui::CheckboxFlags(label, &_flags, flags_value);
+
+	ext_buffer->seek(0);
+	ext_buffer->write(changed);
+	ext_buffer->write(_flags);
+
+	return 0.0;
+}
+
+fn_export double imgui_radio_button(const char* label, double active) {
+	return ImGui::RadioButton(label, active);
+}
+
+fn_export double _imgui_radio_button_int(const char* label, double v, double v_button) {
+	int iv = v;
+	int iv_button = v_button;
+	bool changed = ImGui::RadioButton(label, &iv, iv_button);
+
+	ext_buffer->seek(0);
+	ext_buffer->write(changed);
+	ext_buffer->write(iv);
+
+	return 0.0;
+}
+
+fn_export double _imgui_progress_bar(const char* overlay) {
+	ext_buffer->seek(0);
+	float fraction = ext_buffer->read_float();
+	ImVec2 size(ext_buffer->read_float(), ext_buffer->read_float());
+	ImGui::ProgressBar(fraction, size, overlay);
+	return 0.0;
+}
+
+fn_export double imgui_bullet() {
+	ImGui::Bullet();
+	return 0.0;
+}
 
 //-----------------------------------------------------------------------------
 // [SECTION] ImGuiStyle

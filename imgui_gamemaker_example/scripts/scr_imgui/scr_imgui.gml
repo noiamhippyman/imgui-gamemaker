@@ -399,13 +399,92 @@ function imgui_set_cursor_screen_pos(pos) {
 	_imgui_set_cursor_screen_pos();
 }
 
+function imgui_text_unformatted(text,text_end=imgui_null()) {
+	_imgui_text_unformatted(text,text_end);
+}
 
+function imgui_text_colored(col,text) {
+	buffer_write_args(global.imgui_buffer,[
+		buffer_f32,col
+	]);
+	_imgui_text_colored(text);
+}
 
+function imgui_button(label,size=[0,0]) {
+	buffer_write_args(global.imgui_buffer,[
+		buffer_f32,size
+	]);
+	return _imgui_button(label);
+}
 
+function imgui_invisible_button(str_id,size,flags=0) {
+	buffer_write_args(global.imgui_buffer,[
+		buffer_f32,size,
+		buffer_f32,flags
+	]);
+	return _imgui_invisible_button(str_id);
+}
 
+function imgui_image(name,size,uv0=[0,0],uv1=[1,1],tint_col=[1,1,1,1],border_col=[0,0,0,0]) {
+	buffer_write_args(global.imgui_buffer,[
+		buffer_f32, size,
+		buffer_f32, uv0,
+		buffer_f32, uv1,
+		buffer_f32, tint_col,
+		buffer_f32, border_col
+	]);
+	
+	_imgui_image(name);
+}
 
+function imgui_image_button(name,size,uv0=[0,0],uv1=[1,1],frame_padding=-1,bg_col=[0,0,0,0],tint_col=[1,1,1,1]) {
+	buffer_write_args(global.imgui_buffer,[
+		buffer_f32, size,
+		buffer_f32, uv0,
+		buffer_f32, uv1,
+		buffer_f32, frame_padding,
+		buffer_f32, bg_col,
+		buffer_f32, tint_col
+	]);
+	
+	return _imgui_image_button(name);
+}
 
+function imgui_checkbox(label,value) {
+	_imgui_checkbox(label,value);
+	
+	return buffer_return(global.imgui_buffer,[
+		buffer_f32, // Changed
+		buffer_f32  // Is Checked
+	]);
+}
 
+function imgui_checkbox_flags(label,flags,flags_value) {
+	_imgui_checkbox_flags(label,flags,flags_value);
+	
+	return buffer_return(global.imgui_buffer,[
+		buffer_f32, // Changed
+		buffer_f32  // Flags
+	]);
+}
+
+function imgui_radio_button_int(label,v,v_button) {
+	_imgui_radio_button_int(label,v,v_button);
+	
+	return buffer_return(global.imgui_buffer,[
+		buffer_f32, // Changed
+		buffer_f32  // Value
+	]);
+}
+
+function imgui_progress_bar(fraction,size=[-1,0],overlay=imgui_null()) {
+	buffer_write_args(global.imgui_buffer,[
+		buffer_f32, fraction,
+		buffer_f32, size
+	]);
+	
+	_imgui_progress_bar(overlay);
+}
 
 
 

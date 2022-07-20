@@ -27,14 +27,6 @@
           ],"resourceVersion":"1.0","name":"_imgui_cleanup","tags":[],"resourceType":"GMExtensionFunction",},
         {"externalName":"imgui_newframe","kind":1,"help":"imgui_newframe()","hidden":false,"returnType":2,"argCount":0,"args":[],"resourceVersion":"1.0","name":"imgui_newframe","tags":[],"resourceType":"GMExtensionFunction",},
         {"externalName":"imgui_render","kind":1,"help":"imgui_render","hidden":false,"returnType":2,"argCount":0,"args":[],"resourceVersion":"1.0","name":"imgui_render","tags":[],"resourceType":"GMExtensionFunction",},
-        {"externalName":"imgui_get_io","kind":1,"help":"imgui_get_io","hidden":false,"returnType":2,"argCount":0,"args":[],"resourceVersion":"1.0","name":"imgui_get_io","tags":[],"resourceType":"GMExtensionFunction",},
-        {"externalName":"imgui_io_get_config_flags","kind":1,"help":"imgui_io_get_config_flags(io)","hidden":false,"returnType":2,"argCount":0,"args":[
-            2,
-          ],"resourceVersion":"1.0","name":"imgui_io_get_config_flags","tags":[],"resourceType":"GMExtensionFunction",},
-        {"externalName":"imgui_io_set_config_flags","kind":1,"help":"imgui_io_set_config_flags(io,flags)","hidden":false,"returnType":2,"argCount":0,"args":[
-            2,
-            2,
-          ],"resourceVersion":"1.0","name":"imgui_io_set_config_flags","tags":[],"resourceType":"GMExtensionFunction",},
         {"externalName":"_extension_setup","kind":1,"help":"_extension_setup(buffer_ptr,buffer_size);","hidden":true,"returnType":2,"argCount":0,"args":[
             1,
             2,
@@ -221,10 +213,79 @@
             1,
             1,
           ],"resourceVersion":"1.0","name":"imgui_get_id_begin_end","tags":[],"resourceType":"GMExtensionFunction",},
+        {"externalName":"_imgui_text_unformatted","kind":1,"help":"_imgui_text_unformatted(text_start,text_end)","hidden":false,"returnType":2,"argCount":0,"args":[
+            1,
+            1,
+          ],"resourceVersion":"1.0","name":"_imgui_text_unformatted","tags":[],"resourceType":"GMExtensionFunction",},
+        {"externalName":"imgui_null","kind":1,"help":"imgui_null()","hidden":false,"returnType":1,"argCount":0,"args":[],"resourceVersion":"1.0","name":"imgui_null","tags":[],"resourceType":"GMExtensionFunction",},
+        {"externalName":"imgui_text","kind":1,"help":"imgui_text(text)","hidden":false,"returnType":2,"argCount":0,"args":[
+            1,
+          ],"resourceVersion":"1.0","name":"imgui_text","tags":[],"resourceType":"GMExtensionFunction",},
+        {"externalName":"_imgui_text_colored","kind":1,"help":"_imgui_text_colored(text)","hidden":false,"returnType":2,"argCount":0,"args":[
+            1,
+          ],"resourceVersion":"1.0","name":"_imgui_text_colored","tags":[],"resourceType":"GMExtensionFunction",},
+        {"externalName":"imgui_text_disabled","kind":1,"help":"imgui_text_disabled(text)","hidden":false,"returnType":2,"argCount":0,"args":[
+            1,
+          ],"resourceVersion":"1.0","name":"imgui_text_disabled","tags":[],"resourceType":"GMExtensionFunction",},
+        {"externalName":"imgui_text_wrapped","kind":1,"help":"imgui_text_wrapped(text)","hidden":false,"returnType":2,"argCount":0,"args":[
+            1,
+          ],"resourceVersion":"1.0","name":"imgui_text_wrapped","tags":[],"resourceType":"GMExtensionFunction",},
+        {"externalName":"imgui_label_text","kind":1,"help":"imgui_label_text(label,text)","hidden":false,"returnType":2,"argCount":0,"args":[
+            1,
+            1,
+          ],"resourceVersion":"1.0","name":"imgui_label_text","tags":[],"resourceType":"GMExtensionFunction",},
+        {"externalName":"imgui_bullet_text","kind":1,"help":"imgui_bullet_text(text)","hidden":false,"returnType":2,"argCount":0,"args":[
+            1,
+          ],"resourceVersion":"1.0","name":"imgui_bullet_text","tags":[],"resourceType":"GMExtensionFunction",},
+        {"externalName":"_imgui_button","kind":1,"help":"_imgui_button(label)","hidden":false,"returnType":2,"argCount":0,"args":[
+            1,
+          ],"resourceVersion":"1.0","name":"_imgui_button","tags":[],"resourceType":"GMExtensionFunction",},
+        {"externalName":"imgui_small_button","kind":1,"help":"imgui_small_button(label)","hidden":false,"returnType":2,"argCount":0,"args":[
+            1,
+          ],"resourceVersion":"1.0","name":"imgui_small_button","tags":[],"resourceType":"GMExtensionFunction",},
+        {"externalName":"_imgui_invisible_button","kind":1,"help":"_imgui_invisible_button(str_id)","hidden":false,"returnType":2,"argCount":0,"args":[
+            1,
+          ],"resourceVersion":"1.0","name":"_imgui_invisible_button","tags":[],"resourceType":"GMExtensionFunction",},
+        {"externalName":"imgui_arrow_button","kind":1,"help":"imgui_arrow_button(str_id,dir)","hidden":false,"returnType":2,"argCount":0,"args":[
+            1,
+            2,
+          ],"resourceVersion":"1.0","name":"imgui_arrow_button","tags":[],"resourceType":"GMExtensionFunction",},
+        {"externalName":"imgui_load_image","kind":1,"help":"imgui_load_image(name,buffer_ptr,d3d_device)","hidden":false,"returnType":2,"argCount":0,"args":[
+            1,
+            1,
+            1,
+          ],"resourceVersion":"1.0","name":"imgui_load_image","tags":[],"resourceType":"GMExtensionFunction",},
+        {"externalName":"_imgui_image","kind":1,"help":"_imgui_image(name)","hidden":false,"returnType":2,"argCount":0,"args":[
+            1,
+          ],"resourceVersion":"1.0","name":"_imgui_image","tags":[],"resourceType":"GMExtensionFunction",},
+        {"externalName":"_imgui_image_button","kind":1,"help":"_imgui_image_button(name)","hidden":false,"returnType":2,"argCount":0,"args":[
+            1,
+          ],"resourceVersion":"1.0","name":"_imgui_image_button","tags":[],"resourceType":"GMExtensionFunction",},
+        {"externalName":"_imgui_checkbox","kind":1,"help":"_imgui_checkbox(label,checked)","hidden":false,"returnType":2,"argCount":0,"args":[
+            1,
+            2,
+          ],"resourceVersion":"1.0","name":"_imgui_checkbox","tags":[],"resourceType":"GMExtensionFunction",},
+        {"externalName":"_imgui_checkbox_flags","kind":1,"help":"_imgui_checkbox_flags(label,flags,flags_value)","hidden":false,"returnType":2,"argCount":0,"args":[
+            1,
+            2,
+            2,
+          ],"resourceVersion":"1.0","name":"_imgui_checkbox_flags","tags":[],"resourceType":"GMExtensionFunction",},
+        {"externalName":"imgui_radio_button","kind":1,"help":"imgui_radio_button(label,active)","hidden":false,"returnType":2,"argCount":0,"args":[
+            1,
+            2,
+          ],"resourceVersion":"1.0","name":"imgui_radio_button","tags":[],"resourceType":"GMExtensionFunction",},
+        {"externalName":"_imgui_radio_button_int","kind":1,"help":"_imgui_radio_button_int(label,v,v_button)","hidden":false,"returnType":2,"argCount":0,"args":[
+            1,
+            2,
+            2,
+          ],"resourceVersion":"1.0","name":"_imgui_radio_button_int","tags":[],"resourceType":"GMExtensionFunction",},
+        {"externalName":"_imgui_progress_bar","kind":1,"help":"_imgui_progress_bar(overlay)","hidden":false,"returnType":2,"argCount":0,"args":[
+            1,
+          ],"resourceVersion":"1.0","name":"_imgui_progress_bar","tags":[],"resourceType":"GMExtensionFunction",},
+        {"externalName":"imgui_bullet","kind":1,"help":"imgui_bullet()","hidden":false,"returnType":2,"argCount":0,"args":[],"resourceVersion":"1.0","name":"imgui_bullet","tags":[],"resourceType":"GMExtensionFunction",},
       ],"constants":[],"ProxyFiles":[],"copyToTargets":-1,"order":[
-        {"name":"imgui_get_io","path":"extensions/Ext_ImGui/Ext_ImGui.yy",},
-        {"name":"imgui_io_get_config_flags","path":"extensions/Ext_ImGui/Ext_ImGui.yy",},
-        {"name":"imgui_io_set_config_flags","path":"extensions/Ext_ImGui/Ext_ImGui.yy",},
+        {"name":"imgui_null","path":"extensions/Ext_ImGui/Ext_ImGui.yy",},
+        {"name":"imgui_load_image","path":"extensions/Ext_ImGui/Ext_ImGui.yy",},
         {"name":"_extension_setup","path":"extensions/Ext_ImGui/Ext_ImGui.yy",},
         {"name":"_extension_cleanup","path":"extensions/Ext_ImGui/Ext_ImGui.yy",},
         {"name":"_imgui_setup","path":"extensions/Ext_ImGui/Ext_ImGui.yy",},
@@ -334,6 +395,25 @@
         {"name":"imgui_pop_id","path":"extensions/Ext_ImGui/Ext_ImGui.yy",},
         {"name":"imgui_get_id_str","path":"extensions/Ext_ImGui/Ext_ImGui.yy",},
         {"name":"imgui_get_id_begin_end","path":"extensions/Ext_ImGui/Ext_ImGui.yy",},
+        {"name":"_imgui_text_unformatted","path":"extensions/Ext_ImGui/Ext_ImGui.yy",},
+        {"name":"imgui_text","path":"extensions/Ext_ImGui/Ext_ImGui.yy",},
+        {"name":"_imgui_text_colored","path":"extensions/Ext_ImGui/Ext_ImGui.yy",},
+        {"name":"imgui_text_disabled","path":"extensions/Ext_ImGui/Ext_ImGui.yy",},
+        {"name":"imgui_text_wrapped","path":"extensions/Ext_ImGui/Ext_ImGui.yy",},
+        {"name":"imgui_label_text","path":"extensions/Ext_ImGui/Ext_ImGui.yy",},
+        {"name":"imgui_bullet_text","path":"extensions/Ext_ImGui/Ext_ImGui.yy",},
+        {"name":"_imgui_button","path":"extensions/Ext_ImGui/Ext_ImGui.yy",},
+        {"name":"imgui_small_button","path":"extensions/Ext_ImGui/Ext_ImGui.yy",},
+        {"name":"_imgui_invisible_button","path":"extensions/Ext_ImGui/Ext_ImGui.yy",},
+        {"name":"imgui_arrow_button","path":"extensions/Ext_ImGui/Ext_ImGui.yy",},
+        {"name":"_imgui_image","path":"extensions/Ext_ImGui/Ext_ImGui.yy",},
+        {"name":"_imgui_image_button","path":"extensions/Ext_ImGui/Ext_ImGui.yy",},
+        {"name":"_imgui_checkbox","path":"extensions/Ext_ImGui/Ext_ImGui.yy",},
+        {"name":"_imgui_checkbox_flags","path":"extensions/Ext_ImGui/Ext_ImGui.yy",},
+        {"name":"imgui_radio_button","path":"extensions/Ext_ImGui/Ext_ImGui.yy",},
+        {"name":"_imgui_radio_button_int","path":"extensions/Ext_ImGui/Ext_ImGui.yy",},
+        {"name":"_imgui_progress_bar","path":"extensions/Ext_ImGui/Ext_ImGui.yy",},
+        {"name":"imgui_bullet","path":"extensions/Ext_ImGui/Ext_ImGui.yy",},
       ],"resourceVersion":"1.0","name":"","tags":[],"resourceType":"GMExtensionFile",},
   ],
   "classname": "",
