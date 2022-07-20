@@ -48,6 +48,7 @@ LRESULT CALLBACK ImGuiGMSSubclassProc(HWND hWnd, UINT uMsg, WPARAM wParam,
 // [SECTION] Dear ImGui end-user API functions
 //-----------------------------------------------------------------------------
 
+
 // Main
 fn_export double _imgui_setup(char* hwnd, char* device, char* device_context) {
 
@@ -113,6 +114,7 @@ fn_export double imgui_render() {
 
 }
 
+
 // Demo, Debug, Information
 fn_export double imgui_show_demo_window(double open) {
 	bool _open = open;
@@ -155,6 +157,7 @@ fn_export const char* imgui_get_version() {
 	return ImGui::GetVersion();
 }
 
+
 // Styles
 fn_export double imgui_style_colors_dark() {
 	ImGui::StyleColorsDark();
@@ -170,6 +173,7 @@ fn_export double imgui_style_colors_light() {
 	ImGui::StyleColorsLight();
 	return 0.0;
 }
+
 
 // Windows
 
@@ -193,6 +197,558 @@ fn_export double imgui_end() {
 	ImGui::End();
 	return 0.0;
 }
+
+
+// Child Windows
+fn_export double _imgui_begin_child(const char* name) {
+	ImVec2 size = { ext_buffer->read_float(), ext_buffer->read_float() };
+	bool border = ext_buffer->read_float();
+	ImGuiWindowFlags flags = ext_buffer->read_float();
+
+	return ImGui::BeginChild(name, size, border, flags);
+}
+
+fn_export double imgui_end_child() {
+	ImGui::EndChild();
+	return 0.0;
+}
+
+
+// Window Utilities
+fn_export double imgui_is_window_appearing() {
+	return ImGui::IsWindowAppearing();
+}
+
+fn_export double imgui_is_window_collapsed() {
+	return ImGui::IsWindowCollapsed();
+}
+
+fn_export double _imgui_is_window_focused(double flags) {
+	return ImGui::IsWindowFocused((ImGuiFocusedFlags)flags);
+}
+
+fn_export double _imgui_is_window_hovered(double flags) {
+	return ImGui::IsWindowHovered((ImGuiHoveredFlags)flags);
+}
+
+// returns ImDrawList*
+fn_export double imgui_get_window_draw_list() {
+	ImDrawList* draw_list = ImGui::GetWindowDrawList();
+	return reinterpret_cast<int64>(draw_list);
+}
+
+fn_export double imgui_get_window_dpi_scale() {
+	return ImGui::GetWindowDpiScale();
+}
+
+// returns ImVec2
+fn_export double _imgui_get_window_pos() {
+	ImVec2 pos = ImGui::GetWindowPos();
+
+	ext_buffer->seek(0);
+	ext_buffer->write(pos.x);
+	ext_buffer->write(pos.y);
+
+	return 0.0;
+}
+
+// returns ImVec2
+fn_export double _imgui_get_window_size() {
+	ImVec2 size = ImGui::GetWindowSize();
+
+	ext_buffer->seek(0);
+	ext_buffer->write(size.x);
+	ext_buffer->write(size.y);
+
+	return 0.0;
+}
+
+fn_export double imgui_get_window_width() {
+	return ImGui::GetWindowWidth();
+}
+
+fn_export double imgui_get_window_height() {
+	return ImGui::GetWindowHeight();
+}
+
+// returns ImGuiViewport*
+// I'm not sure if the end-user ever needs this. If somebody asks or I find a reason I'll put it back in
+//fn_export double imgui_get_window_viewport() {
+//	ImGuiViewport* viewport = ImGui::GetWindowViewport();
+//	return reinterpret_cast<int64>(viewport);
+//}
+
+
+// Window Manipulation
+fn_export double _imgui_set_next_window_pos() {
+	ext_buffer->seek(0);
+
+	ImVec2 pos(ext_buffer->read_float(), ext_buffer->read_float());
+	ImGuiCond cond = ext_buffer->read_float();
+	ImVec2 pivot(ext_buffer->read_float(), ext_buffer->read_float());
+
+	ImGui::SetNextWindowPos(pos, cond, pivot);
+
+	return 0.0;
+}
+
+fn_export double _imgui_set_next_window_size() {
+	ext_buffer->seek(0);
+
+	ImVec2 size(ext_buffer->read_float(), ext_buffer->read_float());
+	ImGuiCond cond = ext_buffer->read_float();
+
+	ImGui::SetNextWindowSize(size, cond);
+
+	return 0.0;
+}
+
+fn_export double _imgui_set_next_window_size_constraints() {
+	ext_buffer->seek(0);
+
+	ImVec2 size_min(ext_buffer->read_float(), ext_buffer->read_float());
+	ImVec2 size_max(ext_buffer->read_float(), ext_buffer->read_float());
+
+	// TODO: figure out how to do callbacks
+
+	ImGui::SetNextWindowSizeConstraints(size_min, size_max, NULL, NULL);
+
+	return 0.0;
+}
+
+fn_export double _imgui_set_next_window_content_size() {
+	ext_buffer->seek(0);
+
+	ImVec2 size(ext_buffer->read_float(), ext_buffer->read_float());
+
+	ImGui::SetNextWindowContentSize(size);
+
+	return 0.0;
+}
+
+fn_export double _imgui_set_next_window_collapsed() {
+	ext_buffer->seek(0);
+
+	bool collapsed = ext_buffer->read_float();
+	ImGuiCond cond = ext_buffer->read_float();
+
+	ImGui::SetNextWindowCollapsed(collapsed, cond);
+
+	return 0.0;
+}
+
+fn_export double imgui_set_next_window_focus() {
+	
+	ImGui::SetNextWindowFocus();
+
+	return 0.0;
+}
+
+fn_export double imgui_set_next_window_bg_alpha(double alpha) {
+	
+	ImGui::SetNextWindowBgAlpha(alpha);
+	
+	return 0.0;
+}
+
+fn_export double _imgui_set_window_pos() {
+	ext_buffer->seek(0);
+	ImVec2 pos(ext_buffer->read_float(), ext_buffer->read_float());
+	ImGuiCond cond = ext_buffer->read_float();
+	ImGui::SetWindowPos(pos, cond);
+	return 0.0;
+}
+
+fn_export double _imgui_set_window_size() {
+	ext_buffer->seek(0);
+	ImVec2 size(ext_buffer->read_float(), ext_buffer->read_float());
+	ImGuiCond cond = ext_buffer->read_float();
+	ImGui::SetWindowSize(size, cond);
+	return 0.0;
+}
+
+fn_export double _imgui_set_window_collapsed() {
+	ext_buffer->seek(0);
+
+	bool collapsed = ext_buffer->read_float();
+	ImGuiCond cond = ext_buffer->read_float();
+
+	ImGui::SetWindowCollapsed(collapsed, cond);
+
+	return 0.0;
+}
+
+fn_export double imgui_set_window_focus() {
+	ImGui::SetWindowFocus();
+	return 0.0;
+}
+
+fn_export double imgui_set_window_font_scale(double scale) {
+	ImGui::SetWindowFontScale(scale);
+	return 0.0;
+}
+
+
+// Content region
+fn_export double _imgui_get_content_region_avail() {
+	ImVec2 region = ImGui::GetContentRegionAvail();
+
+	ext_buffer->seek(0);
+	ext_buffer->write(region.x);
+	ext_buffer->write(region.y);
+
+	return 0.0;
+}
+
+fn_export double _imgui_get_content_region_max() {
+	ImVec2 region = ImGui::GetContentRegionMax();
+	
+	ext_buffer->seek(0);
+	ext_buffer->write(region.x);
+	ext_buffer->write(region.y);
+
+	return 0.0;
+}
+
+fn_export double _imgui_get_window_content_region_min() {
+	ImVec2 region = ImGui::GetWindowContentRegionMin();
+
+	ext_buffer->seek(0);
+	ext_buffer->write(region.x);
+	ext_buffer->write(region.y);
+
+	return 0.0;
+}
+
+fn_export double _imgui_get_window_content_region_max() {
+	ImVec2 region = ImGui::GetWindowContentRegionMax();
+
+	ext_buffer->seek(0);
+	ext_buffer->write(region.x);
+	ext_buffer->write(region.y);
+
+	return 0.0;
+}
+
+
+// Windows Scrolling
+fn_export double imgui_get_scroll_x() { return ImGui::GetScrollX(); }
+fn_export double imgui_get_scroll_y() { return ImGui::GetScrollY(); }
+fn_export double imgui_set_scroll_x(double value) { ImGui::SetScrollX(value); return 0.0; }
+fn_export double imgui_set_scroll_y(double value) { ImGui::SetScrollY(value); return 0.0; }
+fn_export double imgui_get_scroll_max_x() { return ImGui::GetScrollMaxX(); }
+fn_export double imgui_get_scroll_max_y() { return ImGui::GetScrollMaxY(); }
+fn_export double _imgui_set_scroll_here_x(double center_x_ratio) { ImGui::SetScrollHereX(center_x_ratio); return 0.0; }
+fn_export double _imgui_set_scroll_here_y(double center_y_ratio) { ImGui::SetScrollHereY(center_y_ratio); return 0.0; }
+fn_export double _imgui_set_scroll_from_pos_x(double local_x, double center_x_ratio) { ImGui::SetScrollFromPosX(local_x, center_x_ratio); return 0.0; }
+fn_export double _imgui_set_scroll_from_pos_y(double local_y, double center_y_ratio) { ImGui::SetScrollFromPosY(local_y, center_y_ratio); return 0.0; }
+
+
+// Parameters stacks (shared)
+fn_export double imgui_push_font(double font) {
+	ImFont* _font = reinterpret_cast<ImFont*>((int64)font);
+	ImGui::PushFont(_font);
+	return 0.0;
+}
+
+fn_export double imgui_pop_font() {
+	ImGui::PopFont();
+	return 0.0;
+}
+
+fn_export double _imgui_push_style_color() {
+	ext_buffer->seek(0);
+	ImGuiCol idx = ext_buffer->read_float();
+	ImVec4 col( ext_buffer->read_float(), ext_buffer->read_float(), ext_buffer->read_float(), ext_buffer->read_float() );
+	ImGui::PushStyleColor(idx, col);
+	return 0.0;
+}
+
+fn_export double _imgui_pop_style_color(double count) {
+	ImGui::PopStyleColor(count);
+	return 0.0;
+}
+
+// using ImGuiCol for idx
+fn_export double imgui_push_style_var_f(double idx, double val) {
+	ImGui::PushStyleVar(idx, val);
+	return 0.0;
+}
+
+fn_export double _imgui_push_style_var_f2() {
+	ext_buffer->seek(0);
+	ImGuiCol idx = ext_buffer->read_float();
+	ImVec2 val(ext_buffer->read_float(), ext_buffer->read_float());
+	ImGui::PushStyleVar(idx, val);
+	return 0.0;
+}
+
+fn_export double _imgui_pop_style_var(double count) {
+	ImGui::PopStyleVar(count);
+	return 0.0;
+}
+
+fn_export double imgui_push_allow_keyboard_focus(double allow) {
+	ImGui::PushAllowKeyboardFocus(allow);
+	return 0.0;
+}
+
+fn_export double imgui_pop_allow_keyboard_focus() {
+	ImGui::PopAllowKeyboardFocus();
+	return 0.0;
+}
+
+fn_export double imgui_push_button_repeat(double repeat) {
+	ImGui::PushButtonRepeat(repeat);
+	return 0.0;
+}
+
+fn_export double imgui_pop_button_repeat() {
+	ImGui::PopButtonRepeat();
+	return 0.0;
+}
+
+
+// Parameters stacks (current window)
+fn_export double imgui_push_item_width(double width) {
+	ImGui::PushItemWidth(width);
+	return 0.0;
+}
+
+fn_export double imgui_pop_item_width() {
+	ImGui::PopItemWidth();
+	return 0.0;
+}
+
+fn_export double imgui_set_next_item_width(double width) {
+	ImGui::SetNextItemWidth(width);
+	return 0.0;
+}
+
+fn_export double imgui_calc_item_width() {
+	return ImGui::CalcItemWidth();
+}
+
+fn_export double _imgui_push_text_wrap_pos(double wrap_local_pos_x) {
+	ImGui::PushTextWrapPos(wrap_local_pos_x);
+	return 0.0;
+}
+
+fn_export double imgui_pop_text_wrap_pos() {
+	ImGui::PopTextWrapPos();
+	return 0.0;
+}
+
+
+// Style read access
+fn_export double imgui_get_font() {
+	ImFont* font = ImGui::GetFont();
+	return reinterpret_cast<int64>(font);
+}
+
+fn_export double imgui_get_font_size() {
+	return ImGui::GetFontSize();
+}
+
+fn_export double _imgui_get_font_tex_uv_white_pixel() {
+	ImVec2 uv = ImGui::GetFontTexUvWhitePixel();
+
+	ext_buffer->seek(0);
+	ext_buffer->write(uv.x);
+	ext_buffer->write(uv.y);
+	
+	return 0.0;
+}
+
+fn_export double _imgui_get_style_color_u32() {
+	ext_buffer->seek(0);
+	ImGuiCol idx = ext_buffer->read_float();
+	float alpha = ext_buffer->read_float();
+	return ImGui::GetColorU32(idx, alpha);
+}
+
+fn_export double _imgui_get_color_u32() {
+	ext_buffer->seek(0);
+	ImVec4 col( ext_buffer->read_float(), ext_buffer->read_float(), ext_buffer->read_float(), ext_buffer->read_float() );
+	return ImGui::GetColorU32(col);
+}
+
+fn_export double _imgui_get_style_color_vec4() {
+	ext_buffer->seek(0);
+	ImGuiCol idx = ext_buffer->read_float();
+	ImVec4 color = ImGui::GetStyleColorVec4(idx);
+	ext_buffer->seek(0);
+	ext_buffer->write(color.x);
+	ext_buffer->write(color.y);
+	ext_buffer->write(color.z);
+	ext_buffer->write(color.w);
+	return 0.0;
+}
+
+
+// Cursor/Layout
+fn_export double imgui_separator() {
+	ImGui::Separator();
+	return 0.0;
+}
+
+fn_export double _imgui_same_line(double offset_from_start_x, double spacing) {
+	ImGui::SameLine(offset_from_start_x, spacing);
+	return 0.0;
+}
+
+fn_export double imgui_new_line() {
+	ImGui::NewLine();
+	return 0.0;
+}
+
+fn_export double imgui_spacing() {
+	ImGui::Spacing();
+	return 0.0;
+}
+
+fn_export double _imgui_dummy() {
+	ext_buffer->seek(0);
+	ImVec2 size(ext_buffer->read_float(), ext_buffer->read_float());
+	ImGui::Dummy(size);
+	return 0.0;
+}
+
+fn_export double _imgui_indent(double indent_w) {
+	ImGui::Indent(indent_w);
+	return 0.0;
+}
+
+fn_export double _imgui_unindent(double indent_w) {
+	ImGui::Unindent(indent_w);
+	return 0.0;
+}
+
+fn_export double imgui_begin_group() {
+	ImGui::BeginGroup();
+	return 0.0;
+}
+
+fn_export double imgui_end_group() {
+	ImGui::EndGroup();
+	return 0.0;
+}
+
+fn_export double _imgui_get_cursor_pos() {
+	ImVec2 pos = ImGui::GetCursorPos();
+
+	ext_buffer->seek(0);
+	ext_buffer->write(pos.x);
+	ext_buffer->write(pos.y);
+
+	return 0.0;
+}
+
+fn_export double imgui_get_cursor_pos_x() {
+	return ImGui::GetCursorPosX();
+}
+
+fn_export double imgui_get_cursor_pos_y() {
+	return ImGui::GetCursorPosY();
+}
+
+fn_export double _imgui_set_cursor_pos() {
+	ext_buffer->seek(0);
+	ImVec2 pos(ext_buffer->read_float(), ext_buffer->read_float());
+	ImGui::SetCursorPos(pos);
+	return 0.0;
+}
+
+fn_export double imgui_set_cursor_pos_x(double x) {
+	ImGui::SetCursorPosX(x);
+	return 0.0;
+}
+
+fn_export double imgui_set_cursor_pos_y(double y) {
+	ImGui::SetCursorPosY(y);
+	return 0.0;
+}
+
+fn_export double _imgui_get_cursor_start_pos() {
+	ImVec2 pos = ImGui::GetCursorStartPos();
+
+	ext_buffer->seek(0);
+	ext_buffer->write(pos.x);
+	ext_buffer->write(pos.y);
+
+	return 0.0;
+}
+
+fn_export double _imgui_get_cursor_screen_pos() {
+	ImVec2 pos = ImGui::GetCursorScreenPos();
+
+	ext_buffer->seek(0);
+	ext_buffer->write(pos.x);
+	ext_buffer->write(pos.y);
+
+	return 0.0;
+}
+
+fn_export double _imgui_set_cursor_screen_pos() {
+	ext_buffer->seek(0);
+	ImVec2 pos(ext_buffer->read_float(), ext_buffer->read_float());
+	ImGui::SetCursorScreenPos(pos);
+	return 0.0;
+}
+
+fn_export double imgui_align_text_to_frame_padding() {
+	ImGui::AlignTextToFramePadding();
+	return 0.0;
+}
+
+fn_export double imgui_get_text_line_height() {
+	return ImGui::GetTextLineHeight();
+}
+
+fn_export double imgui_get_text_line_height_with_spacing() {
+	return ImGui::GetTextLineHeightWithSpacing();
+}
+
+fn_export double imgui_get_frame_height() {
+	return ImGui::GetFrameHeight();
+}
+
+fn_export double imgui_get_frame_height_with_spacing() {
+	return ImGui::GetFrameHeightWithSpacing();
+}
+
+
+// ID stack/scopes
+fn_export double imgui_push_id_str(const char* str_id) {
+	ImGui::PushID(str_id);
+	return 0.0;
+}
+
+fn_export double imgui_push_id_begin_end(const char* str_id_begin, const char* str_id_end) {
+	ImGui::PushID(str_id_begin, str_id_end);
+	return 0.0;
+}
+
+fn_export double imgui_push_id(double id) {
+	ImGui::PushID(id);
+	return 0.0;
+}
+
+fn_export double imgui_pop_id() {
+	ImGui::PopID();
+	return 0.0;
+}
+
+fn_export double imgui_get_id_str(const char* str_id) {
+	return ImGui::GetID(str_id);
+}
+
+fn_export double imgui_get_id_begin_end(const char* str_id_begin, const char* str_id_end) {
+	return ImGui::GetID(str_id_begin, str_id_end);
+}
+
+
+
 
 
 //-----------------------------------------------------------------------------
@@ -875,6 +1431,13 @@ fn_export double imgui_io_set_key_repeat_rate(double io, double seconds) {
 	ImGuiIO* io_ptr = reinterpret_cast<ImGuiIO*>((int64)io);
 	io_ptr->KeyRepeatRate = seconds;
 	return 0.0;
+}
+
+// returns ImFontAtlas*
+fn_export double imgui_io_get_fonts(double io) {
+	ImGuiIO* io_ptr = reinterpret_cast<ImGuiIO*>((int64)io);
+	ImFontAtlas* fonts = io_ptr->Fonts;
+	return reinterpret_cast<int64>(fonts);
 }
 
 fn_export double imgui_io_get_font_global_scale(double io) {
