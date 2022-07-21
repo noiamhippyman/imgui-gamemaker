@@ -2272,6 +2272,191 @@ fn_export double imgui_payload_get_data_size(double payload_id) {
 }
 
 
+// Disabling [BETA API]
+fn_export double _imgui_begin_disabled(double disabled) {
+	ImGui::BeginDisabled(disabled);
+	return 0.0;
+}
+
+fn_export double imgui_end_disabled() {
+	ImGui::EndDisabled();
+	return 0.0;
+}
+
+
+// Clipping
+fn_export double _imgui_push_clip_rect() {
+	ext_buffer->seek(0);
+	ImVec2 clip_rect_min(ext_buffer->read_float(), ext_buffer->read_float());
+	ImVec2 clip_rect_max(ext_buffer->read_float(), ext_buffer->read_float());
+	bool intersect_with_current_clip_rect = ext_buffer->read_float();
+	
+	ImGui::PushClipRect(clip_rect_min, clip_rect_max, intersect_with_current_clip_rect);
+	
+	return 0.0;
+}
+
+fn_export double imgui_pop_clip_rect() {
+	ImGui::PopClipRect();
+	return 0.0;
+}
+
+
+// Focus, Activation
+fn_export double imgui_set_item_default_focus() {
+	ImGui::SetItemDefaultFocus();
+	return 0.0;
+}
+
+fn_export double _imgui_set_keyboard_focus_here(double offset) {
+	ImGui::SetKeyboardFocusHere(offset);
+	return 0.0;
+}
+
+
+// Item/Widget Utilities and Query functions
+fn_export double _imgui_is_item_hovered(double flags) {
+	return ImGui::IsItemHovered(flags);
+}
+
+fn_export double imgui_is_item_active() {
+	return ImGui::IsItemActive();
+}
+
+fn_export double imgui_is_item_focused() {
+	return ImGui::IsItemFocused();
+}
+
+fn_export double _imgui_is_item_clicked(double mouse_button) {
+	return ImGui::IsItemClicked(mouse_button);
+}
+
+fn_export double imgui_is_item_visible() {
+	return ImGui::IsItemVisible();
+}
+
+fn_export double imgui_is_item_edited() {
+	return ImGui::IsItemEdited();
+}
+
+fn_export double imgui_is_item_activated() {
+	return ImGui::IsItemActivated();
+}
+
+fn_export double imgui_is_item_deactivated() {
+	return ImGui::IsItemDeactivated();
+}
+
+fn_export double imgui_is_item_deactivated_after_edit() {
+	return ImGui::IsItemDeactivatedAfterEdit();
+}
+
+fn_export double imgui_is_item_toggled_open() {
+	return ImGui::IsItemToggledOpen();
+}
+
+fn_export double imgui_is_any_item_hovered() {
+	return ImGui::IsAnyItemHovered();
+}
+
+fn_export double imgui_is_any_item_active() {
+	return ImGui::IsAnyItemActive();
+}
+
+fn_export double imgui_is_any_item_focused() {
+	return ImGui::IsAnyItemFocused();
+}
+
+fn_export double _imgui_get_item_rect_min() {
+	ImVec2 size = ImGui::GetItemRectMin();
+	ext_buffer->seek(0);
+	ext_buffer->write(size.x);
+	ext_buffer->write(size.y);
+	return 0.0;
+}
+
+fn_export double _imgui_get_item_rect_max() {
+	ImVec2 size = ImGui::GetItemRectMax();
+	ext_buffer->seek(0);
+	ext_buffer->write(size.x);
+	ext_buffer->write(size.y);
+	return 0.0;
+}
+
+fn_export double _imgui_get_item_rect_size() {
+	ImVec2 size = ImGui::GetItemRectSize();
+	ext_buffer->seek(0);
+	ext_buffer->write(size.x);
+	ext_buffer->write(size.y);
+	return 0.0;
+}
+
+fn_export double imgui_set_item_allow_overlap() {
+	ImGui::SetItemAllowOverlap();
+	return 0.0;
+}
+
+
+// Background/Foreground draw lists
+fn_export double imgui_get_background_drawlist() {
+	// TODO: ImDrawList access
+	ImDrawList* list = ImGui::GetBackgroundDrawList();
+	return reinterpret_cast<int64>(list);
+}
+
+fn_export double imgui_get_foreground_drawlist() {
+	// TODO: ImDrawList access
+	ImDrawList* list = ImGui::GetForegroundDrawList();
+	return reinterpret_cast<int64>(list);
+}
+
+
+// Misc. Utilities
+fn_export double _imgui_is_rect_visible() {
+	ext_buffer->seek(0);
+	ImVec2 size(ext_buffer->read_float(), ext_buffer->read_float());
+	return ImGui::IsRectVisible(size);
+}
+
+fn_export double _imgui_is_rect_visible_minmax() {
+	ext_buffer->seek(0);
+	ImVec2 rect_min(ext_buffer->read_float(), ext_buffer->read_float());
+	ImVec2 rect_max(ext_buffer->read_float(), ext_buffer->read_float());
+	return ImGui::IsRectVisible(rect_min,rect_max);
+}
+
+fn_export double imgui_get_time() {
+	return ImGui::GetTime();
+}
+
+fn_export double imgui_get_frame_count() {
+	return ImGui::GetFrameCount();
+}
+
+fn_export double imgui_get_drawlist_shared_data() {
+	// TODO: ImDrawList access
+	ImDrawListSharedData* data = ImGui::GetDrawListSharedData();
+	return reinterpret_cast<int64>(data);
+}
+
+fn_export const char* imgui_get_style_color_name(double idx) {
+	return ImGui::GetStyleColorName(idx);
+}
+
+fn_export double _imgui_begin_child_frame() {
+	ext_buffer->seek(0);
+	ImGuiID id = ext_buffer->read_float();
+	ImVec2 size(ext_buffer->read_float(), ext_buffer->read_float());
+	ImGuiWindowFlags flags = ext_buffer->read_float();
+	
+	return ImGui::BeginChildFrame(id, size, flags);
+}
+
+fn_export double imgui_end_child_frame() {
+	ImGui::EndChildFrame();
+	return 0.0;
+}
+
 
 
 
