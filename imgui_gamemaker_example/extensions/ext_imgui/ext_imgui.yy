@@ -580,6 +580,67 @@
             2,
           ],"resourceVersion":"1.0","name":"imgui_set_column_offset","tags":[],"resourceType":"GMExtensionFunction",},
         {"externalName":"imgui_get_columns_count","kind":1,"help":"imgui_get_columns_count()","hidden":false,"returnType":2,"argCount":0,"args":[],"resourceVersion":"1.0","name":"imgui_get_columns_count","tags":[],"resourceType":"GMExtensionFunction",},
+        {"externalName":"_imgui_begin_tab_bar","kind":1,"help":"_imgui_begin_tab_bar(str_id,flags)","hidden":false,"returnType":2,"argCount":0,"args":[
+            1,
+            2,
+          ],"resourceVersion":"1.0","name":"_imgui_begin_tab_bar","tags":[],"resourceType":"GMExtensionFunction",},
+        {"externalName":"imgui_end_tab_bar","kind":1,"help":"imgui_end_tab_bar()","hidden":false,"returnType":2,"argCount":0,"args":[],"resourceVersion":"1.0","name":"imgui_end_tab_bar","tags":[],"resourceType":"GMExtensionFunction",},
+        {"externalName":"_imgui_begin_tab_item","kind":1,"help":"_imgui_begin_tab_item(label)","hidden":false,"returnType":2,"argCount":0,"args":[
+            1,
+          ],"resourceVersion":"1.0","name":"_imgui_begin_tab_item","tags":[],"resourceType":"GMExtensionFunction",},
+        {"externalName":"imgui_end_tab_item","kind":1,"help":"imgui_end_tab_item()","hidden":false,"returnType":2,"argCount":0,"args":[],"resourceVersion":"1.0","name":"imgui_end_tab_item","tags":[],"resourceType":"GMExtensionFunction",},
+        {"externalName":"_imgui_tab_item_button","kind":1,"help":"_imgui_tab_item_button(label,flags)","hidden":false,"returnType":2,"argCount":0,"args":[
+            1,
+            2,
+          ],"resourceVersion":"1.0","name":"_imgui_tab_item_button","tags":[],"resourceType":"GMExtensionFunction",},
+        {"externalName":"imgui_set_tab_item_closed","kind":1,"help":"imgui_set_tab_item_closed(tab_or_docked_window_label)","hidden":false,"returnType":2,"argCount":0,"args":[
+            1,
+          ],"resourceVersion":"1.0","name":"imgui_set_tab_item_closed","tags":[],"resourceType":"GMExtensionFunction",},
+        {"externalName":"_imgui_log_to_TTY","kind":1,"help":"_imgui_log_to_TTY(auto_open_depth)","hidden":false,"returnType":2,"argCount":0,"args":[
+            2,
+          ],"resourceVersion":"1.0","name":"_imgui_log_to_TTY","tags":[],"resourceType":"GMExtensionFunction",},
+        {"externalName":"_imgui_log_to_file","kind":1,"help":"_imgui_log_to_file(auto_open_depth,filename)","hidden":false,"returnType":2,"argCount":0,"args":[
+            2,
+            1,
+          ],"resourceVersion":"1.0","name":"_imgui_log_to_file","tags":[],"resourceType":"GMExtensionFunction",},
+        {"externalName":"_imgui_log_to_clipboard","kind":1,"help":"_imgui_log_to_clipboard(auto_open_depth)","hidden":false,"returnType":2,"argCount":0,"args":[
+            2,
+          ],"resourceVersion":"1.0","name":"_imgui_log_to_clipboard","tags":[],"resourceType":"GMExtensionFunction",},
+        {"externalName":"imgui_log_finish","kind":1,"help":"imgui_log_finish()","hidden":false,"returnType":2,"argCount":0,"args":[],"resourceVersion":"1.0","name":"imgui_log_finish","tags":[],"resourceType":"GMExtensionFunction",},
+        {"externalName":"imgui_log_buttons","kind":1,"help":"imgui_log_buttons()","hidden":false,"returnType":2,"argCount":0,"args":[],"resourceVersion":"1.0","name":"imgui_log_buttons","tags":[],"resourceType":"GMExtensionFunction",},
+        {"externalName":"imgui_log_text","kind":1,"help":"imgui_log_text(text)","hidden":false,"returnType":2,"argCount":0,"args":[
+            1,
+          ],"resourceVersion":"1.0","name":"imgui_log_text","tags":[],"resourceType":"GMExtensionFunction",},
+        {"externalName":"_imgui_begin_drag_drop_source","kind":1,"help":"_imgui_begin_drag_drop_source(flags)","hidden":false,"returnType":2,"argCount":0,"args":[
+            2,
+          ],"resourceVersion":"1.0","name":"_imgui_begin_drag_drop_source","tags":[],"resourceType":"GMExtensionFunction",},
+        {"externalName":"_imgui_set_drag_drop_payload","kind":1,"help":"_imgui_set_drag_drop_payload(type)","hidden":false,"returnType":2,"argCount":0,"args":[
+            1,
+          ],"resourceVersion":"1.0","name":"_imgui_set_drag_drop_payload","tags":[],"resourceType":"GMExtensionFunction",},
+        {"externalName":"imgui_end_drag_drop_source","kind":1,"help":"imgui_end_drag_drop_source()","hidden":false,"returnType":2,"argCount":0,"args":[],"resourceVersion":"1.0","name":"imgui_end_drag_drop_source","tags":[],"resourceType":"GMExtensionFunction",},
+        {"externalName":"imgui_begin_drag_drop_target","kind":1,"help":"imgui_begin_drag_drop_target()","hidden":false,"returnType":2,"argCount":0,"args":[],"resourceVersion":"1.0","name":"imgui_begin_drag_drop_target","tags":[],"resourceType":"GMExtensionFunction",},
+        {"externalName":"_imgui_accept_drag_drop_payload","kind":1,"help":"_imgui_accept_drag_drop_payload(type,flags)","hidden":false,"returnType":2,"argCount":0,"args":[
+            1,
+            2,
+          ],"resourceVersion":"1.0","name":"_imgui_accept_drag_drop_payload","tags":[],"resourceType":"GMExtensionFunction",},
+        {"externalName":"imgui_end_drag_drop_target","kind":1,"help":"imgui_end_drag_drop_target()","hidden":false,"returnType":2,"argCount":0,"args":[],"resourceVersion":"1.0","name":"imgui_end_drag_drop_target","tags":[],"resourceType":"GMExtensionFunction",},
+        {"externalName":"imgui_get_drag_drop_payload","kind":1,"help":"imgui_get_drag_drop_payload()","hidden":false,"returnType":2,"argCount":0,"args":[],"resourceVersion":"1.0","name":"imgui_get_drag_drop_payload","tags":[],"resourceType":"GMExtensionFunction",},
+        {"externalName":"imgui_payload_is_data_type","kind":1,"help":"imgui_payload_is_data_type(payload_id,data_type)","hidden":false,"returnType":2,"argCount":0,"args":[
+            2,
+            1,
+          ],"resourceVersion":"1.0","name":"imgui_payload_is_data_type","tags":[],"resourceType":"GMExtensionFunction",},
+        {"externalName":"imgui_payload_is_preview","kind":1,"help":"imgui_payload_is_preview(payload_id)","hidden":false,"returnType":2,"argCount":0,"args":[
+            2,
+          ],"resourceVersion":"1.0","name":"imgui_payload_is_preview","tags":[],"resourceType":"GMExtensionFunction",},
+        {"externalName":"imgui_payload_is_delivery","kind":1,"help":"imgui_payload_is_delivery(payload_id)","hidden":false,"returnType":2,"argCount":0,"args":[
+            2,
+          ],"resourceVersion":"1.0","name":"imgui_payload_is_delivery","tags":[],"resourceType":"GMExtensionFunction",},
+        {"externalName":"_imgui_payload_get_data","kind":1,"help":"_imgui_payload_get_data(payload_id)","hidden":false,"returnType":2,"argCount":0,"args":[
+            2,
+          ],"resourceVersion":"1.0","name":"_imgui_payload_get_data","tags":[],"resourceType":"GMExtensionFunction",},
+        {"externalName":"imgui_payload_get_data_size","kind":1,"help":"imgui_payload_get_data_size(payload_id)","hidden":false,"returnType":2,"argCount":0,"args":[
+            2,
+          ],"resourceVersion":"1.0","name":"imgui_payload_get_data_size","tags":[],"resourceType":"GMExtensionFunction",},
       ],"constants":[],"ProxyFiles":[],"copyToTargets":-1,"order":[
         {"name":"imgui_null","path":"extensions/Ext_ImGui/Ext_ImGui.yy",},
         {"name":"imgui_load_image","path":"extensions/Ext_ImGui/Ext_ImGui.yy",},
@@ -810,6 +871,30 @@
         {"name":"_imgui_get_column_offset","path":"extensions/Ext_ImGui/Ext_ImGui.yy",},
         {"name":"imgui_set_column_offset","path":"extensions/Ext_ImGui/Ext_ImGui.yy",},
         {"name":"imgui_get_columns_count","path":"extensions/Ext_ImGui/Ext_ImGui.yy",},
+        {"name":"_imgui_begin_tab_bar","path":"extensions/Ext_ImGui/Ext_ImGui.yy",},
+        {"name":"imgui_end_tab_bar","path":"extensions/Ext_ImGui/Ext_ImGui.yy",},
+        {"name":"_imgui_begin_tab_item","path":"extensions/Ext_ImGui/Ext_ImGui.yy",},
+        {"name":"imgui_end_tab_item","path":"extensions/Ext_ImGui/Ext_ImGui.yy",},
+        {"name":"_imgui_tab_item_button","path":"extensions/Ext_ImGui/Ext_ImGui.yy",},
+        {"name":"imgui_set_tab_item_closed","path":"extensions/Ext_ImGui/Ext_ImGui.yy",},
+        {"name":"_imgui_log_to_TTY","path":"extensions/Ext_ImGui/Ext_ImGui.yy",},
+        {"name":"_imgui_log_to_file","path":"extensions/Ext_ImGui/Ext_ImGui.yy",},
+        {"name":"_imgui_log_to_clipboard","path":"extensions/Ext_ImGui/Ext_ImGui.yy",},
+        {"name":"imgui_log_finish","path":"extensions/Ext_ImGui/Ext_ImGui.yy",},
+        {"name":"imgui_log_buttons","path":"extensions/Ext_ImGui/Ext_ImGui.yy",},
+        {"name":"imgui_log_text","path":"extensions/Ext_ImGui/Ext_ImGui.yy",},
+        {"name":"_imgui_begin_drag_drop_source","path":"extensions/Ext_ImGui/Ext_ImGui.yy",},
+        {"name":"_imgui_set_drag_drop_payload","path":"extensions/Ext_ImGui/Ext_ImGui.yy",},
+        {"name":"imgui_end_drag_drop_source","path":"extensions/Ext_ImGui/Ext_ImGui.yy",},
+        {"name":"imgui_begin_drag_drop_target","path":"extensions/Ext_ImGui/Ext_ImGui.yy",},
+        {"name":"_imgui_accept_drag_drop_payload","path":"extensions/Ext_ImGui/Ext_ImGui.yy",},
+        {"name":"imgui_end_drag_drop_target","path":"extensions/Ext_ImGui/Ext_ImGui.yy",},
+        {"name":"imgui_get_drag_drop_payload","path":"extensions/Ext_ImGui/Ext_ImGui.yy",},
+        {"name":"imgui_payload_is_data_type","path":"extensions/Ext_ImGui/Ext_ImGui.yy",},
+        {"name":"imgui_payload_is_preview","path":"extensions/Ext_ImGui/Ext_ImGui.yy",},
+        {"name":"imgui_payload_is_delivery","path":"extensions/Ext_ImGui/Ext_ImGui.yy",},
+        {"name":"_imgui_payload_get_data","path":"extensions/Ext_ImGui/Ext_ImGui.yy",},
+        {"name":"imgui_payload_get_data_size","path":"extensions/Ext_ImGui/Ext_ImGui.yy",},
       ],"resourceVersion":"1.0","name":"","tags":[],"resourceType":"GMExtensionFile",},
   ],
   "classname": "",

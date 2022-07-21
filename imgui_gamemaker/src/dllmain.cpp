@@ -772,9 +772,6 @@ fn_export double imgui_get_frame_height_with_spacing() {
 }
 
 
-///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-
-
 // ID stack/scopes
 fn_export double imgui_push_id_str(const char* str_id) {
 	ImGui::PushID(str_id);
@@ -803,10 +800,6 @@ fn_export double imgui_get_id_str(const char* str_id) {
 fn_export double imgui_get_id_begin_end(const char* str_id_begin, const char* str_id_end) {
 	return ImGui::GetID(str_id_begin, str_id_end);
 }
-
-
-
-///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
 
 // Widgets: Text
@@ -846,9 +839,6 @@ fn_export double imgui_bullet_text(const char* text) {
 	ImGui::BulletText(text);
 	return 0.0;
 }
-
-
-///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
 
 // Widgets: Main
@@ -963,9 +953,6 @@ fn_export double imgui_bullet() {
 }
 
 
-///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-
-
 // Widgets: Combo Box
 fn_export double _imgui_begin_combo(const char* label, const char* preview_value, double flags) {
 	return ImGui::BeginCombo(label, preview_value, flags);
@@ -994,9 +981,6 @@ fn_export double _imgui_combo(const char* label) {
 
 	return 0.0;
 }
-
-
-///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
 
 // Widgets: Drag Sliders
@@ -1222,9 +1206,6 @@ fn_export double _imgui_drag_int_range2(const char* label, const char* format, c
 //}
 
 
-///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-
-
 // Widgets: Regular Sliders
 fn_export double _imgui_slider_float(const char* label, const char* format) {
 	ext_buffer->seek(0);
@@ -1432,9 +1413,6 @@ fn_export double _imgui_vslider_int(const char* label, const char* format) {
 
 	return 0.0;
 }
-
-
-///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
 
 // Widgets: Input w/ Keyboard
@@ -1645,9 +1623,6 @@ fn_export double _imgui_input_int4(const char* label) {
 }
 
 
-///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-
-
 // Widgets: Color Editor/Picker
 fn_export double _imgui_color_edit3(const char* label) {
 	ext_buffer->seek(0);
@@ -1745,9 +1720,6 @@ fn_export double _imgui_set_color_edit_options(double flags) {
 }
 
 
-///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-
-
 // Widgets: Trees
 fn_export double imgui_tree_node(const char* label) {
 	return ImGui::TreeNode(label);
@@ -1792,9 +1764,6 @@ fn_export double _imgui_set_next_item_open(double is_open, double cond) {
 }
 
 
-///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-
-
 // Widgets: Selectables
 fn_export double _imgui_selectable(const char* label) {
 	ext_buffer->seek(0);
@@ -1803,9 +1772,6 @@ fn_export double _imgui_selectable(const char* label) {
 	ImVec2 size(ext_buffer->read_float(), ext_buffer->read_float());
 	return ImGui::Selectable(label, selected, flags, size);
 }
-
-
-///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
 
 // Widgets: List Boxes
@@ -1837,9 +1803,6 @@ fn_export double _imgui_list_box(const char* label) {
 
 	return 0.0;
 }
-
-
-///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
 
 // Widgets: Data Plotting
@@ -1882,9 +1845,6 @@ fn_export double _imgui_plot_histogram(const char* label, const char* overlay_te
 }
 
 
-///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-
-
 // Widgets: Menus
 fn_export double imgui_begin_menu_bar() {
 	return ImGui::BeginMenuBar();
@@ -1921,9 +1881,6 @@ fn_export double _imgui_menu_item(const char* label, const char* shortcut) {
 }
 
 
-///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-
-
 // Tooltips
 fn_export double imgui_begin_tooltip() {
 	ImGui::BeginTooltip();
@@ -1939,9 +1896,6 @@ fn_export double imgui_set_tooltip(const char* text) {
 	ImGui::SetTooltip(text);
 	return 0.0;
 }
-
-
-///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
 
 // Popups: Begin/End functions
@@ -2005,9 +1959,6 @@ fn_export double _imgui_begin_popup_context_void(const char* str_id, double flag
 fn_export double _imgui_is_popup_open(const char* str_id, double flags) {
 	return ImGui::IsPopupOpen(str_id, flags);
 }
-
-
-///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
 
 // Tables
@@ -2112,9 +2063,6 @@ fn_export double _imgui_table_set_bg_color() {
 }
 
 
-///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-
-
 // Legacy Columns API
 fn_export double _imgui_columns(const char* id) {
 	ext_buffer->seek(0);
@@ -2157,7 +2105,171 @@ fn_export double imgui_get_columns_count() {
 }
 
 
-///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+// Tab Bars, Tabs
+fn_export double _imgui_begin_tab_bar(const char* str_id, double flags) {
+	return ImGui::BeginTabBar(str_id, flags);
+}
+
+fn_export double imgui_end_tab_bar() {
+	ImGui::EndTabBar();
+	return 0.0;
+}
+
+fn_export double _imgui_begin_tab_item(const char* label) {
+	ext_buffer->seek(0);
+	float open = ext_buffer->read_float();
+	bool _open = open;
+	ImGuiTabItemFlags flags = ext_buffer->read_float();
+
+	bool selected = ImGui::BeginTabItem(label, open < 0 ? (bool*)0 : &_open, flags);
+
+	ext_buffer->seek(0);
+	ext_buffer->write(selected);
+	ext_buffer->write(_open);
+
+	return 0.0;
+}
+
+fn_export double imgui_end_tab_item() {
+	ImGui::EndTabItem();
+	return 0.0;
+}
+
+fn_export double _imgui_tab_item_button(const char* label, double flags) {
+	return ImGui::TabItemButton(label, flags);
+}
+
+fn_export double imgui_set_tab_item_closed(const char* tab_or_docked_window_label) {
+	ImGui::SetTabItemClosed(tab_or_docked_window_label);
+	return 0.0;
+}
+
+
+// Logging/Capture
+
+fn_export double _imgui_log_to_TTY(double auto_open_depth) {
+	ImGui::LogToTTY(auto_open_depth);
+	return 0.0;
+}
+
+fn_export double _imgui_log_to_file(double auto_open_depth, const char* filename) {
+	ImGui::LogToFile(auto_open_depth,filename);
+	return 0.0;
+}
+
+fn_export double _imgui_log_to_clipboard(double auto_open_depth) {
+	ImGui::LogToClipboard(auto_open_depth);
+	return 0.0;
+}
+
+fn_export double imgui_log_finish() {
+	ImGui::LogFinish();
+	return 0.0;
+}
+
+fn_export double imgui_log_buttons() {
+	ImGui::LogButtons();
+	return 0.0;
+}
+
+fn_export double imgui_log_text(const char* text) {
+	ImGui::LogText(text);
+	return 0.0;
+}
+
+
+// Drag and Drop
+fn_export double _imgui_begin_drag_drop_source(double flags) {
+	return ImGui::BeginDragDropSource(flags);
+}
+
+fn_export double _imgui_set_drag_drop_payload(const char* type) {
+	ext_buffer->seek(0);
+	ImGuiCond cond = ext_buffer->read_float();
+	int data_size = ext_buffer->read_float();
+	if (data_size <= 0) {
+		return ImGui::SetDragDropPayload(type, NULL, 0, cond);
+	}
+	else {
+		std::vector<float> data;
+		for (int i = 0; i < data_size; ++i) {
+			data.push_back(ext_buffer->read_float());
+		}
+
+		return ImGui::SetDragDropPayload(type, &data, sizeof(float) * data_size, cond);
+	}
+}
+
+fn_export double imgui_end_drag_drop_source() {
+	ImGui::EndDragDropSource();
+	return 0.0;
+}
+
+fn_export double imgui_begin_drag_drop_target() {
+	return ImGui::BeginDragDropTarget();
+}
+
+fn_export double _imgui_accept_drag_drop_payload(const char* type, double flags) {
+	const ImGuiPayload* payload = ImGui::AcceptDragDropPayload(type, flags);
+
+	float* data = (float*)payload->Data;
+
+	ext_buffer->seek(0);
+	ext_buffer->write(payload->DataSize);
+	for (int i = 0; i < payload->DataSize; ++i) {
+		ext_buffer->write(data[i]);
+	}
+
+	return 0.0;
+}
+
+fn_export double imgui_end_drag_drop_target() {
+	ImGui::EndDragDropTarget();
+	return 0.0;
+}
+
+fn_export double imgui_get_drag_drop_payload() {
+	// TODO: functions for payload access
+	const ImGuiPayload* payload = ImGui::GetDragDropPayload();
+	return reinterpret_cast<int64>(payload);
+}
+
+
+
+// ImGuiPayload access functions
+fn_export double imgui_payload_is_data_type(double payload_id, const char* type) {
+	const ImGuiPayload* payload = reinterpret_cast<const ImGuiPayload*>((int64)payload_id);
+	return payload->IsDataType(type);
+}
+
+fn_export double imgui_payload_is_preview(double payload_id) {
+	const ImGuiPayload* payload = reinterpret_cast<const ImGuiPayload*>((int64)payload_id);
+	return payload->IsPreview();
+}
+
+fn_export double imgui_payload_is_delivery(double payload_id) {
+	const ImGuiPayload* payload = reinterpret_cast<const ImGuiPayload*>((int64)payload_id);
+	return payload->IsDelivery();
+}
+
+fn_export double _imgui_payload_get_data(double payload_id) {
+	const ImGuiPayload* payload = reinterpret_cast<const ImGuiPayload*>((int64)payload_id);
+	
+	float* data = (float*)payload->Data;
+
+	ext_buffer->seek(0);
+	ext_buffer->write(payload->DataSize);
+	for (int i = 0; i < payload->DataSize; ++i) {
+		ext_buffer->write(data[i]);
+	}
+	
+	return 0.0;
+}
+
+fn_export double imgui_payload_get_data_size(double payload_id) {
+	const ImGuiPayload* payload = reinterpret_cast<const ImGuiPayload*>((int64)payload_id);
+	return payload->DataSize;
+}
 
 
 

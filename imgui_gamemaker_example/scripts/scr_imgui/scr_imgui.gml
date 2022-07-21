@@ -1341,6 +1341,90 @@ function imgui_get_column_offset(column_index=-1) {
 	return _imgui_get_column_offset(column_index);
 }
 
+function imgui_begin_tab_bar(str_id,flags=0) {
+	return _imgui_begin_tab_bar(str_id,flags);
+}
+
+function imgui_begin_tab_item(label,open=-1,flags=0) {
+	buffer_write_args(global.imgui_buffer,[
+		buffer_f32, open,
+		buffer_f32, flags
+	]);
+	
+	_imgui_begin_tab_item(label);
+	
+	return buffer_return(global.imgui_buffer,[
+		buffer_f32, // Selected
+		buffer_f32  // Open
+	]);
+}
+
+function imgui_tab_item_button(label,flags=0) {
+	return _imgui_tab_item_button(label,flags);
+}
+
+function imgui_log_to_TTY(auto_open_depth=-1) {
+	_imgui_log_to_TTY(auto_open_depth);
+}
+
+function imgui_log_to_file(auto_open_depth=-1) {
+	_imgui_log_to_file(auto_open_depth);
+}
+
+function imgui_log_to_clipboard(auto_open_depth=-1) {
+	_imgui_log_to_clipboard(auto_open_depth);
+}
+
+function imgui_begin_drag_drop_source(flags=0) {
+	return _imgui_begin_drag_drop_source(flags);
+}
+
+function imgui_set_drag_drop_payload(type,data=0,data_size=-1,cond=0) {
+	buffer_write_args(global.imgui_buffer,[
+		buffer_f32, cond,
+		buffer_f32, data_size,
+		buffer_f32, data
+	]);
+	
+	return _imgui_set_drag_drop_payload(type);
+}
+
+function imgui_accept_drag_drop_payload(type,flags=0) {
+	_imgui_accept_drag_drop_payload(type,flags);
+	var data_size = buffer_peek(global.imgui_buffer,0,buffer_f32);
+	var ret = array_create(data_size);
+	var offset = 4;
+	for (var i = 0; i < data_size; ++i) {
+		ret[i] = buffer_peek(global.imgui_buffer,offset,buffer_f32);
+		offset += 4;
+	}
+	
+	return ret;
+}
+
+function imgui_payload_get_data(payload_id) {
+	_imgui_payload_get_data(payload_id);
+	
+	var data_size = buffer_peek(global.imgui_buffer,0,buffer_f32);
+	var ret = array_create(data_size);
+	var offset = 4;
+	for (var i = 0; i < data_size; ++i) {
+		ret[i] = buffer_peek(global.imgui_buffer,offset,buffer_f32);
+		offset += 4;
+	}
+	
+	return ret;
+}
+
+
+
+
+
+
+
+
+
+
 
 
 
