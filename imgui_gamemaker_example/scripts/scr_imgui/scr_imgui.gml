@@ -899,9 +899,400 @@ function imgui_vslider_int(label,size,v,v_min,v_max,format="%d",flags=0) {
 	]);
 }
 
+function imgui_input_text(label,str,flags=0) {
+	buffer_write_args(global.imgui_buffer,[
+		buffer_f32, flags
+	]);
+	
+	_imgui_input_text(label,str);
+	
+	return buffer_return(global.imgui_buffer,[
+		buffer_f32, // Changed
+		buffer_f32  // String
+	]);
+}
 
+function imgui_input_text_multiline(label,str,size=[0,0],flags=0) {
+	buffer_write_args(global.imgui_buffer,[
+		buffer_f32, size,
+		buffer_f32, flags
+	]);
+	
+	_imgui_input_text_multiline(label,str);
+	
+	return buffer_return(global.imgui_buffer,[
+		buffer_f32, // Changed
+		buffer_f32  // String
+	]);
+}
 
+function imgui_input_text_with_hint(label,hint,str,flags=0) {
+	buffer_write_args(global.imgui_buffer,[
+		buffer_f32, flags
+	]);
+	
+	_imgui_input_text_with_hint(label,str);
+	
+	return buffer_return(global.imgui_buffer,[
+		buffer_f32, // Changed
+		buffer_f32  // String
+	]);
+}
 
+function imgui_input_float(label,v,step=0,step_fast=0,format="%.3f",flags=0) {
+	buffer_write_args(global.imgui_buffer,[
+		buffer_f32, v,
+		buffer_f32, step,
+		buffer_f32, step_fast,
+		buffer_f32, flags
+	]);
+	
+	_imgui_input_float(label,format);
+	
+	return buffer_return(global.imgui_buffer,[
+		buffer_f32, // Changed
+		buffer_f32  // Value
+	]);
+}
+
+function imgui_input_float2(label,v,step=0,step_fast=0,format="%.3f",flags=0) {
+	buffer_write_args(global.imgui_buffer,[
+		buffer_f32, v,
+		buffer_f32, step,
+		buffer_f32, step_fast,
+		buffer_f32, flags
+	]);
+	
+	_imgui_input_float2(label,format);
+	
+	return buffer_return(global.imgui_buffer,[
+		buffer_f32, // Changed
+		buffer_f32, // V[0]
+		buffer_f32  // V[1]
+	]);
+}
+
+function imgui_input_float3(label,v,step=0,step_fast=0,format="%.3f",flags=0) {
+	buffer_write_args(global.imgui_buffer,[
+		buffer_f32, v,
+		buffer_f32, step,
+		buffer_f32, step_fast,
+		buffer_f32, flags
+	]);
+	
+	_imgui_input_float3(label,format);
+	
+	return buffer_return(global.imgui_buffer,[
+		buffer_f32, // Changed
+		buffer_f32, // V[0]
+		buffer_f32, // V[1]
+		buffer_f32  // V[2]
+	]);
+}
+
+function imgui_input_float4(label,v,step=0,step_fast=0,format="%.3f",flags=0) {
+	buffer_write_args(global.imgui_buffer,[
+		buffer_f32, v,
+		buffer_f32, step,
+		buffer_f32, step_fast,
+		buffer_f32, flags
+	]);
+	
+	_imgui_input_float4(label,format);
+	
+	return buffer_return(global.imgui_buffer,[
+		buffer_f32, // Changed
+		buffer_f32, // V[0]
+		buffer_f32, // V[1]
+		buffer_f32, // V[2]
+		buffer_f32  // V[3]
+	]);
+}
+
+function imgui_input_int(label,v,step=1,step_fast=100,flags=0) {
+	buffer_write_args(global.imgui_buffer,[
+		buffer_f32, v,
+		buffer_f32, step,
+		buffer_f32, step_fast,
+		buffer_f32, flags
+	]);
+	
+	_imgui_input_int(label);
+	
+	return buffer_return(global.imgui_buffer,[
+		buffer_f32, // Changed
+		buffer_f32  // Value
+	]);
+}
+
+function imgui_input_int2(label,v,step=1,step_fast=100,flags=0) {
+	buffer_write_args(global.imgui_buffer,[
+		buffer_f32, v,
+		buffer_f32, step,
+		buffer_f32, step_fast,
+		buffer_f32, flags
+	]);
+	
+	_imgui_input_int2(label);
+	
+	return buffer_return(global.imgui_buffer,[
+		buffer_f32, // Changed
+		buffer_f32, // V[0]
+		buffer_f32  // V[1]
+	]);
+}
+
+function imgui_input_int3(label,v,step=1,step_fast=100,flags=0) {
+	buffer_write_args(global.imgui_buffer,[
+		buffer_f32, v,
+		buffer_f32, step,
+		buffer_f32, step_fast,
+		buffer_f32, flags
+	]);
+	
+	_imgui_input_int3(label);
+	
+	return buffer_return(global.imgui_buffer,[
+		buffer_f32, // Changed
+		buffer_f32, // V[0]
+		buffer_f32, // V[1]
+		buffer_f32  // V[2]
+	]);
+}
+
+function imgui_input_int4(label,v,step=1,step_fast=100,flags=0) {
+	buffer_write_args(global.imgui_buffer,[
+		buffer_f32, v,
+		buffer_f32, step,
+		buffer_f32, step_fast,
+		buffer_f32, flags
+	]);
+	
+	_imgui_input_int4(label);
+	
+	return buffer_return(global.imgui_buffer,[
+		buffer_f32, // Changed
+		buffer_f32, // V[0]
+		buffer_f32, // V[1]
+		buffer_f32, // V[2]
+		buffer_f32  // V[3]
+	]);
+}
+
+function imgui_color_edit3(label,col,flags=0) {
+	buffer_write_args(global.imgui_buffer,[
+		buffer_f32, col,
+		buffer_f32, flags
+	]);
+	
+	_imgui_color_edit3(label);
+	
+	return buffer_return(global.imgui_buffer,[
+		buffer_f32, // Changed
+		buffer_f32, // R
+		buffer_f32, // G
+		buffer_f32  // B
+	]);
+}
+
+function imgui_color_edit4(label,col,flags=0) {
+	buffer_write_args(global.imgui_buffer,[
+		buffer_f32, col,
+		buffer_f32, flags
+	]);
+	
+	_imgui_color_edit4(label);
+	
+	return buffer_return(global.imgui_buffer,[
+		buffer_f32, // Changed
+		buffer_f32, // R
+		buffer_f32, // G
+		buffer_f32, // B
+		buffer_f32  // A
+	]);
+}
+
+function imgui_color_picker3(label,col,flags=0) {
+	buffer_write_args(global.imgui_buffer,[
+		buffer_f32, col,
+		buffer_f32, flags
+	]);
+	
+	_imgui_color_picker3(label);
+	
+	return buffer_return(global.imgui_buffer,[
+		buffer_f32, // Changed
+		buffer_f32, // R
+		buffer_f32, // G
+		buffer_f32  // B
+	]);
+}
+
+function imgui_color_picker4(label,col,flags=0) {
+	buffer_write_args(global.imgui_buffer,[
+		buffer_f32, col,
+		buffer_f32, flags
+	]);
+	
+	_imgui_color_picker4(label);
+	
+	return buffer_return(global.imgui_buffer,[
+		buffer_f32, // Changed
+		buffer_f32, // R
+		buffer_f32, // G
+		buffer_f32, // B
+		buffer_f32  // A
+	]);
+}
+
+function imgui_color_button(desc_id,col,flags=0,size=[0,0]) {
+	buffer_write_args(global.imgui_buffer,[
+		buffer_f32, col,
+		buffer_f32, flags,
+		buffer_f32, size
+	]);
+	
+	return _imgui_color_button(desc_id);
+}
+
+function imgui_set_color_edit_options(flags=0) {
+	_imgui_set_color_edit_options(flags);
+}
+
+function imgui_tree_node_ex(label,flags=0) {
+	return _imgui_tree_node_ex(label,flags);
+}
+
+function imgui_collapsing_header(label,is_visible,flags=0) {
+	buffer_write_args(global.imgui_buffer,[
+		buffer_f32, is_visible,
+		buffer_f32, flags
+	]);
+	
+	return buffer_return(global.imgui_buffer,[
+		buffer_f32, // Collapsed
+		buffer_f32  // Is Visible
+	]);
+}
+
+function imgui_set_next_item_open(is_open,cond=0) {
+	_imgui_set_next_item_open(is_open,cond);
+}
+
+function imgui_selectable(label,selected=false,flags=0,size=[0,0]) {
+	buffer_write_args(global.imgui_buffer,[
+		buffer_f32,selected,
+		buffer_f32,flags,
+		buffer_f32,size
+	]);
+	return _imgui_selectable(label);
+}
+
+function imgui_begin_list_box(label,size=[0,0]) {
+	buffer_write_args(global.imgui_buffer,[
+		buffer_f32, size
+	]);
+	
+	return _imgui_begin_list_box(label);
+}
+
+function imgui_list_box(label,current_item,item_string,item_count,height_in_items=-1) {
+	buffer_write_args(global.imgui_buffer,[
+		buffer_f32, height_in_items,
+		buffer_f32, current_item,
+		buffer_f32, item_count,
+		buffer_string, item_string
+	]);
+	
+	_imgui_list_box(label);
+	
+	return buffer_return(global.imgui_buffer,[
+		buffer_f32, // Changed
+		buffer_f32  // Current item
+	]);
+}
+
+function imgui_plot_lines(label,values,value_count,value_offset,overlay_text=imgui_null(),scale_min=-1,scale_max=-1,graph_size=[0,0]) {
+	buffer_write_args(global.imgui_buffer,[
+		buffer_f32, value_count,
+		buffer_f32, values,
+		buffer_f32, value_offset,
+		buffer_f32, scale_min,
+		buffer_f32, scale_max,
+		buffer_f32, graph_size
+	]);
+	
+	_imgui_plot_lines(label,overlay_text);
+	
+}
+
+function imgui_plot_histogram(label,values,value_count,value_offset,overlay_text=imgui_null(),scale_min=-1,scale_max=-1,graph_size=[0,0]) {
+	buffer_write_args(global.imgui_buffer,[
+		buffer_f32, value_count,
+		buffer_f32, values,
+		buffer_f32, value_offset,
+		buffer_f32, scale_min,
+		buffer_f32, scale_max,
+		buffer_f32, graph_size
+	]);
+	
+	_imgui_plot_histogram(label,overlay_text);
+	
+}
+
+function imgui_begin_menu(label,enabled=true) {
+	return _imgui_begin_menu(label,enabled);
+}
+
+function imgui_menu_item(label,shortcut=imgui_null(),selected=false,enabled=true) {
+	buffer_write_args(global.imgui_buffer,[
+		buffer_f32, selected,
+		buffer_f32, enabled
+	]);
+	
+	return _imgui_menu_item(label,shortcut);
+}
+
+function imgui_begin_popup(str_id,flags=0) {
+	return _imgui_begin_popup(str_id,flags);
+}
+
+function imgui_begin_popup_modal(str_id,open=-1,flags=0) {
+	buffer_write_args(global.imgui_buffer,[
+		buffer_f32, open,
+		buffer_f32, flags
+	]);
+	_imgui_begin_popup_modal(str_id);
+	
+	return buffer_return(global.imgui_buffer,[
+		buffer_f32, // Was Opened
+		buffer_f32  // Open
+	]);
+}
+
+function imgui_open_popup(str_id,flags=0) {
+	return _imgui_open_popup(str_id,flags);
+}
+
+function imgui_open_popup_on_item_click(str_id=imgui_null(),flags=1) {
+	return _imgui_open_popup_on_item_click(str_id,flags);
+}
+
+function imgui_begin_popup_context_item(str_id=imgui_null(),flags=1) {
+	return _imgui_begin_popup_context_item(str_id,flags);
+}
+
+function imgui_begin_popup_context_window(str_id=imgui_null(),flags=1) {
+	return _imgui_begin_popup_context_window(str_id,flags);
+}
+
+function imgui_begin_popup_context_void(str_id=imgui_null(),flags=1) {
+	return _imgui_begin_popup_context_void(str_id,flags);
+}
+
+function imgui_is_popup_open(str_id,flags=0) {
+	return _imgui_is_popup_open(str_id,flags);
+}
 
 
 

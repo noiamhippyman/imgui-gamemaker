@@ -1186,6 +1186,8 @@ fn_export double _imgui_drag_int_range2(const char* label, const char* format, c
 	return 0.0;
 }
 
+// kinda works but gets wiggy waggy when min and max aren't perfect. can't do reverse for some reason not sure why.
+// gamemaker man. i'm excited for the future extension updates. I need them baaaaaad morty.
 //fn_export double _imgui_drag_scalar_s8(const char* label, const char* format) {
 //	ext_buffer->seek(0);
 //	char p_data = ext_buffer->read_float();
@@ -1412,19 +1414,551 @@ fn_export double _imgui_vslider_int(const char* label, const char* format) {
 	return 0.0;
 }
 
+
 // Widgets: Input w/ Keyboard
+fn_export double _imgui_input_text(const char* label, const char* text) {
+	std::string str(text);
+	ImGuiInputTextFlags flags = ext_buffer->read_float();
+	bool changed = ImGui::InputText(label, &str, flags);
+
+	ext_buffer->seek(0);
+	ext_buffer->write(changed);
+	ext_buffer->write(str);
+
+	return 0.0;
+}
+
+fn_export double _imgui_input_text_multiline(const char* label, const char* text) {
+	ext_buffer->seek(0);
+	ImVec2 size(ext_buffer->read_float(), ext_buffer->read_float());
+	ImGuiInputTextFlags flags = ext_buffer->read_float();
+
+	std::string str(text);
+	bool changed = ImGui::InputTextMultiline(label, &str, size, flags);
+
+	ext_buffer->seek(0);
+	ext_buffer->write(changed);
+	ext_buffer->write(str);
+
+	return 0.0;
+
+}
+
+fn_export double _imgui_input_text_with_hint(const char* label, const char* hint, const char* text) {
+	std::string str(text);
+	ImGuiInputTextFlags flags = ext_buffer->read_float();
+	bool changed = ImGui::InputTextWithHint(label, hint, &str, flags);
+
+	ext_buffer->seek(0);
+	ext_buffer->write(changed);
+	ext_buffer->write(str);
+
+	return 0.0;
+}
+
+fn_export double _imgui_input_float(const char* label, const char* format) {
+
+	ext_buffer->seek(0);
+	float v = ext_buffer->read_float();
+	float step = ext_buffer->read_float();
+	float step_fast = ext_buffer->read_float();
+	ImGuiInputTextFlags flags = ext_buffer->read_float();
+
+	bool changed = ImGui::InputFloat(label, &v, step, step_fast, format, flags);
+
+	ext_buffer->seek(0);
+	ext_buffer->write(changed);
+	ext_buffer->write(v);
+
+	return 0.0;
+}
+
+fn_export double _imgui_input_float2(const char* label, const char* format) {
+
+	ext_buffer->seek(0);
+	float v[] = {
+		ext_buffer->read_float(),
+		ext_buffer->read_float()
+	};
+
+	ImGuiInputTextFlags flags = ext_buffer->read_float();
+
+	bool changed = ImGui::InputFloat2(label, v, format, flags);
+
+	ext_buffer->seek(0);
+	ext_buffer->write(changed);
+	ext_buffer->write(v[0]);
+	ext_buffer->write(v[1]);
+
+	return 0.0;
+}
+
+fn_export double _imgui_input_float3(const char* label, const char* format) {
+
+	ext_buffer->seek(0);
+	float v[] = {
+		ext_buffer->read_float(),
+		ext_buffer->read_float(),
+		ext_buffer->read_float()
+	};
+	ImGuiInputTextFlags flags = ext_buffer->read_float();
+
+	bool changed = ImGui::InputFloat3(label, v, format, flags);
+
+	ext_buffer->seek(0);
+	ext_buffer->write(changed);
+	ext_buffer->write(v[0]);
+	ext_buffer->write(v[1]);
+	ext_buffer->write(v[2]);
+
+	return 0.0;
+}
+
+fn_export double _imgui_input_float4(const char* label, const char* format) {
+
+	ext_buffer->seek(0);
+	float v[] = {
+		ext_buffer->read_float(),
+		ext_buffer->read_float(),
+		ext_buffer->read_float(),
+		ext_buffer->read_float()
+	};
+
+	ImGuiInputTextFlags flags = ext_buffer->read_float();
+
+	bool changed = ImGui::InputFloat4(label, v, format, flags);
+
+	ext_buffer->seek(0);
+	ext_buffer->write(changed);
+	ext_buffer->write(v[0]);
+	ext_buffer->write(v[1]);
+	ext_buffer->write(v[2]);
+	ext_buffer->write(v[3]);
+
+	return 0.0;
+}
+
+fn_export double _imgui_input_int(const char* label) {
+
+	ext_buffer->seek(0);
+	int v = ext_buffer->read_float();
+	int step = ext_buffer->read_float();
+	int step_fast = ext_buffer->read_float();
+
+	ImGuiInputTextFlags flags = ext_buffer->read_float();
+
+	bool changed = ImGui::InputInt(label, &v, step, step_fast, flags);
+
+	ext_buffer->seek(0);
+	ext_buffer->write(changed);
+	ext_buffer->write(v);
+
+	return 0.0;
+}
+
+fn_export double _imgui_input_int2(const char* label) {
+
+	ext_buffer->seek(0);
+	int v[] = {
+		ext_buffer->read_float(),
+		ext_buffer->read_float()
+	};
+
+	ImGuiInputTextFlags flags = ext_buffer->read_float();
+
+	bool changed = ImGui::InputInt2(label, v, flags);
+
+	ext_buffer->seek(0);
+	ext_buffer->write(changed);
+	ext_buffer->write(v[0]);
+	ext_buffer->write(v[1]);
+
+	return 0.0;
+}
+
+fn_export double _imgui_input_int3(const char* label) {
+
+	ext_buffer->seek(0);
+	int v[] = {
+		ext_buffer->read_float(),
+		ext_buffer->read_float(),
+		ext_buffer->read_float()
+	};
+
+	ImGuiInputTextFlags flags = ext_buffer->read_float();
+
+	bool changed = ImGui::InputInt3(label, v, flags);
+
+	ext_buffer->seek(0);
+	ext_buffer->write(changed);
+	ext_buffer->write(v[0]);
+	ext_buffer->write(v[1]);
+	ext_buffer->write(v[2]);
+
+	return 0.0;
+}
+
+fn_export double _imgui_input_int4(const char* label) {
+
+	ext_buffer->seek(0);
+	int v[] = {
+		ext_buffer->read_float(),
+		ext_buffer->read_float(),
+		ext_buffer->read_float(),
+		ext_buffer->read_float()
+	};
+
+	ImGuiInputTextFlags flags = ext_buffer->read_float();
+
+	bool changed = ImGui::InputInt4(label, v, flags);
+
+	ext_buffer->seek(0);
+	ext_buffer->write(changed);
+	ext_buffer->write(v[0]);
+	ext_buffer->write(v[1]);
+	ext_buffer->write(v[2]);
+	ext_buffer->write(v[3]);
+
+	return 0.0;
+}
+
 
 // Widgets: Color Editor/Picker
+fn_export double _imgui_color_edit3(const char* label) {
+	ext_buffer->seek(0);
+	float c[] = {
+		ext_buffer->read_float(),
+		ext_buffer->read_float(),
+		ext_buffer->read_float()
+	};
+	ImGuiColorEditFlags flags = ext_buffer->read_float();
+	bool changed = ImGui::ColorEdit3(label, c, flags);
+
+	ext_buffer->seek(0);
+	ext_buffer->write(changed);
+	ext_buffer->write(c[0]);
+	ext_buffer->write(c[1]);
+	ext_buffer->write(c[2]);
+
+	return 0.0;
+}
+
+fn_export double _imgui_color_edit4(const char* label) {
+	ext_buffer->seek(0);
+	float c[] = {
+		ext_buffer->read_float(),
+		ext_buffer->read_float(),
+		ext_buffer->read_float(),
+		ext_buffer->read_float()
+	};
+	ImGuiColorEditFlags flags = ext_buffer->read_float();
+	bool changed = ImGui::ColorEdit4(label, c, flags);
+
+	ext_buffer->seek(0);
+	ext_buffer->write(changed);
+	ext_buffer->write(c[0]);
+	ext_buffer->write(c[1]);
+	ext_buffer->write(c[2]);
+	ext_buffer->write(c[3]);
+
+	return 0.0;
+}
+
+fn_export double _imgui_color_picker3(const char* label) {
+	ext_buffer->seek(0);
+	float c[] = {
+		ext_buffer->read_float(),
+		ext_buffer->read_float(),
+		ext_buffer->read_float()
+	};
+	ImGuiColorEditFlags flags = ext_buffer->read_float();
+	bool changed = ImGui::ColorPicker3(label, c, flags);
+
+	ext_buffer->seek(0);
+	ext_buffer->write(changed);
+	ext_buffer->write(c[0]);
+	ext_buffer->write(c[1]);
+	ext_buffer->write(c[2]);
+
+	return 0.0;
+}
+
+fn_export double _imgui_color_picker4(const char* label) {
+	ext_buffer->seek(0);
+	float c[] = {
+		ext_buffer->read_float(),
+		ext_buffer->read_float(),
+		ext_buffer->read_float(),
+		ext_buffer->read_float()
+	};
+	ImGuiColorEditFlags flags = ext_buffer->read_float();
+	bool changed = ImGui::ColorPicker4(label, c, flags);
+
+	ext_buffer->seek(0);
+	ext_buffer->write(changed);
+	ext_buffer->write(c[0]);
+	ext_buffer->write(c[1]);
+	ext_buffer->write(c[2]);
+	ext_buffer->write(c[3]);
+
+	return 0.0;
+}
+
+fn_export double _imgui_color_button(const char* desc_id) {
+	ext_buffer->seek(0);
+	ImVec4 c(ext_buffer->read_float(), ext_buffer->read_float(), ext_buffer->read_float(), ext_buffer->read_float());
+	ImVec2 size(ext_buffer->read_float(), ext_buffer->read_float());
+	ImGuiColorEditFlags flags = ext_buffer->read_float();
+
+	return ImGui::ColorButton(desc_id, c, flags, size);
+}
+
+fn_export double _imgui_set_color_edit_options(double flags) {
+	ImGui::SetColorEditOptions(flags);
+
+	return 0.0;
+}
+
 
 // Widgets: Trees
+fn_export double imgui_tree_node(const char* label) {
+	return ImGui::TreeNode(label);
+}
+
+fn_export double _imgui_tree_node_ex(const char* label, double flags) {
+	return ImGui::TreeNodeEx(label, flags);
+}
+
+fn_export double imgui_tree_push(const char* str_id) {
+	ImGui::TreePush(str_id);
+	return 0.0;
+}
+
+fn_export double imgui_tree_pop() {
+	ImGui::TreePop();
+	return 0.0;
+}
+
+fn_export double imgui_get_tree_node_to_label_spacing() {
+	return ImGui::GetTreeNodeToLabelSpacing();
+}
+
+fn_export double _imgui_collapsing_header(const char* label) {
+	ext_buffer->seek(0);
+	float open = ext_buffer->read_float();
+	ImGuiTreeNodeFlags flags = ext_buffer->read_float();
+	bool is_null = open < 0;
+	bool b = (bool)open;
+	bool collapsed = ImGui::CollapsingHeader(label, is_null ? NULL : &b, flags);
+
+	ext_buffer->seek(0);
+	ext_buffer->write(collapsed);
+	ext_buffer->write(is_null ? open : b);
+
+	return 0.0;
+}
+
+fn_export double _imgui_set_next_item_open(double is_open, double cond) {
+	ImGui::SetNextItemOpen(is_open, cond);
+	return 0.0;
+}
+
 
 // Widgets: Selectables
+fn_export double _imgui_selectable(const char* label) {
+	ext_buffer->seek(0);
+	bool selected = ext_buffer->read_float();
+	ImGuiSelectableFlags flags = ext_buffer->read_float();
+	ImVec2 size(ext_buffer->read_float(), ext_buffer->read_float());
+	return ImGui::Selectable(label, selected, flags, size);
+}
+
 
 // Widgets: List Boxes
+fn_export double _imgui_begin_list_box(const char* label) {
+	ext_buffer->seek(0);
+	ImVec2 size(ext_buffer->read_float(), ext_buffer->read_float());
+	return ImGui::BeginListBox(label, size);
+}
+
+fn_export double imgui_end_list_box() {
+	ImGui::EndListBox();
+	return 0.0;
+}
+
+fn_export double _imgui_list_box(const char* label) {
+	ext_buffer->seek(0);
+	int height_in_items = ext_buffer->read_float();
+	int current_item = ext_buffer->read_float();
+	int item_count = ext_buffer->read_float();
+	std::vector<std::string> items;
+	for (int i = 0; i < item_count; ++i) {
+		items.push_back(ext_buffer->read_string());
+	}
+	bool changed = ImGui::ListBox(label, &current_item, items, height_in_items);
+
+	ext_buffer->seek(0);
+	ext_buffer->write(changed);
+	ext_buffer->write(current_item);
+
+	return 0.0;
+}
+
 
 // Widgets: Data Plotting
+fn_export double _imgui_plot_lines(const char* label, const char* overlay_text) {
+
+	ext_buffer->seek(0);
+	int values_count = ext_buffer->read_float();
+	std::vector<float> values;
+	for (int i = 0; i < values_count; ++i) {
+		values.push_back(ext_buffer->read_float());
+	}
+	int values_offset = ext_buffer->read_float();
+	float scale_min = ext_buffer->read_float();
+	float scale_max = ext_buffer->read_float();
+	ImVec2 graph_size(ext_buffer->read_float(), ext_buffer->read_float());
+
+	ImGui::PlotLines(label, &values[0], values_count, values_offset, overlay_text, scale_min < 0 ? FLT_MAX : scale_min, scale_max < 0 ? FLT_MAX : scale_max, graph_size);
+
+	return 0.0;
+
+}
+
+fn_export double _imgui_plot_histogram(const char* label, const char* overlay_text) {
+
+	ext_buffer->seek(0);
+	int values_count = ext_buffer->read_float();
+	std::vector<float> values;
+	for (int i = 0; i < values_count; ++i) {
+		values.push_back(ext_buffer->read_float());
+	}
+	int values_offset = ext_buffer->read_float();
+	float scale_min = ext_buffer->read_float();
+	float scale_max = ext_buffer->read_float();
+	ImVec2 graph_size(ext_buffer->read_float(), ext_buffer->read_float());
+
+	ImGui::PlotHistogram(label, &values[0], values_count, values_offset, overlay_text, scale_min < 0 ? FLT_MAX : scale_min, scale_max < 0 ? FLT_MAX : scale_max, graph_size);
+
+	return 0.0;
+
+}
 
 
+// Widgets: Menus
+fn_export double imgui_begin_menu_bar() {
+	return ImGui::BeginMenuBar();
+}
+
+fn_export double imgui_end_menu_bar() {
+	ImGui::EndMenuBar();
+	return 0.0;
+}
+
+fn_export double imgui_begin_main_menu_bar() {
+	return ImGui::BeginMainMenuBar();
+}
+
+fn_export double imgui_end_main_menu_bar() {
+	ImGui::EndMainMenuBar();
+	return 0.0;
+}
+
+fn_export double _imgui_begin_menu(const char* label, double enabled) {
+	return ImGui::BeginMenu(label, enabled);
+}
+
+fn_export double imgui_end_menu() {
+	ImGui::EndMenu();
+	return 0.0;
+}
+
+fn_export double _imgui_menu_item(const char* label, const char* shortcut) {
+	ext_buffer->seek(0);
+	bool selected = ext_buffer->read_float();
+	bool enabled = ext_buffer->read_float();
+	return ImGui::MenuItem(label, shortcut, selected, enabled);
+}
+
+
+// Tooltips
+fn_export double imgui_begin_tooltip() {
+	ImGui::BeginTooltip();
+	return 0.0;
+}
+
+fn_export double imgui_end_tooltip() {
+	ImGui::EndTooltip();
+	return 0.0;
+}
+
+fn_export double imgui_set_tooltip(const char* text) {
+	ImGui::SetTooltip(text);
+	return 0.0;
+}
+
+
+// Popups: Begin/End functions
+fn_export double _imgui_begin_popup(const char* str_id, double flags) {
+	return ImGui::BeginPopup(str_id, flags);
+}
+
+fn_export double _imgui_begin_popup_modal(const char* name) {
+	ext_buffer->seek(0);
+	float open = ext_buffer->read_float();
+	bool _open = open;
+	ImGuiPopupFlags flags = ext_buffer->read_float();
+
+	bool was_opened = ImGui::BeginPopupModal(name, open < 0 ? (bool*)0 : &_open, flags);
+
+	ext_buffer->seek(0);
+	ext_buffer->write(was_opened);
+	ext_buffer->write(_open);
+
+	return 0.0;
+}
+
+fn_export double imgui_end_popup() {
+	ImGui::EndPopup();
+	return 0.0;
+}
+
+
+// Popups: Open/Close functions
+fn_export double _imgui_open_popup(const char* str_id, double flags) {
+	ImGui::OpenPopup(str_id, flags);
+	return 0.0;
+}
+
+fn_export double _imgui_open_popup_on_item_click(const char* str_id, double flags) {
+	ImGui::OpenPopupOnItemClick(str_id, flags);
+	return 0.0;
+}
+
+fn_export double imgui_close_current_popup() {
+	ImGui::CloseCurrentPopup();
+	return 0.0;
+}
+
+
+// Popups: Open + Begin combined function helpers
+fn_export double _imgui_begin_popup_context_item(const char* str_id, double flags) {
+	return ImGui::BeginPopupContextItem(str_id, flags);
+}
+
+fn_export double _imgui_begin_popup_context_window(const char* str_id, double flags) {
+	return ImGui::BeginPopupContextWindow(str_id, flags);
+}
+
+fn_export double _imgui_begin_popup_context_void(const char* str_id, double flags) {
+	return ImGui::BeginPopupContextVoid(str_id, flags);
+}
+
+
+// Popups: Query Functions
+fn_export double _imgui_is_popup_open(const char* str_id, double flags) {
+	return ImGui::IsPopupOpen(str_id, flags);
+}
 
 
 
