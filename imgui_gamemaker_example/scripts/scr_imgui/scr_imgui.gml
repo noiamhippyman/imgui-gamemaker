@@ -1529,13 +1529,151 @@ function imgui_reset_mouse_drag_delta(button=0) {
 	return _imgui_reset_mouse_drag_delta(button);
 }
 
+function imgui_drawlist_push_clip_rect(drawlist,clip_rect_min,clip_rect_max,intersect_with_current_clip_rect=false) {
+	buffer_write_args(global.imgui_buffer,[
+		buffer_f32, clip_rect_min,
+		buffer_f32, clip_rect_max,
+		buffer_f32, intersect_with_current_clip_rect
+	]);
+	_imgui_drawlist_push_clip_rect(drawlist);
+}
+
+function imgui_drawlist_get_clip_rect_min(drawlist) {
+	_imgui_drawlist_get_clip_rect_min(drawlist);
+	return buffer_return(global.imgui_buffer,[
+		buffer_f32, // X
+		buffer_f32  // Y
+	]);
+}
+
+function imgui_drawlist_get_clip_rect_max(drawlist) {
+	_imgui_drawlist_get_clip_rect_max(drawlist);
+	return buffer_return(global.imgui_buffer,[
+		buffer_f32, // X
+		buffer_f32  // Y
+	]);
+}
+
+function imgui_drawlist_add_line(drawlist,p1,p2,col,thickness=1) {
+	buffer_write_args(global.imgui_buffer,[
+		buffer_f32, p1,
+		buffer_f32, p2,
+		buffer_f32, col,
+		buffer_f32, thickness
+	]);
+	
+	_imgui_drawlist_add_line(drawlist);
+}
+
+function imgui_drawlist_add_rect(drawlist,p_min,p_max,col,rounding=0,flags=0,thickness=1) {
+	buffer_write_args(global.imgui_buffer,[
+		buffer_f32, p_min,
+		buffer_f32, p_max,
+		buffer_f32, col,
+		buffer_f32, rounding,
+		buffer_f32, flags,
+		buffer_f32, thickness
+	]);
+	
+	_imgui_drawlist_add_rect(drawlist);
+}
+
+function imgui_drawlist_add_rect_filled(drawlist,p_min,p_max,col,rounding=0,flags=0) {
+	buffer_write_args(global.imgui_buffer,[
+		buffer_f32, p_min,
+		buffer_f32, p_max,
+		buffer_f32, col,
+		buffer_f32, rounding,
+		buffer_f32, flags
+	]);
+	
+	_imgui_drawlist_add_rect_filled(drawlist);
+}
 
 
 
+function imgui_drawlist_add_rect_filled_multicolor(drawlist,p_min,p_max,col_upr_left,col_upr_right,col_bot_right,col_bot_left) {
+	buffer_write_args(global.imgui_buffer,[
+		buffer_f32, p_min,
+		buffer_f32, p_max,
+		buffer_f32, col_upr_left,
+		buffer_f32, col_upr_right,
+		buffer_f32, col_bot_right,
+		buffer_f32, col_bot_left
+	]);
+	
+	_imgui_drawlist_add_rect_filled_multicolor(drawlist);
+}
+
+function imgui_drawlist_add_quad(drawlist,p1,p2,p3,p4,col,thickness=1) {
+	buffer_write_args(global.imgui_buffer,[
+		buffer_f32, p1,
+		buffer_f32, p2,
+		buffer_f32, p3,
+		buffer_f32, p4,
+		buffer_f32, col,
+		buffer_f32, thickness
+	]);
+	
+	_imgui_drawlist_add_quad(drawlist);
+}
+
+function imgui_drawlist_add_quad_filled(drawlist,p1,p2,p3,p4,col) {
+	buffer_write_args(global.imgui_buffer,[
+		buffer_f32, p1,
+		buffer_f32, p2,
+		buffer_f32, p3,
+		buffer_f32, p4,
+		buffer_f32, col
+	]);
+	
+	_imgui_drawlist_add_quad_filled(drawlist);
+}
 
 
+function imgui_drawlist_add_triangle(drawlist,p1,p2,p3,col,thickness=1) {
+	buffer_write_args(global.imgui_buffer,[
+		buffer_f32, p1,
+		buffer_f32, p2,
+		buffer_f32, p3,
+		buffer_f32, col,
+		buffer_f32, thickness
+	]);
+	
+	_imgui_drawlist_add_triangle(drawlist);
+}
 
+function imgui_drawlist_add_triangle_filled(drawlist,p1,p2,p3,col) {
+	buffer_write_args(global.imgui_buffer,[
+		buffer_f32, p1,
+		buffer_f32, p2,
+		buffer_f32, p3,
+		buffer_f32, col
+	]);
+	
+	_imgui_drawlist_add_triangle_filled(drawlist);
+}
 
+function imgui_drawlist_add_circle(drawlist,center,radius,col,num_segments=0,thickness=1) {
+	buffer_write_args(global.imgui_buffer,[
+		buffer_f32, center,
+		buffer_f32, radius, 
+		buffer_f32, col,
+		buffer_f32, num_segments,
+		buffer_f32, thickness
+	]);
+	
+	_imgui_drawlist_add_circle(drawlist);
+}
 
-
+function imgui_drawlist_add_circle_filled(drawlist,center,radius,col,num_segments=0) {
+	buffer_write_args(global.imgui_buffer,[
+		buffer_f32, center,
+		buffer_f32, radius, 
+		buffer_f32, col,
+		buffer_f32, num_segments
+	]);
+	
+	_imgui_drawlist_add_circle_filled(drawlist);
+}
 
