@@ -2553,7 +2553,7 @@ fn_export double imgui_is_mouse_down(double button) {
 	return ImGui::IsMouseDown(button);
 }
 
-fn_export double imgui_is_mouse_clicked(double button, double repeat) {
+fn_export double _imgui_is_mouse_clicked(double button, double repeat) {
 	return ImGui::IsMouseClicked(button, repeat);
 }
 

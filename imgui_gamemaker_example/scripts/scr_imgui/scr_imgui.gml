@@ -1416,13 +1416,118 @@ function imgui_payload_get_data(payload_id) {
 	return ret;
 }
 
+function imgui_get_calc_text_size(text,text_end=imgui_null(),hide_text_after_double_hash,wrap_width) {
+	buffer_write_args(global.imgui_buffer,[
+		buffer_f32, hide_text_after_double_hash,
+		buffer_f32, wrap_width
+	]);
+	
+	_imgui_get_calc_text_size(text,text_end);
+	
+	return buffer_return(global.imgui_buffer,[
+		buffer_f32, // Width
+		buffer_f32  // Height
+	]);
+}
 
+function imgui_color_covert_u32_to_float4(colu32) {
+	_imgui_color_convert_u32_to_float4(colu32);
+	return buffer_return(global.imgui_buffer,[
+		buffer_f32, // R
+		buffer_f32, // G
+		buffer_f32, // B
+		buffer_f32  // A
+	]);
+}
 
+function imgui_color_convert_float4_to_u32(col) {
+	buffer_write_args(global.imgui_buffer,[
+		buffer_f32, col
+	]);
+	
+	return _imgui_color_convert_float4_to_u32();
+}
 
+function imgui_color_convert_rgb_to_hsv(rgb) {
+	buffer_write_args(global.imgui_buffer, [
+		buffer_f32, rgb
+	]);
+	
+	_imgui_color_convert_rgb_to_hsv();
+	
+	return buffer_return(global.imgui_buffer,[
+		buffer_f32, // H
+		buffer_f32, // S
+		buffer_f32  // V
+	]);
+}
 
+function imgui_color_convert_hsv_to_rgb(hsv) {
+	buffer_write_args(global.imgui_buffer, [
+		buffer_f32, hsv
+	]);
+	
+	_imgui_color_convert_hsv_to_rgb();
+	
+	return buffer_return(global.imgui_buffer,[
+		buffer_f32, // R
+		buffer_f32, // G
+		buffer_f32  // B
+	]);
+}
 
+function imgui_is_key_pressed(key,repeat_key=true) {
+	return _imgui_is_key_pressed(key,repeat_key);
+}
 
+function imgui_is_mouse_clicked(button,repeat_mouse=false) {
+	return _imgui_is_mouse_clicked(button,repeat_mouse);
+}
 
+function imgui_is_mouse_hovering_rect(r_min,r_max,clip=true) {
+	buffer_write_args(global.imgui_buffer,[
+		buffer_f32, r_min,
+		buffer_f32, r_max,
+		buffer_f32, clip
+	]);
+	
+	return _imgui_is_mouse_hovering_rect();
+}
+
+function imgui_get_mouse_pos() {
+	_imgui_get_mouse_pos();
+	
+	return buffer_return(global.imgui_buffer,[
+		buffer_f32, // Mouse x
+		buffer_f32  // Mouse y
+	]);
+}
+
+function imgui_get_mouse_pos_on_opening_current_popup() {
+	_imgui_get_mouse_pos_on_opening_current_popup();
+	
+	return buffer_return(global.imgui_buffer,[
+		buffer_f32, // Mouse x
+		buffer_f32  // Mouse y
+	]);
+}
+
+function imgui_is_mouse_dragging(button,lock_threshold=-1) {
+	return _imgui_is_mouse_dragging(button,lock_threshold);
+}
+
+function imgui_get_mouse_drag_delta(button=0, lock_threshold=-1) {
+	_imgui_get_mouse_drag_delta(button,lock_threshold);
+	
+	return buffer_return(global.imgui_buffer,[
+		buffer_f32, // Delta x
+		buffer_f32  // Delta y
+	]);
+}
+
+function imgui_reset_mouse_drag_delta(button=0) {
+	return _imgui_reset_mouse_drag_delta(button);
+}
 
 
 
