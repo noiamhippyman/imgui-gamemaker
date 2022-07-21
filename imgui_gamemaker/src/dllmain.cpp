@@ -230,8 +230,6 @@ fn_export double imgui_style_colors_light() {
 
 
 // Windows
-
-// returns { expanded, open }
 fn_export double _imgui_begin(const char* name) {
 	ext_buffer->seek(0);
 	float fvalue = ext_buffer->read_float();
@@ -285,7 +283,6 @@ fn_export double _imgui_is_window_hovered(double flags) {
 	return ImGui::IsWindowHovered((ImGuiHoveredFlags)flags);
 }
 
-// returns ImDrawList*
 fn_export double imgui_get_window_draw_list() {
 	ImDrawList* draw_list = ImGui::GetWindowDrawList();
 	return reinterpret_cast<int64>(draw_list);
@@ -295,7 +292,6 @@ fn_export double imgui_get_window_dpi_scale() {
 	return ImGui::GetWindowDpiScale();
 }
 
-// returns ImVec2
 fn_export double _imgui_get_window_pos() {
 	ImVec2 pos = ImGui::GetWindowPos();
 
@@ -306,7 +302,6 @@ fn_export double _imgui_get_window_pos() {
 	return 0.0;
 }
 
-// returns ImVec2
 fn_export double _imgui_get_window_size() {
 	ImVec2 size = ImGui::GetWindowSize();
 
@@ -523,7 +518,6 @@ fn_export double _imgui_pop_style_color(double count) {
 	return 0.0;
 }
 
-// using ImGuiCol for idx
 fn_export double imgui_push_style_var_f(double idx, double val) {
 	ImGui::PushStyleVar(idx, val);
 	return 0.0;
@@ -859,7 +853,6 @@ fn_export double _imgui_invisible_button(const char* str_id) {
 	return ImGui::InvisibleButton(str_id, size, flags);
 }
 
-// using ImGuiDir
 fn_export double imgui_arrow_button(const char* str_id, double dir) {
 	return ImGui::ArrowButton(str_id, dir);
 }
@@ -2229,11 +2222,9 @@ fn_export double imgui_end_drag_drop_target() {
 }
 
 fn_export double imgui_get_drag_drop_payload() {
-	// TODO: functions for payload access
 	const ImGuiPayload* payload = ImGui::GetDragDropPayload();
 	return reinterpret_cast<int64>(payload);
 }
-
 
 
 // ImGuiPayload access functions
@@ -2649,6 +2640,531 @@ fn_export double imgui_set_clipboard_text(const char* text) {
 }
 
 
+
+//-----------------------------------------------------------------------------
+// [SECTION] ImDrawList API
+//-----------------------------------------------------------------------------
+
+// ImDrawList: Push/Pop functions
+fn_export double _imgui_drawlist_push_clip_rect(double id) {
+	ImDrawList* drawlist = reinterpret_cast<ImDrawList*>((int64)id);
+
+	ext_buffer->seek(0);
+	ImVec2 clip_rect_min(ext_buffer->read_float(), ext_buffer->read_float());
+	ImVec2 clip_rect_max(ext_buffer->read_float(), ext_buffer->read_float());
+	bool intersect_with_current_clip_rect = ext_buffer->read_float();
+
+	drawlist->PushClipRect(clip_rect_min, clip_rect_max, intersect_with_current_clip_rect);
+
+	return 0.0;
+}
+
+fn_export double imgui_drawlist_push_clip_rect_fullscreen(double id) {
+	ImDrawList* drawlist = reinterpret_cast<ImDrawList*>((int64)id);
+	drawlist->PushClipRectFullScreen();
+	return 0.0;
+}
+
+fn_export double imgui_drawlist_pop_clip_rect(double id) {
+	ImDrawList* drawlist = reinterpret_cast<ImDrawList*>((int64)id);
+	drawlist->PopClipRect();
+	return 0.0;
+}
+
+fn_export double imgui_drawlist_push_texture_id(double id, const char* tex_name) {
+	if (!_imgui_is_image_loaded(tex_name)) return -1.0;
+
+	ImDrawList* drawlist = reinterpret_cast<ImDrawList*>((int64)id);
+	ImTextureID tex_id = ext_loaded_image_map[tex_name];
+	drawlist->PushTextureID(tex_id);
+	return 0.0;
+}
+
+fn_export double imgui_drawlist_pop_texture_id(double id) {
+	ImDrawList* drawlist = reinterpret_cast<ImDrawList*>((int64)id);
+	drawlist->PopTextureID();
+	return 0.0;
+}
+
+fn_export double _imgui_drawlist_get_clip_rect_min(double id) {
+	ImDrawList* drawlist = reinterpret_cast<ImDrawList*>((int64)id);
+	ImVec2 v = drawlist->GetClipRectMin();
+	ext_buffer->seek(0);
+	ext_buffer->write(v.x);
+	ext_buffer->write(v.y);
+	return 0.0;
+}
+
+fn_export double _imgui_drawlist_get_clip_rect_max(double id) {
+	ImDrawList* drawlist = reinterpret_cast<ImDrawList*>((int64)id);
+	ImVec2 v = drawlist->GetClipRectMax();
+	ext_buffer->seek(0);
+	ext_buffer->write(v.x);
+	ext_buffer->write(v.y);
+	return 0.0;
+}
+
+
+// ImDrawList: Primitives
+fn_export double _imgui_drawlist_add_line(double id) {
+	ImDrawList* drawlist = reinterpret_cast<ImDrawList*>((int64)id);
+
+	ext_buffer->seek(0);
+	ImVec2 p1(ext_buffer->read_float(), ext_buffer->read_float());
+	ImVec2 p2(ext_buffer->read_float(), ext_buffer->read_float());
+	ImU32 col = ext_buffer->read_float();
+	float thickness = ext_buffer->read_float();
+	drawlist->AddLine(p1, p2, col, thickness);
+
+	return 0.0;
+}
+
+fn_export double _imgui_drawlist_add_rect(double id) {
+	ImDrawList* drawlist = reinterpret_cast<ImDrawList*>((int64)id);
+
+	ext_buffer->seek(0);
+	ImVec2 p_min(ext_buffer->read_float(), ext_buffer->read_float());
+	ImVec2 p_max(ext_buffer->read_float(), ext_buffer->read_float());
+	ImU32 col = ext_buffer->read_float();
+	float rounding = ext_buffer->read_float();
+	ImDrawFlags flags = ext_buffer->read_float();
+	float thickness = ext_buffer->read_float();
+	drawlist->AddRect(p_min,p_max,col,rounding,flags,thickness);
+
+	return 0.0;
+}
+
+fn_export double _imgui_drawlist_add_rect_filled(double id) {
+	ImDrawList* drawlist = reinterpret_cast<ImDrawList*>((int64)id);
+
+	ext_buffer->seek(0);
+	ImVec2 p_min(ext_buffer->read_float(), ext_buffer->read_float());
+	ImVec2 p_max(ext_buffer->read_float(), ext_buffer->read_float());
+	ImU32 col = ext_buffer->read_float();
+	float rounding = ext_buffer->read_float();
+	ImDrawFlags flags = ext_buffer->read_float();
+	drawlist->AddRectFilled(p_min, p_max, col, rounding, flags);
+
+	return 0.0;
+}
+
+fn_export double _imgui_drawlist_add_rect_filled_multicolor(double id) {
+	ImDrawList* drawlist = reinterpret_cast<ImDrawList*>((int64)id);
+
+	ext_buffer->seek(0);
+	ImVec2 p_min(ext_buffer->read_float(), ext_buffer->read_float());
+	ImVec2 p_max(ext_buffer->read_float(), ext_buffer->read_float());
+	ImU32 col_upr_left = ext_buffer->read_float();
+	ImU32 col_upr_right = ext_buffer->read_float();
+	ImU32 col_bot_right = ext_buffer->read_float();
+	ImU32 col_bot_left = ext_buffer->read_float();
+
+	drawlist->AddRectFilledMultiColor(p_min, p_max, col_upr_left, col_upr_right, col_bot_right, col_bot_left);
+
+	return 0.0;
+}
+
+fn_export double _imgui_drawlist_add_quad(double id) {
+	ImDrawList* drawlist = reinterpret_cast<ImDrawList*>((int64)id);
+
+	ext_buffer->seek(0);
+	ImVec2 p1(ext_buffer->read_float(), ext_buffer->read_float());
+	ImVec2 p2(ext_buffer->read_float(), ext_buffer->read_float());
+	ImVec2 p3(ext_buffer->read_float(), ext_buffer->read_float());
+	ImVec2 p4(ext_buffer->read_float(), ext_buffer->read_float());
+	ImU32 col = ext_buffer->read_float();
+	float thickness = ext_buffer->read_float();
+	drawlist->AddQuad(p1, p2, p3, p4, col, thickness);
+
+	return 0.0;
+}
+
+fn_export double _imgui_drawlist_add_quad_filled(double id) {
+	ImDrawList* drawlist = reinterpret_cast<ImDrawList*>((int64)id);
+
+	ext_buffer->seek(0);
+	ImVec2 p1(ext_buffer->read_float(), ext_buffer->read_float());
+	ImVec2 p2(ext_buffer->read_float(), ext_buffer->read_float());
+	ImVec2 p3(ext_buffer->read_float(), ext_buffer->read_float());
+	ImVec2 p4(ext_buffer->read_float(), ext_buffer->read_float());
+	ImU32 col = ext_buffer->read_float();
+	drawlist->AddQuadFilled(p1, p2, p3, p4, col);
+
+	return 0.0;
+}
+
+fn_export double _imgui_drawlist_add_triangle(double id) {
+	ImDrawList* drawlist = reinterpret_cast<ImDrawList*>((int64)id);
+
+	ext_buffer->seek(0);
+	ImVec2 p1(ext_buffer->read_float(), ext_buffer->read_float());
+	ImVec2 p2(ext_buffer->read_float(), ext_buffer->read_float());
+	ImVec2 p3(ext_buffer->read_float(), ext_buffer->read_float());
+	ImU32 col = ext_buffer->read_float();
+	float thickness = ext_buffer->read_float();
+	drawlist->AddTriangle(p1, p2, p3, col, thickness);
+
+	return 0.0;
+}
+
+fn_export double _imgui_drawlist_add_triangle_filled(double id) {
+	ImDrawList* drawlist = reinterpret_cast<ImDrawList*>((int64)id);
+
+	ext_buffer->seek(0);
+	ImVec2 p1(ext_buffer->read_float(), ext_buffer->read_float());
+	ImVec2 p2(ext_buffer->read_float(), ext_buffer->read_float());
+	ImVec2 p3(ext_buffer->read_float(), ext_buffer->read_float());
+	ImU32 col = ext_buffer->read_float();
+	drawlist->AddTriangleFilled(p1, p2, p3, col);
+
+	return 0.0;
+}
+
+fn_export double _imgui_drawlist_add_circle(double id) {
+	ImDrawList* drawlist = reinterpret_cast<ImDrawList*>((int64)id);
+
+	ext_buffer->seek(0);
+	ImVec2 center(ext_buffer->read_float(), ext_buffer->read_float());
+	float radius = ext_buffer->read_float();
+	ImU32 col = ext_buffer->read_float();
+	int num_segments = ext_buffer->read_float();
+	float thickness = ext_buffer->read_float();
+
+	drawlist->AddCircle(center, radius, col, num_segments, thickness);
+
+	return 0.0;
+}
+
+fn_export double _imgui_drawlist_add_circle_filled(double id) {
+	ImDrawList* drawlist = reinterpret_cast<ImDrawList*>((int64)id);
+
+	ext_buffer->seek(0);
+	ImVec2 center(ext_buffer->read_float(), ext_buffer->read_float());
+	float radius = ext_buffer->read_float();
+	ImU32 col = ext_buffer->read_float();
+	int num_segments = ext_buffer->read_float();
+
+	drawlist->AddCircleFilled(center, radius, col, num_segments);
+
+	return 0.0;
+}
+
+fn_export double _imgui_drawlist_add_ngon(double id) {
+	ImDrawList* drawlist = reinterpret_cast<ImDrawList*>((int64)id);
+
+	ext_buffer->seek(0);
+	ImVec2 center(ext_buffer->read_float(), ext_buffer->read_float());
+	float radius = ext_buffer->read_float();
+	ImU32 col = ext_buffer->read_float();
+	int num_segments = ext_buffer->read_float();
+	float thickness = ext_buffer->read_float();
+
+	drawlist->AddNgon(center, radius, col, num_segments, thickness);
+
+	return 0.0;
+}
+
+fn_export double _imgui_drawlist_add_ngon_filled(double id) {
+	ImDrawList* drawlist = reinterpret_cast<ImDrawList*>((int64)id);
+
+	ext_buffer->seek(0);
+	ImVec2 center(ext_buffer->read_float(), ext_buffer->read_float());
+	float radius = ext_buffer->read_float();
+	ImU32 col = ext_buffer->read_float();
+	int num_segments = ext_buffer->read_float();
+
+	drawlist->AddNgonFilled(center, radius, col, num_segments);
+
+	return 0.0;
+}
+
+fn_export double _imgui_drawlist_add_text(double id, const char* text_begin, const char* text_end) {
+	ImDrawList* drawlist = reinterpret_cast<ImDrawList*>((int64)id);
+
+	ext_buffer->seek(0);
+	ImVec2 pos(ext_buffer->read_float(), ext_buffer->read_float());
+	ImU32 col = ext_buffer->read_float();
+	drawlist->AddText(pos, col, text_begin, text_end);
+
+	return 0.0;
+}
+
+fn_export double _imgui_drawlist_add_font_text(double id, double font_id, const char* text_begin, const char* text_end) {
+	ImDrawList* drawlist = reinterpret_cast<ImDrawList*>((int64)id);
+
+	ImFont* font = reinterpret_cast<ImFont*>((int64)font_id);
+
+	ext_buffer->seek(0);
+	float font_size = ext_buffer->read_float();
+	ImVec2 pos(ext_buffer->read_float(), ext_buffer->read_float());
+	ImU32 col = ext_buffer->read_float();
+	float wrap_width = ext_buffer->read_float();
+	ImVec4 cpu_fine_clip_rect(ext_buffer->read_float(), ext_buffer->read_float(), ext_buffer->read_float(), ext_buffer->read_float());
+
+	drawlist->AddText(font, font_size, pos, col, text_begin, text_end, wrap_width,&cpu_fine_clip_rect);
+
+	return 0.0;
+}
+
+fn_export double _imgui_drawlist_add_polyline(double id) {
+	ImDrawList* drawlist = reinterpret_cast<ImDrawList*>((int64)id);
+
+	ext_buffer->seek(0);
+	int num_points = ext_buffer->read_float();
+	std::vector<ImVec2> points;
+	for (int i = 0; i < num_points; ++i) {
+		ImVec2 v(ext_buffer->read_float(), ext_buffer->read_float());
+		points.push_back(v);
+	}
+	ImU32 col = ext_buffer->read_float();
+	ImDrawFlags flags = ext_buffer->read_float();
+	float thickness = ext_buffer->read_float();
+
+
+	drawlist->AddPolyline(&points[0], num_points, col, flags, thickness);
+
+	return 0.0;
+}
+
+fn_export double _imgui_drawlist_add_convex_poly_filled(double id) {
+	ImDrawList* drawlist = reinterpret_cast<ImDrawList*>((int64)id);
+
+	ext_buffer->seek(0);
+	int num_points = ext_buffer->read_float();
+	std::vector<ImVec2> points;
+	for (int i = 0; i < num_points; ++i) {
+		ImVec2 v(ext_buffer->read_float(), ext_buffer->read_float());
+		points.push_back(v);
+	}
+	ImU32 col = ext_buffer->read_float();
+
+
+	drawlist->AddConvexPolyFilled(&points[0], num_points, col);
+
+	return 0.0;
+}
+
+fn_export double _imgui_drawlist_add_bezier_cubic(double id) {
+	ImDrawList* drawlist = reinterpret_cast<ImDrawList*>((int64)id);
+
+	ext_buffer->seek(0);
+	ImVec2 p1(ext_buffer->read_float(), ext_buffer->read_float());
+	ImVec2 p2(ext_buffer->read_float(), ext_buffer->read_float());
+	ImVec2 p3(ext_buffer->read_float(), ext_buffer->read_float());
+	ImVec2 p4(ext_buffer->read_float(), ext_buffer->read_float());
+	ImU32 col = ext_buffer->read_float();
+	float thickness = ext_buffer->read_float();
+	int num_segments = ext_buffer->read_float();
+	drawlist->AddBezierCubic(p1, p2, p3, p4, col, thickness, num_segments);
+
+	return 0.0;
+}
+
+fn_export double _imgui_drawlist_add_bezier_quadratic(double id) {
+	ImDrawList* drawlist = reinterpret_cast<ImDrawList*>((int64)id);
+
+	ext_buffer->seek(0);
+	ImVec2 p1(ext_buffer->read_float(), ext_buffer->read_float());
+	ImVec2 p2(ext_buffer->read_float(), ext_buffer->read_float());
+	ImVec2 p3(ext_buffer->read_float(), ext_buffer->read_float());
+	ImU32 col = ext_buffer->read_float();
+	float thickness = ext_buffer->read_float();
+	int num_segments = ext_buffer->read_float();
+	drawlist->AddBezierQuadratic(p1, p2, p3, col, thickness, num_segments);
+
+	return 0.0;
+}
+
+
+// ImDrawList: Image Primitives
+fn_export double _imgui_drawlist_add_image(double id, const char* tex_name) {
+
+	if (!_imgui_is_image_loaded(tex_name)) return -1.0;
+
+	ImTextureID tex_id = ext_loaded_image_map[tex_name];
+
+	ImDrawList* drawlist = reinterpret_cast<ImDrawList*>((int64)id);
+
+	ext_buffer->seek(0);
+	ImVec2 p_min(ext_buffer->read_float(), ext_buffer->read_float());
+	ImVec2 p_max(ext_buffer->read_float(), ext_buffer->read_float());
+	ImVec2 uv_min(ext_buffer->read_float(), ext_buffer->read_float());
+	ImVec2 uv_max(ext_buffer->read_float(), ext_buffer->read_float());
+	ImU32 col = ext_buffer->read_float();
+	drawlist->AddImage(tex_id, p_min, p_max, uv_min, uv_max, col);
+
+	return 0.0;
+}
+
+fn_export double _imgui_drawlist_add_image_quad(double id, const char* tex_name) {
+
+	if (!_imgui_is_image_loaded(tex_name)) return -1.0;
+
+	ImTextureID tex_id = ext_loaded_image_map[tex_name];
+
+	ImDrawList* drawlist = reinterpret_cast<ImDrawList*>((int64)id);
+
+	ext_buffer->seek(0);
+	ImVec2 p1(ext_buffer->read_float(), ext_buffer->read_float());
+	ImVec2 p2(ext_buffer->read_float(), ext_buffer->read_float());
+	ImVec2 p3(ext_buffer->read_float(), ext_buffer->read_float());
+	ImVec2 p4(ext_buffer->read_float(), ext_buffer->read_float());
+	ImVec2 uv1(ext_buffer->read_float(), ext_buffer->read_float());
+	ImVec2 uv2(ext_buffer->read_float(), ext_buffer->read_float());
+	ImVec2 uv3(ext_buffer->read_float(), ext_buffer->read_float());
+	ImVec2 uv4(ext_buffer->read_float(), ext_buffer->read_float());
+	ImU32 col = ext_buffer->read_float();
+	drawlist->AddImageQuad(tex_id, p1, p2, p3, p4, uv1, uv2, uv3, uv4, col);
+
+	return 0.0;
+}
+
+fn_export double _imgui_drawlist_add_image_rounded(double id, const char* tex_name) {
+
+	if (!_imgui_is_image_loaded(tex_name)) return -1.0;
+
+	ImTextureID tex_id = ext_loaded_image_map[tex_name];
+
+	ImDrawList* drawlist = reinterpret_cast<ImDrawList*>((int64)id);
+
+	ext_buffer->seek(0);
+	ImVec2 p_min(ext_buffer->read_float(), ext_buffer->read_float());
+	ImVec2 p_max(ext_buffer->read_float(), ext_buffer->read_float());
+	ImVec2 uv_min(ext_buffer->read_float(), ext_buffer->read_float());
+	ImVec2 uv_max(ext_buffer->read_float(), ext_buffer->read_float());
+	ImU32 col = ext_buffer->read_float();
+	float rounding = ext_buffer->read_float();
+	ImDrawFlags flags = ext_buffer->read_float();
+	drawlist->AddImageRounded(tex_id, p_min, p_max, uv_min, uv_max, col, rounding, flags);
+
+	return 0.0;
+}
+
+
+// ImDrawList: Stateful path API
+fn_export double _imgui_drawlist_path_clear(double id) {
+	ImDrawList* drawlist = reinterpret_cast<ImDrawList*>((int64)id);
+
+	drawlist->PathClear();
+
+	return 0.0;
+}
+
+fn_export double _imgui_drawlist_path_line_to(double id) {
+	ImDrawList* drawlist = reinterpret_cast<ImDrawList*>((int64)id);
+
+	ext_buffer->seek(0);
+	ImVec2 pos(ext_buffer->read_float(), ext_buffer->read_float());
+
+	drawlist->PathLineTo(pos);
+
+	return 0.0;
+}
+
+fn_export double _imgui_drawlist_path_line_to_merge_duplicate(double id) {
+	ImDrawList* drawlist = reinterpret_cast<ImDrawList*>((int64)id);
+
+	ext_buffer->seek(0);
+	ImVec2 pos(ext_buffer->read_float(), ext_buffer->read_float());
+
+	drawlist->PathLineToMergeDuplicate(pos);
+
+	return 0.0;
+}
+
+fn_export double _imgui_drawlist_path_fill_convex(double id) {
+	ImDrawList* drawlist = reinterpret_cast<ImDrawList*>((int64)id);
+
+	ext_buffer->seek(0);
+	ImU32 col = ext_buffer->read_float();
+
+	drawlist->PathFillConvex(col);
+
+	return 0.0;
+}
+
+fn_export double _imgui_drawlist_path_stroke(double id) {
+	ImDrawList* drawlist = reinterpret_cast<ImDrawList*>((int64)id);
+
+	ext_buffer->seek(0);
+	ImU32 col = ext_buffer->read_float();
+	ImDrawFlags flags = ext_buffer->read_float();
+	float thickness = ext_buffer->read_float();
+
+	drawlist->PathStroke(col, flags, thickness);
+
+	return 0.0;
+}
+
+fn_export double _imgui_drawlist_path_arc_to(double id) {
+	ImDrawList* drawlist = reinterpret_cast<ImDrawList*>((int64)id);
+
+	ext_buffer->seek(0);
+	ImVec2 center(ext_buffer->read_float(), ext_buffer->read_float());
+	float radius = ext_buffer->read_float();
+	float a_min = ext_buffer->read_float();
+	float a_max = ext_buffer->read_float();
+	int num_segments = ext_buffer->read_float();
+
+	drawlist->PathArcTo(center, radius, a_min, a_max, num_segments);
+
+	return 0.0;
+}
+
+fn_export double _imgui_drawlist_path_arc_to_fast(double id) {
+	ImDrawList* drawlist = reinterpret_cast<ImDrawList*>((int64)id);
+
+	ext_buffer->seek(0);
+	ImVec2 center(ext_buffer->read_float(), ext_buffer->read_float());
+	float radius = ext_buffer->read_float();
+	float a_min_of_12 = ext_buffer->read_float();
+	float a_max_of_12 = ext_buffer->read_float();
+
+	drawlist->PathArcToFast(center, radius, a_min_of_12, a_max_of_12);
+
+	return 0.0;
+}
+
+fn_export double _imgui_drawlist_path_bezier_cubic_curve_to(double id) {
+	ImDrawList* drawlist = reinterpret_cast<ImDrawList*>((int64)id);
+
+	ext_buffer->seek(0);
+	ImVec2 p2(ext_buffer->read_float(), ext_buffer->read_float());
+	ImVec2 p3(ext_buffer->read_float(), ext_buffer->read_float());
+	ImVec2 p4(ext_buffer->read_float(), ext_buffer->read_float());
+	int num_segments = ext_buffer->read_float();
+
+	drawlist->PathBezierCubicCurveTo(p2, p3, p4, num_segments);
+
+	return 0.0;
+}
+
+fn_export double _imgui_drawlist_path_bezier_quadratic_curve_to(double id) {
+	ImDrawList* drawlist = reinterpret_cast<ImDrawList*>((int64)id);
+
+	ext_buffer->seek(0);
+	ImVec2 p2(ext_buffer->read_float(), ext_buffer->read_float());
+	ImVec2 p3(ext_buffer->read_float(), ext_buffer->read_float());
+	int num_segments = ext_buffer->read_float();
+
+	drawlist->PathBezierQuadraticCurveTo(p2, p3, num_segments);
+
+	return 0.0;
+}
+
+fn_export double _imgui_drawlist_path_rect(double id) {
+	ImDrawList* drawlist = reinterpret_cast<ImDrawList*>((int64)id);
+
+	ext_buffer->seek(0);
+	ImVec2 rect_min(ext_buffer->read_float(), ext_buffer->read_float());
+	ImVec2 rect_max(ext_buffer->read_float(), ext_buffer->read_float());
+	float rounding = ext_buffer->read_float();
+	ImDrawFlags flags = ext_buffer->read_float();
+
+	drawlist->PathRect(rect_min,rect_max,rounding,flags);
+
+	return 0.0;
+}
 
 
 
