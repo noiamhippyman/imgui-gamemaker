@@ -692,23 +692,6 @@ function imgui_drag_int_range2(label,v_current_min,v_current_max,v_speed=1,v_min
 	]);
 }
 
-//function imgui_drag_scalar_s8(label,v,v_speed=1,v_min=0,v_max=0,format=imgui_null(),flags=0) {
-//	buffer_write_args(global.imgui_buffer,[
-//		buffer_f32,v,
-//		buffer_f32,v_speed,
-//		buffer_f32,v_min,
-//		buffer_f32,v_max,
-//		buffer_f32,flags
-//	]);
-	
-//	_imgui_drag_scalar_s8(label,format);
-	
-//	return buffer_return(global.imgui_buffer,[
-//		buffer_f32, // Changed
-//		buffer_f32  // Current Value (v)
-//	]);
-//}
-
 function imgui_slider_float(label,v,v_speed=1,v_min=0,v_max=0,format="%.3f",flags=0) {
 	buffer_write_args(global.imgui_buffer,[
 		buffer_f32, v,
@@ -1294,13 +1277,69 @@ function imgui_is_popup_open(str_id,flags=0) {
 	return _imgui_is_popup_open(str_id,flags);
 }
 
+function imgui_begin_table(str_id,column,flags=0,outer_size=[0,0],inner_width=0) {
+	buffer_write_args(global.imgui_buffer,[
+		buffer_f32, column,
+		buffer_f32, flags,
+		buffer_f32, outer_size,
+		buffer_f32, inner_width
+	]);
+	
+	return _imgui_begin_table(str_id);
+}
 
+function imgui_table_next_row(flags=0,min_row_height=0) {
+	buffer_write_args(global.imgui_buffer,[
+		buffer_f32, flags,
+		buffer_f32, min_row_height
+	]);
+	
+	_imgui_table_next_row();
+}
 
+function imgui_table_setup_column(label,flags=0,init_width_or_weight=0,user_id=0) {
+	buffer_write_args(global.imgui_buffer,[
+		buffer_f32, flags,
+		buffer_f32, init_width_or_weight,
+		buffer_f32, user_id
+	]);
+	_imgui_table_setup_column(label);
+}
 
+function imgui_table_get_column_name(column_n=-1) {
+	return _imgui_table_get_column_name(column_n);
+}
 
+function imgui_table_get_column_flags(column_n=-1) {
+	return _imgui_table_get_column_flags(column_n);
+}
 
+function imgui_table_set_bg_color(target,color,column_n=-1) {
+	var colorU32 = imgui_get_color_u32(color);
+	buffer_write_args(global.imgui_buffer,[
+		buffer_f32, target,
+		buffer_f32, colorU32,
+		buffer_f32, column_n
+	]);
+	_imgui_table_set_bg_color();
+}
 
+function imgui_columns(count=1,str_id=imgui_null(),border=true) {
+	buffer_write_args(global.imgui_buffer,[
+		buffer_f32, count,
+		buffer_f32, border
+	]);
+	
+	_imgui_columns(str_id);
+}
 
+function imgui_get_column_width(column_index=-1) {
+	return _imgui_get_column_width(column_index);
+}
+
+function imgui_get_column_offset(column_index=-1) {
+	return _imgui_get_column_offset(column_index);
+}
 
 
 

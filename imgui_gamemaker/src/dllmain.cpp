@@ -772,6 +772,9 @@ fn_export double imgui_get_frame_height_with_spacing() {
 }
 
 
+///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
+
 // ID stack/scopes
 fn_export double imgui_push_id_str(const char* str_id) {
 	ImGui::PushID(str_id);
@@ -800,6 +803,10 @@ fn_export double imgui_get_id_str(const char* str_id) {
 fn_export double imgui_get_id_begin_end(const char* str_id_begin, const char* str_id_end) {
 	return ImGui::GetID(str_id_begin, str_id_end);
 }
+
+
+
+///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
 
 // Widgets: Text
@@ -839,6 +846,9 @@ fn_export double imgui_bullet_text(const char* text) {
 	ImGui::BulletText(text);
 	return 0.0;
 }
+
+
+///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
 
 // Widgets: Main
@@ -953,6 +963,9 @@ fn_export double imgui_bullet() {
 }
 
 
+///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
+
 // Widgets: Combo Box
 fn_export double _imgui_begin_combo(const char* label, const char* preview_value, double flags) {
 	return ImGui::BeginCombo(label, preview_value, flags);
@@ -981,6 +994,9 @@ fn_export double _imgui_combo(const char* label) {
 
 	return 0.0;
 }
+
+
+///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
 
 // Widgets: Drag Sliders
@@ -1206,6 +1222,9 @@ fn_export double _imgui_drag_int_range2(const char* label, const char* format, c
 //}
 
 
+///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
+
 // Widgets: Regular Sliders
 fn_export double _imgui_slider_float(const char* label, const char* format) {
 	ext_buffer->seek(0);
@@ -1413,6 +1432,9 @@ fn_export double _imgui_vslider_int(const char* label, const char* format) {
 
 	return 0.0;
 }
+
+
+///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
 
 // Widgets: Input w/ Keyboard
@@ -1623,6 +1645,9 @@ fn_export double _imgui_input_int4(const char* label) {
 }
 
 
+///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
+
 // Widgets: Color Editor/Picker
 fn_export double _imgui_color_edit3(const char* label) {
 	ext_buffer->seek(0);
@@ -1720,6 +1745,9 @@ fn_export double _imgui_set_color_edit_options(double flags) {
 }
 
 
+///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
+
 // Widgets: Trees
 fn_export double imgui_tree_node(const char* label) {
 	return ImGui::TreeNode(label);
@@ -1764,6 +1792,9 @@ fn_export double _imgui_set_next_item_open(double is_open, double cond) {
 }
 
 
+///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
+
 // Widgets: Selectables
 fn_export double _imgui_selectable(const char* label) {
 	ext_buffer->seek(0);
@@ -1772,6 +1803,9 @@ fn_export double _imgui_selectable(const char* label) {
 	ImVec2 size(ext_buffer->read_float(), ext_buffer->read_float());
 	return ImGui::Selectable(label, selected, flags, size);
 }
+
+
+///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
 
 // Widgets: List Boxes
@@ -1803,6 +1837,9 @@ fn_export double _imgui_list_box(const char* label) {
 
 	return 0.0;
 }
+
+
+///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
 
 // Widgets: Data Plotting
@@ -1845,6 +1882,9 @@ fn_export double _imgui_plot_histogram(const char* label, const char* overlay_te
 }
 
 
+///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
+
 // Widgets: Menus
 fn_export double imgui_begin_menu_bar() {
 	return ImGui::BeginMenuBar();
@@ -1881,6 +1921,9 @@ fn_export double _imgui_menu_item(const char* label, const char* shortcut) {
 }
 
 
+///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
+
 // Tooltips
 fn_export double imgui_begin_tooltip() {
 	ImGui::BeginTooltip();
@@ -1896,6 +1939,9 @@ fn_export double imgui_set_tooltip(const char* text) {
 	ImGui::SetTooltip(text);
 	return 0.0;
 }
+
+
+///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
 
 // Popups: Begin/End functions
@@ -1959,6 +2005,166 @@ fn_export double _imgui_begin_popup_context_void(const char* str_id, double flag
 fn_export double _imgui_is_popup_open(const char* str_id, double flags) {
 	return ImGui::IsPopupOpen(str_id, flags);
 }
+
+
+///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
+
+// Tables
+fn_export double _imgui_begin_table(const char* str_id) {
+	ext_buffer->seek(0);
+	int column = ext_buffer->read_float();
+	ImGuiTableFlags flags = ext_buffer->read_float();
+	ImVec2 outer_size(ext_buffer->read_float(), ext_buffer->read_float());
+	float inner_width = ext_buffer->read_float();
+	
+	return ImGui::BeginTable(str_id, column, flags, outer_size, inner_width);
+}
+
+fn_export double imgui_end_table() {
+	ImGui::EndTable();
+	return 0.0;
+}
+
+fn_export double _imgui_table_next_row() {
+	ext_buffer->seek(0);
+	ImGuiTableRowFlags flags = ext_buffer->read_float();
+	float min_row_height = ext_buffer->read_float();
+	ImGui::TableNextRow(flags, min_row_height);
+	return 0.0;
+}
+
+fn_export double imgui_table_next_column() {
+	return ImGui::TableNextColumn();
+}
+
+fn_export double imgui_table_set_column_index(double column_n) {
+	return ImGui::TableSetColumnIndex(column_n);
+}
+
+
+// Tables: Headers & Columns declaration
+fn_export double _imgui_table_setup_column(const char* label) {
+	ext_buffer->seek(0);
+	ImGuiTableColumnFlags flags = ext_buffer->read_float();
+	float init_width_or_weight = ext_buffer->read_float();
+	ImGuiID user_id = ext_buffer->read_float();
+	ImGui::TableSetupColumn(label, flags, init_width_or_weight, user_id);
+	return 0.0;
+}
+
+fn_export double imgui_table_setup_scroll_freeze(double cols, double rows) {
+	ImGui::TableSetupScrollFreeze(cols, rows);
+	return 0.0;
+}
+
+fn_export double imgui_table_headers_row() {
+	ImGui::TableHeadersRow();
+	return 0.0;
+}
+
+fn_export double imgui_table_header(const char* label) {
+	ImGui::TableHeader(label);
+	return 0.0;
+}
+
+
+// Tables: Sorting & Misc functions
+fn_export double imgui_table_get_sort_specs() {
+	// TODO: access to specs
+	ImGuiTableSortSpecs* specs = ImGui::TableGetSortSpecs();
+	return reinterpret_cast<int64>(specs);
+}
+
+fn_export double imgui_table_get_column_count() {
+	return ImGui::TableGetColumnCount();
+}
+
+fn_export double imgui_table_get_column_index() {
+	return ImGui::TableGetColumnIndex();
+}
+
+fn_export double imgui_table_get_row_index() {
+	return ImGui::TableGetRowIndex();
+}
+
+fn_export const char* _imgui_table_get_column_name(double column_n) {
+	return ImGui::TableGetColumnName(column_n);
+}
+
+fn_export double _imgui_table_get_column_flags(double column_n) {
+	return ImGui::TableGetColumnFlags(column_n);
+}
+
+fn_export double imgui_table_set_column_enabled(double column_n, double enabled) {
+	ImGui::TableSetColumnEnabled(column_n, enabled);
+	return 0.0;
+}
+
+fn_export double _imgui_table_set_bg_color() {
+	ImGuiTableBgTarget target = ext_buffer->read_float();
+	ImU32 color = ext_buffer->read_float();
+	int column_n = ext_buffer->read_float();
+
+	ImGui::TableSetBgColor(target, color, column_n);
+
+	return 0.0;
+}
+
+
+///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
+
+// Legacy Columns API
+fn_export double _imgui_columns(const char* id) {
+	ext_buffer->seek(0);
+	int count = ext_buffer->read_float();
+	bool border = ext_buffer->read_float();
+	ImGui::Columns(count, id, border);
+	return 0.0;
+}
+
+fn_export double imgui_next_column() {
+	ImGui::NextColumn();
+	return 0.0;
+}
+
+fn_export double imgui_get_column_index() {
+	ImGui::GetColumnIndex();
+	return 0.0;
+}
+
+fn_export double _imgui_get_column_width(double column_index) {
+	return ImGui::GetColumnWidth(column_index);
+}
+
+fn_export double imgui_set_column_width(double column_index, double width) {
+	ImGui::SetColumnWidth(column_index, width);
+	return 0.0;
+}
+
+fn_export double _imgui_get_column_offset(double column_index) {
+	return ImGui::GetColumnOffset(column_index);
+}
+
+fn_export double imgui_set_column_offset(double column_index, double offset) {
+	ImGui::SetColumnOffset(column_index, offset);
+	return 0.0;
+}
+
+fn_export double imgui_get_columns_count() {
+	return ImGui::GetColumnsCount();
+}
+
+
+///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
+
+
+
+
+
+
 
 
 
