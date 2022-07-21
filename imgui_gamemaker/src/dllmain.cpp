@@ -2458,6 +2458,196 @@ fn_export double imgui_end_child_frame() {
 }
 
 
+// Text Utilities
+fn_export double _imgui_get_calc_text_size(const char* text, const char* text_end) {
+	ext_buffer->seek(0);
+	bool hide_text_after_double_hash = ext_buffer->read_float();
+	float wrap_width = ext_buffer->read_float();
+
+	ImVec2 size = ImGui::CalcTextSize(text, text_end, hide_text_after_double_hash, wrap_width);
+	ext_buffer->seek(0);
+	ext_buffer->write(size.x);
+	ext_buffer->write(size.y);
+	return 0.0;
+}
+
+
+// Color Utilities
+fn_export double _imgui_color_convert_u32_to_float4(double colU32) {
+	
+	ImVec4 colF4 = ImGui::ColorConvertU32ToFloat4(colU32);
+
+	ext_buffer->seek(0);
+	ext_buffer->write(colF4.x);
+	ext_buffer->write(colF4.y);
+	ext_buffer->write(colF4.z);
+	ext_buffer->write(colF4.w);
+
+	return 0.0;
+}
+
+fn_export double _imgui_color_convert_float4_to_u32() {
+	ext_buffer->seek(0);
+	ImVec4 colF4(ext_buffer->read_float(), ext_buffer->read_float(), ext_buffer->read_float(), ext_buffer->read_float());
+	return ImGui::ColorConvertFloat4ToU32(colF4);
+}
+
+fn_export double _imgui_color_convert_rgb_to_hsv() {
+	ext_buffer->seek(0);
+	float f[3] = { ext_buffer->read_float(), ext_buffer->read_float(), ext_buffer->read_float() };
+	float hsv[3] = { 0.0, 0.0, 0.0 };
+	ImGui::ColorConvertRGBtoHSV(f[0], f[1], f[2], hsv[0], hsv[1], hsv[2]);
+
+	ext_buffer->seek(0);
+	ext_buffer->write(hsv[0]);
+	ext_buffer->write(hsv[1]);
+	ext_buffer->write(hsv[2]);
+
+	return 0.0;
+}
+
+fn_export double _imgui_color_convert_hsv_to_rgb() {
+	ext_buffer->seek(0);
+	float f[3] = { ext_buffer->read_float(), ext_buffer->read_float(), ext_buffer->read_float() };
+	float rgb[3] = { 0.0, 0.0, 0.0 };
+	ImGui::ColorConvertHSVtoRGB(f[0], f[1], f[2], rgb[0], rgb[1], rgb[2]);
+
+	ext_buffer->seek(0);
+	ext_buffer->write(rgb[0]);
+	ext_buffer->write(rgb[1]);
+	ext_buffer->write(rgb[2]);
+
+	return 0.0;
+}
+
+
+// Input Utilities: Keyboard
+fn_export double imgui_is_key_down(double key) {
+	return ImGui::IsKeyDown(key);
+}
+
+fn_export double _imgui_is_key_pressed(double key,double repeat) {
+	return ImGui::IsKeyPressed(key,repeat);
+}
+
+fn_export double imgui_is_key_released(double key) {
+	return ImGui::IsKeyReleased(key);
+}
+
+fn_export double imgui_get_key_pressed_amount(double key, double repeat_delay, double rate) {
+	return ImGui::GetKeyPressedAmount(key, repeat_delay, rate);
+}
+
+fn_export const char* imgui_get_key_name(double key) {
+	return ImGui::GetKeyName(key);
+}
+
+fn_export double imgui_set_next_frame_want_capture_keyboard(double want_capture) {
+	ImGui::SetNextFrameWantCaptureKeyboard(want_capture);
+	return 0.0;
+}
+
+
+// Input Utilities: Mouse
+fn_export double imgui_is_mouse_down(double button) {
+	return ImGui::IsMouseDown(button);
+}
+
+fn_export double imgui_is_mouse_clicked(double button, double repeat) {
+	return ImGui::IsMouseClicked(button, repeat);
+}
+
+fn_export double imgui_is_mouse_released(double button) {
+	return ImGui::IsMouseReleased(button);
+}
+
+fn_export double imgui_is_mouse_double_clicked(double button) {
+	return ImGui::IsMouseDoubleClicked(button);
+}
+
+fn_export double imgui_get_mouse_clicked_count(double button) {
+	return ImGui::GetMouseClickedCount(button);
+}
+
+fn_export double _imgui_is_mouse_hovering_rect() {
+	ext_buffer->seek(0);
+	ImVec2 r_min(ext_buffer->read_float(), ext_buffer->read_float());
+	ImVec2 r_max(ext_buffer->read_float(), ext_buffer->read_float());
+	bool clip = ext_buffer->read_float();
+	return ImGui::IsMouseHoveringRect(r_min, r_max, clip);
+}
+
+fn_export double imgui_is_mouse_pos_valid() {
+	return ImGui::IsMousePosValid();
+}
+
+fn_export double imgui_is_any_mouse_down() {
+	return ImGui::IsAnyMouseDown();
+}
+
+fn_export double _imgui_get_mouse_pos() {
+	ImVec2 pos = ImGui::GetMousePos();
+	ext_buffer->seek(0);
+	ext_buffer->write(pos.x);
+	ext_buffer->write(pos.y);
+	return 0.0;
+}
+
+fn_export double _imgui_get_mouse_pos_on_opening_current_popup() {
+	ImVec2 pos = ImGui::GetMousePosOnOpeningCurrentPopup();
+	ext_buffer->seek(0);
+	ext_buffer->write(pos.x);
+	ext_buffer->write(pos.y);
+	return 0.0;
+}
+
+fn_export double _imgui_is_mouse_dragging(double button, double lock_threshold) {
+	return ImGui::IsMouseDragging(button, lock_threshold);
+}
+
+fn_export double _imgui_get_mouse_drag_delta(double button, double lock_threshold) {
+
+	ImVec2 delta = ImGui::GetMouseDragDelta(button, lock_threshold);
+
+	ext_buffer->seek(0);
+	ext_buffer->write(delta.x);
+	ext_buffer->write(delta.y);
+
+	return 0.0;
+
+}
+
+fn_export double _imgui_reset_mouse_drag_delta(double button) {
+	ImGui::ResetMouseDragDelta(button);
+	return 0.0;
+}
+
+fn_export double imgui_get_mouse_cursor() {
+	return ImGui::GetMouseCursor();
+}
+
+fn_export double imgui_set_mouse_cursor(double cursor_type) {
+	ImGui::SetMouseCursor(cursor_type);
+	return 0.0;
+}
+
+fn_export double imgui_set_next_frame_want_capture_mouse(double want_capture) {
+	ImGui::SetNextFrameWantCaptureMouse(want_capture);
+	return 0.0;
+}
+
+
+
+// Clipboard Utilities
+fn_export const char* imgui_get_clipboard_text() {
+	return ImGui::GetClipboardText();
+}
+
+fn_export double imgui_set_clipboard_text(const char* text) {
+	ImGui::SetClipboardText(text);
+	return 0.0;
+}
+
 
 
 
