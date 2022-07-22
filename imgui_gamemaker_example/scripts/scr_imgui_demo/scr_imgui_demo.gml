@@ -172,6 +172,80 @@ function imgui_demo_show_demo_window_widgets() {
 		
 		}
 		
+		{
+		
+			static basic_drag_i1 = 50;
+			static basic_drag_i2 = 42;
+			ret = imgui_drag_int("drag int",basic_drag_i1,1);
+			if (ret[0]) basic_drag_i1 = ret[1];
+			imgui_same_line();
+			imgui_help_marker("Click and drag to edit value.\nHold SHIFT/ALT for faster/slower edit.\nDouble-click or CTRL+Click to input value.");
+			
+			ret = imgui_drag_int("drag int 0..100", basic_drag_i2, 1, 0, 100, "%d%%", ImGuiSliderFlags.AlwaysClamp);
+			if (ret[0]) basic_drag_i2 = ret[1];
+			
+			static basic_drag_float_f1 = 1;
+			static basic_drag_float_f2 = 0.0067;
+			ret = imgui_drag_float("drag float", basic_drag_float_f1, 0.005);
+			if (ret[0]) basic_drag_float_f1 = ret[1];
+			ret = imgui_drag_float("drag small float", basic_drag_float_f2, 0.0001,0,0,"%.06fns");
+			if (ret[0]) basic_drag_float_f2 = ret[1];
+			
+		}
+		
+		{
+			
+			static basic_slider_i1 = 0;
+			ret = imgui_slider_int("slider int",basic_slider_i1,-1,3);
+			if (ret[0]) basic_slider_i1 = ret[1];
+			imgui_same_line();
+			imgui_help_marker("CTRL+Click to input value.");
+			
+			static basic_slider_f1 = 0.123;
+			static basic_slider_f2 = 0;
+			ret = imgui_slider_float("slider float",basic_slider_f1,0.0,1.0,"ratio = %.3f");
+			if (ret[0]) basic_slider_f1 = ret[1];
+			ret = imgui_slider_float("slider float (log)",basic_slider_f2,-10.0,10.0,"%.4f",ImGuiSliderFlags.Logarithmic);
+			if (ret[0]) basic_slider_f2 = ret[1];
+			
+			static basic_slider_angle = 0;
+			ret = imgui_slider_angle("slider angle",basic_slider_angle);
+			if (ret[0]) basic_slider_angle = ret[1];
+			
+			enum Element { Fire, Earth, Air, Water, COUNT }
+			static basic_slider_elem = Element.Fire;
+			var elem_names = ["Fire","Earth","Air","Water"];
+			var elem_name = (basic_slider_elem >= 0 && basic_slider_elem < Element.COUNT) ? elem_names[basic_slider_elem] : "Unknown";
+			ret = imgui_slider_int("slider enum",basic_slider_elem,0,Element.COUNT-1,elem_name);
+			if (ret[0]) basic_slider_elem = ret[1];
+			imgui_same_line();
+			imgui_help_marker("Using the format string parameter to display a name instead of the underlying integer.");
+			
+		}
+		
+		{
+			
+			static basic_coloredit_col1 = [ 1.0, 0.0, 0.2 ];
+			static basic_coloredit_col2 = [ 0.4, 0.7, 0.0, 0.5 ];
+			
+			ret = imgui_color_edit3("color 1", basic_coloredit_col1);
+			if (ret[0]) array_copy(basic_coloredit_col1,0,ret,1,3);
+			imgui_same_line();
+			imgui_help_marker("Click on the color square to open a color picker.\nClick and hold to use drag and drop.\nRight-click on the color square to show options.\nCTRL+Click on individual component to input value.\n");
+			ret = imgui_color_edit4("color 2", basic_coloredit_col2);
+			if (ret[0]) array_copy(basic_coloredit_col2,0,ret,1,4);
+			
+		}
+		
+		{
+			
+			var basic_listbox_items = ["Apple", "Banana", "Cherry", "Kiwi", "Mango", "Orange", "Pineapple", "Strawberry", "Watermelon"];
+			static basic_listbox_item_current = 1;
+			ret = imgui_list_box("listbox",basic_listbox_item_current,basic_listbox_items,array_length(basic_listbox_items),4);
+			if (ret[0]) basic_listbox_item_current = ret[1];
+			
+		}
+		
 		imgui_tree_pop();
 	}
 	

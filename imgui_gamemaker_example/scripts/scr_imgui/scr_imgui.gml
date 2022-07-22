@@ -156,7 +156,8 @@ function imgui_set_next_window_pos(pos,cond=0,pivot=[0,0]) {
 // using ImGuiCond
 function imgui_set_next_window_size(size,cond=0) {
 	buffer_write_args(global.imgui_buffer,[
-		buffer_f32,size,
+		buffer_f32,size[1],
+		buffer_f32,size[0],
 		buffer_f32,cond
 	]);
 	
@@ -698,7 +699,7 @@ function imgui_drag_int_range2(label,v_current_min,v_current_max,v_speed=1,v_min
 	]);
 }
 
-function imgui_slider_float(label,v,v_speed=1,v_min=0,v_max=0,format="%.3f",flags=0) {
+function imgui_slider_float(label,v,v_min=0,v_max=0,format="%.3f",flags=0) {
 	buffer_write_args(global.imgui_buffer,[
 		buffer_f32, v,
 		buffer_f32, v_min,
@@ -714,7 +715,7 @@ function imgui_slider_float(label,v,v_speed=1,v_min=0,v_max=0,format="%.3f",flag
 	]);
 }
 
-function imgui_slider_float2(label,v,v_speed=1,v_min=0,v_max=0,format="%.3f",flags=0) {
+function imgui_slider_float2(label,v,v_min=0,v_max=0,format="%.3f",flags=0) {
 	buffer_write_args(global.imgui_buffer,[
 		buffer_f32, v,
 		buffer_f32, v_min,
@@ -731,7 +732,7 @@ function imgui_slider_float2(label,v,v_speed=1,v_min=0,v_max=0,format="%.3f",fla
 	]);
 }
 
-function imgui_slider_float3(label,v,v_speed=1,v_min=0,v_max=0,format="%.3f",flags=0) {
+function imgui_slider_float3(label,v,v_min=0,v_max=0,format="%.3f",flags=0) {
 	buffer_write_args(global.imgui_buffer,[
 		buffer_f32, v,
 		buffer_f32, v_min,
@@ -749,7 +750,7 @@ function imgui_slider_float3(label,v,v_speed=1,v_min=0,v_max=0,format="%.3f",fla
 	]);
 }
 
-function imgui_slider_float4(label,v,v_speed=1,v_min=0,v_max=0,format="%.3f",flags=0) {
+function imgui_slider_float4(label,v,v_min=0,v_max=0,format="%.3f",flags=0) {
 	buffer_write_args(global.imgui_buffer,[
 		buffer_f32, v,
 		buffer_f32, v_min,
@@ -784,7 +785,7 @@ function imgui_slider_angle(label,v_rad,v_degrees_min=-360,v_degrees_max=360,for
 	]);
 }
 
-function imgui_slider_int(label,v,v_speed=1,v_min=0,v_max=0,format="%d",flags=0) {
+function imgui_slider_int(label,v,v_min=0,v_max=0,format="%d",flags=0) {
 	buffer_write_args(global.imgui_buffer,[
 		buffer_f32, v,
 		buffer_f32, v_min,
@@ -800,7 +801,7 @@ function imgui_slider_int(label,v,v_speed=1,v_min=0,v_max=0,format="%d",flags=0)
 	]);
 }
 
-function imgui_slider_int2(label,v,v_speed=1,v_min=0,v_max=0,format="%d",flags=0) {
+function imgui_slider_int2(label,v,v_min=0,v_max=0,format="%d",flags=0) {
 	buffer_write_args(global.imgui_buffer,[
 		buffer_f32, v,
 		buffer_f32, v_min,
@@ -817,7 +818,7 @@ function imgui_slider_int2(label,v,v_speed=1,v_min=0,v_max=0,format="%d",flags=0
 	]);
 }
 
-function imgui_slider_int3(label,v,v_speed=1,v_min=0,v_max=0,format="%d",flags=0) {
+function imgui_slider_int3(label,v,v_min=0,v_max=0,format="%d",flags=0) {
 	buffer_write_args(global.imgui_buffer,[
 		buffer_f32, v,
 		buffer_f32, v_min,
@@ -835,7 +836,7 @@ function imgui_slider_int3(label,v,v_speed=1,v_min=0,v_max=0,format="%d",flags=0
 	]);
 }
 
-function imgui_slider_int4(label,v,v_speed=1,v_min=0,v_max=0,format="%d",flags=0) {
+function imgui_slider_int4(label,v,v_min=0,v_max=0,format="%d",flags=0) {
 	buffer_write_args(global.imgui_buffer,[
 		buffer_f32, v,
 		buffer_f32, v_min,
@@ -1201,12 +1202,12 @@ function imgui_begin_list_box(label,size=[0,0]) {
 	return _imgui_begin_list_box(label);
 }
 
-function imgui_list_box(label,current_item,item_string,item_count,height_in_items=-1) {
+function imgui_list_box(label,current_item,items,item_count,height_in_items=-1) {
 	buffer_write_args(global.imgui_buffer,[
 		buffer_f32, height_in_items,
 		buffer_f32, current_item,
 		buffer_f32, item_count,
-		buffer_string, item_string
+		buffer_string, items
 	]);
 	
 	_imgui_list_box(label);
