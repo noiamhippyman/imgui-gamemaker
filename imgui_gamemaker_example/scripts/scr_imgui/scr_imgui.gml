@@ -272,10 +272,10 @@ function imgui_set_scroll_from_pos_y(center_y_ratio=0.5) {
 function imgui_push_style_color(idx,col) {
 	buffer_write_args(global.imgui_buffer, [
 		buffer_f32, idx,
-		buffer_f32, col[0],
-		buffer_f32, col[1],
+		buffer_f32, col[3],
 		buffer_f32, col[2],
-		buffer_f32, col[3]
+		buffer_f32, col[1],
+		buffer_f32, col[0]
 	]);
 	
 	_imgui_push_style_color();
@@ -894,7 +894,7 @@ function imgui_input_text(label,str,flags=0) {
 	
 	return buffer_return(global.imgui_buffer,[
 		buffer_f32, // Changed
-		buffer_f32  // String
+		buffer_string  // String
 	]);
 }
 
@@ -1467,9 +1467,7 @@ function imgui_color_convert_float4_to_u32(col) {
 
 function imgui_color_convert_rgb_to_hsv(rgb) {
 	buffer_write_args(global.imgui_buffer, [
-		buffer_f32, rgb[0],
-		buffer_f32, rgb[1],
-		buffer_f32, rgb[2]
+		buffer_f32, rgb
 	]);
 	
 	_imgui_color_convert_rgb_to_hsv();
@@ -1483,9 +1481,7 @@ function imgui_color_convert_rgb_to_hsv(rgb) {
 
 function imgui_color_convert_hsv_to_rgb(hsv) {
 	buffer_write_args(global.imgui_buffer, [
-		buffer_f32, hsv[0],
-		buffer_f32, hsv[1],
-		buffer_f32, hsv[2]
+		buffer_f32, hsv
 	]);
 	
 	_imgui_color_convert_hsv_to_rgb();

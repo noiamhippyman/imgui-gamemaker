@@ -122,6 +122,31 @@ function imgui_demo_show_demo_window_widgets() {
 			imgui_plot_lines("Curve",basic_fancy_tooltip_arr,array_length(basic_fancy_tooltip_arr));
 			imgui_end_tooltip();
 		}
+		imgui_separator();
+		imgui_label_text("label", "Value");
+		
+		{
+		
+			var basic_combo_items = ["AAAA", "BBBB", "CCCC", "DDDD", "EEEE", "FFFF", "GGGG", "HHHH", "IIIIIII", "JJJJ", "KKKKKKK"];
+			static basic_combo_item_current = 0;
+			ret = imgui_combo("combo",basic_combo_item_current,basic_combo_items,array_length(basic_combo_items));
+			basic_combo_item_current = ret[1];
+			imgui_same_line();
+			imgui_help_marker("Using the simplified one-liner Combo API here.\nRefer to the \"Combo\" section below for an explanation of how to use the more flexible and general imgui_begin_combo/imgui_end_combo API.");
+		
+		}
+		
+		{
+		
+			static basic_input_text_str0 = "Hello, world!";
+			ret = imgui_input_text("input text",basic_input_text_str0);
+			//show_debug_message(ret);
+			if (ret[0]) {
+				basic_input_text_str0 = ret[1];
+			}
+			
+		
+		}
 		
 		imgui_tree_pop();
 	}

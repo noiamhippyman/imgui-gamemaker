@@ -71,6 +71,7 @@ bool ImGui::InputTextWithHint(const char* label, const char* hint, std::string* 
     return InputTextWithHint(label, hint, (char*)str->c_str(), str->capacity() + 1, flags, InputTextCallback, &cb_user_data);
 }
 
+
 static auto vector_getter = [](void* vec, int idx, const char** out_text)
 {
     auto& vector = *static_cast<std::vector<std::string>*>(vec);

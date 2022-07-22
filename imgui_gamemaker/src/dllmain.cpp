@@ -1412,6 +1412,7 @@ fn_export double _imgui_vslider_int(const char* label, const char* format) {
 // Widgets: Input w/ Keyboard
 fn_export double _imgui_input_text(const char* label, const char* text) {
 	std::string str(text);
+	ext_buffer->seek(0);
 	ImGuiInputTextFlags flags = ext_buffer->read_float();
 	bool changed = ImGui::InputText(label, &str, flags);
 
