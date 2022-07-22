@@ -140,10 +140,14 @@ function imgui_demo_show_demo_window_widgets() {
 		
 			static basic_input_text_str0 = "Hello, world!";
 			ret = imgui_input_text("input text",basic_input_text_str0);
-			//show_debug_message(ret);
-			if (ret[0]) {
-				basic_input_text_str0 = ret[1];
-			}
+			if (ret[0]) basic_input_text_str0 = ret[1];
+			imgui_same_line();
+			imgui_help_marker("USER:\nHold SHIFT or use mouse to select text.\nCTRL+Left/Right to word jump.\nCTRL+A or double-click to select all.\nCTRL+X,CTRL+C,CTRL+V clipboard.\nCTRL+Z,CTRL+Y undo/redo.\nESCAPE to revert.\n\nPROGRAMMER:\n");
+			
+			static basic_input_text_str1 = "";
+			ret = imgui_input_text_with_hint("input text (w/ hint)", "enter text here", basic_input_text_str1);
+			if (ret[0]) basic_input_text_str1 = ret[1];
+			
 			
 		
 		}

@@ -908,7 +908,7 @@ function imgui_input_text_multiline(label,str,size=[0,0],flags=0) {
 	
 	return buffer_return(global.imgui_buffer,[
 		buffer_f32, // Changed
-		buffer_f32  // String
+		buffer_string  // String
 	]);
 }
 
@@ -917,11 +917,11 @@ function imgui_input_text_with_hint(label,hint,str,flags=0) {
 		buffer_f32, flags
 	]);
 	
-	_imgui_input_text_with_hint(label,str);
+	_imgui_input_text_with_hint(label,hint,str);
 	
 	return buffer_return(global.imgui_buffer,[
 		buffer_f32, // Changed
-		buffer_f32  // String
+		buffer_string  // String
 	]);
 }
 

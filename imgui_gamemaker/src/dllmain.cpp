@@ -1441,6 +1441,7 @@ fn_export double _imgui_input_text_multiline(const char* label, const char* text
 
 fn_export double _imgui_input_text_with_hint(const char* label, const char* hint, const char* text) {
 	std::string str(text);
+	ext_buffer->seek(0);
 	ImGuiInputTextFlags flags = ext_buffer->read_float();
 	bool changed = ImGui::InputTextWithHint(label, hint, &str, flags);
 
