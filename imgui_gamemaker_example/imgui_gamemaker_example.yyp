@@ -1,6 +1,7 @@
 {
   "resources": [
     {"id":{"name":"Scr_ImGui","path":"scripts/Scr_ImGui/Scr_ImGui.yy",},"order":3,},
+    {"id":{"name":"Scr_ImGui_Demo","path":"scripts/Scr_ImGui_Demo/Scr_ImGui_Demo.yy",},"order":6,},
     {"id":{"name":"Ext_ImGui","path":"extensions/Ext_ImGui/Ext_ImGui.yy",},"order":2,},
     {"id":{"name":"Obj_ImGui_Demo","path":"objects/Obj_ImGui_Demo/Obj_ImGui_Demo.yy",},"order":4,},
     {"id":{"name":"Scr_ImGui_MacrosAndEnums","path":"scripts/Scr_ImGui_MacrosAndEnums/Scr_ImGui_MacrosAndEnums.yy",},"order":5,},

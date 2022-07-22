@@ -488,7 +488,7 @@
             1,
           ],"resourceVersion":"1.0","name":"_imgui_menu_item","tags":[],"resourceType":"GMExtensionFunction",},
         {"externalName":"imgui_begin_tooltip","kind":1,"help":"imgui_begin_tooltip()","hidden":false,"returnType":2,"argCount":0,"args":[],"resourceVersion":"1.0","name":"imgui_begin_tooltip","tags":[],"resourceType":"GMExtensionFunction",},
-        {"externalName":"imgui_end_tooltip","kind":1,"help":"imgui_end_tooltip","hidden":false,"returnType":2,"argCount":0,"args":[],"resourceVersion":"1.0","name":"imgui_end_tooltip","tags":[],"resourceType":"GMExtensionFunction",},
+        {"externalName":"imgui_end_tooltip","kind":1,"help":"imgui_end_tooltip()","hidden":false,"returnType":2,"argCount":0,"args":[],"resourceVersion":"1.0","name":"imgui_end_tooltip","tags":[],"resourceType":"GMExtensionFunction",},
         {"externalName":"imgui_set_tooltip","kind":1,"help":"imgui_set_tooltip(text)","hidden":false,"returnType":2,"argCount":0,"args":[
             1,
           ],"resourceVersion":"1.0","name":"imgui_set_tooltip","tags":[],"resourceType":"GMExtensionFunction",},

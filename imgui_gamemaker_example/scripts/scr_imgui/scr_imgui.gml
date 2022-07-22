@@ -16,7 +16,7 @@ function buffer_write_args(buffer,args) {
 		if (is_array(val)) {
 			var val_count = array_length(val);
 			for (var j = 0; j < val_count; ++j) {
-				var v = val[(val_count-1)-j];
+				var v = val[j];
 				buffer_poke(buffer,offset,type,v);
 				switch (type) {
 					case buffer_f32:
@@ -272,7 +272,10 @@ function imgui_set_scroll_from_pos_y(center_y_ratio=0.5) {
 function imgui_push_style_color(idx,col) {
 	buffer_write_args(global.imgui_buffer, [
 		buffer_f32, idx,
-		buffer_f32, col
+		buffer_f32, col[0],
+		buffer_f32, col[1],
+		buffer_f32, col[2],
+		buffer_f32, col[3]
 	]);
 	
 	_imgui_push_style_color();
@@ -455,7 +458,7 @@ function imgui_checkbox(label,value) {
 	
 	return buffer_return(global.imgui_buffer,[
 		buffer_f32, // Changed
-		buffer_f32  // Is Checked
+		buffer_f32  // Value
 	]);
 }
 
@@ -1146,11 +1149,13 @@ function imgui_tree_node_ex(label,flags=0) {
 	return _imgui_tree_node_ex(label,flags);
 }
 
-function imgui_collapsing_header(label,is_visible,flags=0) {
+function imgui_collapsing_header(label,is_visible=-1,flags=0) {
 	buffer_write_args(global.imgui_buffer,[
 		buffer_f32, is_visible,
 		buffer_f32, flags
 	]);
+	
+	_imgui_collapsing_header(label);
 	
 	return buffer_return(global.imgui_buffer,[
 		buffer_f32, // Collapsed
@@ -1195,7 +1200,7 @@ function imgui_list_box(label,current_item,item_string,item_count,height_in_item
 	]);
 }
 
-function imgui_plot_lines(label,values,value_count,value_offset,overlay_text=imgui_null(),scale_min=-1,scale_max=-1,graph_size=[0,0]) {
+function imgui_plot_lines(label,values,value_count,value_offset=0,overlay_text=imgui_null(),scale_min=-1,scale_max=-1,graph_size=[0,0]) {
 	buffer_write_args(global.imgui_buffer,[
 		buffer_f32, value_count,
 		buffer_f32, values,
@@ -1416,6 +1421,18 @@ function imgui_payload_get_data(payload_id) {
 	return ret;
 }
 
+function imgui_begin_disabled(disabled=true) {
+	_imgui_begin_disabled(disabled);
+}
+
+function imgui_is_item_hovered(flags=0) {
+	return _imgui_is_item_hovered(flags);
+}
+
+function imgui_is_item_clicked(button=0) {
+	return _imgui_is_item_clicked(button);
+}
+
 function imgui_get_calc_text_size(text,text_end=imgui_null(),hide_text_after_double_hash,wrap_width) {
 	buffer_write_args(global.imgui_buffer,[
 		buffer_f32, hide_text_after_double_hash,
@@ -1450,7 +1467,9 @@ function imgui_color_convert_float4_to_u32(col) {
 
 function imgui_color_convert_rgb_to_hsv(rgb) {
 	buffer_write_args(global.imgui_buffer, [
-		buffer_f32, rgb
+		buffer_f32, rgb[0],
+		buffer_f32, rgb[1],
+		buffer_f32, rgb[2]
 	]);
 	
 	_imgui_color_convert_rgb_to_hsv();
@@ -1464,7 +1483,9 @@ function imgui_color_convert_rgb_to_hsv(rgb) {
 
 function imgui_color_convert_hsv_to_rgb(hsv) {
 	buffer_write_args(global.imgui_buffer, [
-		buffer_f32, hsv
+		buffer_f32, hsv[0],
+		buffer_f32, hsv[1],
+		buffer_f32, hsv[2]
 	]);
 	
 	_imgui_color_convert_hsv_to_rgb();

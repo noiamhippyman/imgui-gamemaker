@@ -2497,14 +2497,16 @@ fn_export double _imgui_color_convert_rgb_to_hsv() {
 
 fn_export double _imgui_color_convert_hsv_to_rgb() {
 	ext_buffer->seek(0);
-	float f[3] = { ext_buffer->read_float(), ext_buffer->read_float(), ext_buffer->read_float() };
-	float rgb[3] = { 0.0, 0.0, 0.0 };
-	ImGui::ColorConvertHSVtoRGB(f[0], f[1], f[2], rgb[0], rgb[1], rgb[2]);
+	float h = ext_buffer->read_float();
+	float s = ext_buffer->read_float();
+	float v = ext_buffer->read_float();
+	float r, g, b;
+	ImGui::ColorConvertHSVtoRGB(h, s, v, r, g, b);
 
 	ext_buffer->seek(0);
-	ext_buffer->write(rgb[0]);
-	ext_buffer->write(rgb[1]);
-	ext_buffer->write(rgb[2]);
+	ext_buffer->write(r);
+	ext_buffer->write(g);
+	ext_buffer->write(b);
 
 	return 0.0;
 }
