@@ -1590,8 +1590,6 @@ function imgui_drawlist_add_rect_filled(drawlist,p_min,p_max,col,rounding=0,flag
 	_imgui_drawlist_add_rect_filled(drawlist);
 }
 
-
-
 function imgui_drawlist_add_rect_filled_multicolor(drawlist,p_min,p_max,col_upr_left,col_upr_right,col_bot_right,col_bot_left) {
 	buffer_write_args(global.imgui_buffer,[
 		buffer_f32, p_min,
@@ -1629,7 +1627,6 @@ function imgui_drawlist_add_quad_filled(drawlist,p1,p2,p3,p4,col) {
 	
 	_imgui_drawlist_add_quad_filled(drawlist);
 }
-
 
 function imgui_drawlist_add_triangle(drawlist,p1,p2,p3,col,thickness=1) {
 	buffer_write_args(global.imgui_buffer,[
@@ -1676,4 +1673,253 @@ function imgui_drawlist_add_circle_filled(drawlist,center,radius,col,num_segment
 	
 	_imgui_drawlist_add_circle_filled(drawlist);
 }
+
+function imgui_drawlist_add_ngon(drawlist,center,radius,col,num_segments,thickness=1) {
+	buffer_write_args(global.imgui_buffer,[
+		buffer_f32, center,
+		buffer_f32, radius, 
+		buffer_f32, col,
+		buffer_f32, num_segments,
+		buffer_f32, thickness
+	]);
+	
+	_imgui_drawlist_add_ngon(drawlist);
+}
+
+function imgui_drawlist_add_ngon_filled(drawlist,center,radius,col,num_segments) {
+	buffer_write_args(global.imgui_buffer,[
+		buffer_f32, center,
+		buffer_f32, radius, 
+		buffer_f32, col,
+		buffer_f32, num_segments
+	]);
+	
+	_imgui_drawlist_add_ngon_filled(drawlist);
+}
+
+function imgui_drawlist_add_text(drawlist,pos,col,text_begin,text_end=imgui_null()) {
+	buffer_write_args(global.imgui_buffer,[
+		buffer_f32, pos,
+		buffer_f32, col
+	]);
+	
+	_imgui_drawlist_add_text(drawlist,text_begin,text_end);
+}
+
+function imgui_drawlist_add_font_text(drawlist,font,font_size,pos,col,text_begin,text_end=imgui_null(),wrap_width,cpu_fine_clip_rect) {
+	buffer_write_args(global.imgui_buffer,[
+		buffer_f32, font_size,
+		buffer_f32, pos,
+		buffer_f32, col,
+		buffer_f32, wrap_width,
+		buffer_f32, cpu_fine_clip_rect
+	]);
+	
+	_imgui_drawlist_add_font_text(drawlist,font,text_begin,text_end);
+}
+
+function imgui_drawlist_add_polyline(drawlist,points,num_points,col,flags,thickness) {
+	buffer_write_args(global.imgui_buffer,[
+		buffer_f32, num_points,
+		buffer_f32, points,
+		buffer_f32, col,
+		buffer_f32, flags,
+		buffer_f32, thickness
+	]);
+	
+	_imgui_drawlist_add_polyline(drawlist);
+}
+
+function imgui_drawlist_add_convex_poly_filled(drawlist,points,num_points,col,flags,thickness) {
+	buffer_write_args(global.imgui_buffer,[
+		buffer_f32, num_points,
+		buffer_f32, points,
+		buffer_f32, col
+	]);
+	
+	_imgui_drawlist_add_convex_poly_filled(drawlist);
+}
+
+function imgui_drawlist_add_bezier_cubic(drawlist,p1,p2,p3,p4,col,thickness,num_segments=0) {
+	buffer_write_args(global.imgui_buffer,[
+		buffer_f32, p1,
+		buffer_f32, p2,
+		buffer_f32, p3,
+		buffer_f32, p4,
+		buffer_f32, col,
+		buffer_f32, thickness,
+		buffer_f32, num_segments
+	]);
+	
+	_imgui_drawlist_add_bezier_cubic(drawlist);
+}
+
+function imgui_drawlist_add_bezier_quadratic(drawlist,p1,p2,p3,col,thickness,num_segments=0) {
+	buffer_write_args(global.imgui_buffer,[
+		buffer_f32, p1,
+		buffer_f32, p2,
+		buffer_f32, p3,
+		buffer_f32, col,
+		buffer_f32, thickness,
+		buffer_f32, num_segments
+	]);
+	
+	_imgui_drawlist_add_bezier_quadratic(drawlist);
+}
+
+function imgui_drawlist_add_image(drawlist,tex_name,p_min,p_max,uv_min=[0,0],uv_max=[1,1],col) {
+	buffer_write_args(global.imgui_buffer,[
+		buffer_f32, p_min,
+		buffer_f32, p_max,
+		buffer_f32, uv_min,
+		buffer_f32, uv_max,
+		buffer_f32, col
+	]);
+	
+	_imgui_drawlist_add_image(drawlist,tex_name);
+}
+
+function imgui_drawlist_add_image_quad(drawlist,tex_name,p1,p2,p3,p4,uv1=[0,0],uv2=[1,0],uv3=[1,1],uv4=[0,1],col) {
+	buffer_write_args(global.imgui_buffer,[
+		buffer_f32, p1,
+		buffer_f32, p2,
+		buffer_f32, p3,
+		buffer_f32, p4,
+		buffer_f32, uv1,
+		buffer_f32, uv2,
+		buffer_f32, uv3,
+		buffer_f32, uv4,
+		buffer_f32, col
+	]);
+	
+	_imgui_drawlist_add_image_quad(drawlist,tex_name);
+}
+
+function imgui_drawlist_add_image_rounded(drawlist,tex_name,p_min,p_max,uv_min,uv_max,col,rounding,flags=0) {
+	buffer_write_args(global.imgui_buffer,[
+		buffer_f32, p_min,
+		buffer_f32, p_max,
+		buffer_f32, uv_min,
+		buffer_f32, uv_max,
+		buffer_f32, col,
+		buffer_f32, rounding,
+		buffer_f32, flags
+	]);
+	
+	_imgui_drawlist_add_image_rounded(drawlist,tex_name);
+}
+
+function imgui_drawlist_path_line_to(drawlist,pos) {
+	buffer_write_args(global.imgui_buffer,[
+		buffer_f32, pos
+	]);
+	
+	_imgui_drawlist_path_line_to(drawlist);
+}
+
+function imgui_drawlist_path_line_to_merge_duplicate(drawlist,pos) {
+	buffer_write_args(global.imgui_buffer,[
+		buffer_f32, pos
+	]);
+	
+	_imgui_drawlist_path_line_to_merge_duplicate(drawlist);
+}
+
+function imgui_drawlist_path_fill_convex(drawlist,col) {
+	buffer_write_args(global.imgui_buffer,[
+		buffer_f32, col
+	]);
+	
+	_imgui_drawlist_path_fill_convex(drawlist);
+}
+
+function imgui_drawlist_path_stroke(drawlist,col,flags=0,thickness=1) {
+	buffer_write_args(global.imgui_buffer,[
+		buffer_f32, col,
+		buffer_f32, flags,
+		buffer_f32, thickness
+	]);
+	
+	_imgui_drawlist_path_stroke(drawlist);
+}
+
+function imgui_drawlist_path_arc_to(drawlist,center,radius,a_min,a_max,num_segments=0) {
+	buffer_write_args(global.imgui_buffer,[
+		buffer_f32, center,
+		buffer_f32, radius,
+		buffer_f32, a_min,
+		buffer_f32, a_max,
+		buffer_f32, num_segments
+	]);
+	
+	_imgui_drawlist_path_arc_to(drawlist);
+}
+
+function imgui_drawlist_path_arc_to_fast(drawlist,center,radius,a_min_of_12,a_max_of_12) {
+	buffer_write_args(global.imgui_buffer,[
+		buffer_f32, center,
+		buffer_f32, radius,
+		buffer_f32, a_min_of_12,
+		buffer_f32, a_max_of_12
+	]);
+	
+	_imgui_drawlist_path_arc_to_fast(drawlist);
+}
+
+function imgui_drawlist_path_bezier_cubic_curve_to(drawlist,p2,p3,p4,num_segments=0) {
+	buffer_write_args(global.imgui_buffer,[
+		buffer_f32, p2,
+		buffer_f32, p3,
+		buffer_f32, p4,
+		buffer_f32, num_segments
+	]);
+	
+	_imgui_drawlist_path_bezier_cubic_curve_to(drawlist);
+}
+
+function imgui_drawlist_path_bezier_quadratic_curve_to(drawlist,p2,p3,num_segments=0) {
+	buffer_write_args(global.imgui_buffer,[
+		buffer_f32, p2,
+		buffer_f32, p3,
+		buffer_f32, num_segments
+	]);
+	
+	_imgui_drawlist_path_bezier_quadratic_curve_to(drawlist);
+}
+
+function imgui_drawlist_path_rect(drawlist,rect_min,rect_max,rounding=0,flags=0) {
+	buffer_write_args(global.imgui_buffer,[
+		buffer_f32, rect_min,
+		buffer_f32, rect_max,
+		buffer_f32, rounding,
+		buffer_f32, flags
+	]);
+	
+	_imgui_drawlist_path_rect(drawlist);
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 

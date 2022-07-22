@@ -849,9 +849,9 @@
             2,
             1,
           ],"resourceVersion":"1.0","name":"_imgui_drawlist_add_image_rounded","tags":[],"resourceType":"GMExtensionFunction",},
-        {"externalName":"_imgui_drawlist_path_clear","kind":1,"help":"_imgui_drawlist_path_clear(drawlist_id)","hidden":false,"returnType":2,"argCount":0,"args":[
+        {"externalName":"imgui_drawlist_path_clear","kind":1,"help":"imgui_drawlist_path_clear(drawlist_id)","hidden":false,"returnType":2,"argCount":0,"args":[
             2,
-          ],"resourceVersion":"1.0","name":"_imgui_drawlist_path_clear","tags":[],"resourceType":"GMExtensionFunction",},
+          ],"resourceVersion":"1.0","name":"imgui_drawlist_path_clear","tags":[],"resourceType":"GMExtensionFunction",},
         {"externalName":"_imgui_drawlist_path_line_to","kind":1,"help":"_imgui_drawlist_path_line_to(drawlist_id)","hidden":false,"returnType":2,"argCount":0,"args":[
             2,
           ],"resourceVersion":"1.0","name":"_imgui_drawlist_path_line_to","tags":[],"resourceType":"GMExtensionFunction",},
@@ -1223,7 +1223,7 @@
         {"name":"_imgui_drawlist_add_image","path":"extensions/Ext_ImGui/Ext_ImGui.yy",},
         {"name":"_imgui_drawlist_add_image_quad","path":"extensions/Ext_ImGui/Ext_ImGui.yy",},
         {"name":"_imgui_drawlist_add_image_rounded","path":"extensions/Ext_ImGui/Ext_ImGui.yy",},
-        {"name":"_imgui_drawlist_path_clear","path":"extensions/Ext_ImGui/Ext_ImGui.yy",},
+        {"name":"imgui_drawlist_path_clear","path":"extensions/Ext_ImGui/Ext_ImGui.yy",},
         {"name":"_imgui_drawlist_path_line_to","path":"extensions/Ext_ImGui/Ext_ImGui.yy",},
         {"name":"_imgui_drawlist_path_line_to_merge_duplicate","path":"extensions/Ext_ImGui/Ext_ImGui.yy",},
         {"name":"_imgui_drawlist_path_fill_convex","path":"extensions/Ext_ImGui/Ext_ImGui.yy",},

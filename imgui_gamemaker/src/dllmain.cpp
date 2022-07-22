@@ -2390,13 +2390,11 @@ fn_export double imgui_set_item_allow_overlap() {
 
 // Background/Foreground draw lists
 fn_export double imgui_get_background_drawlist() {
-	// TODO: ImDrawList access
 	ImDrawList* list = ImGui::GetBackgroundDrawList();
 	return reinterpret_cast<int64>(list);
 }
 
 fn_export double imgui_get_foreground_drawlist() {
-	// TODO: ImDrawList access
 	ImDrawList* list = ImGui::GetForegroundDrawList();
 	return reinterpret_cast<int64>(list);
 }
@@ -2425,7 +2423,6 @@ fn_export double imgui_get_frame_count() {
 }
 
 fn_export double imgui_get_drawlist_shared_data() {
-	// TODO: ImDrawList access
 	ImDrawListSharedData* data = ImGui::GetDrawListSharedData();
 	return reinterpret_cast<int64>(data);
 }
@@ -2642,7 +2639,7 @@ fn_export double imgui_set_clipboard_text(const char* text) {
 
 
 //-----------------------------------------------------------------------------
-// [SECTION] ImDrawList API
+// [SECTION] ImDrawList functions
 //-----------------------------------------------------------------------------
 
 // ImDrawList: Push/Pop functions
@@ -3042,7 +3039,7 @@ fn_export double _imgui_drawlist_add_image_rounded(double id, const char* tex_na
 
 
 // ImDrawList: Stateful path API
-fn_export double _imgui_drawlist_path_clear(double id) {
+fn_export double imgui_drawlist_path_clear(double id) {
 	ImDrawList* drawlist = reinterpret_cast<ImDrawList*>((int64)id);
 
 	drawlist->PathClear();
@@ -3167,6 +3164,11 @@ fn_export double _imgui_drawlist_path_rect(double id) {
 }
 
 
+
+//-----------------------------------------------------------------------------
+// [SECTION] ImGuiTableSortSpecs/ImGuiTableColumnSortSpecs access
+//-----------------------------------------------------------------------------
+// do I even need this? do a commit first stupid. 
 
 
 
