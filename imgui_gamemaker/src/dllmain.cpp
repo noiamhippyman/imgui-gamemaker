@@ -1446,7 +1446,7 @@ fn_export double _imgui_input_text_with_hint(const char* label, const char* hint
 	bool changed = ImGui::InputTextWithHint(label, hint, &str, flags);
 
 	ext_buffer->seek(0);
-	ext_buffer->write(changed);
+	ext_buffer->write((float)changed);
 	ext_buffer->write(str);
 
 	return 0.0;
@@ -1540,7 +1540,6 @@ fn_export double _imgui_input_int(const char* label) {
 	int v = ext_buffer->read_float();
 	int step = ext_buffer->read_float();
 	int step_fast = ext_buffer->read_float();
-
 	ImGuiInputTextFlags flags = ext_buffer->read_float();
 
 	bool changed = ImGui::InputInt(label, &v, step, step_fast, flags);
@@ -1618,6 +1617,19 @@ fn_export double _imgui_input_int4(const char* label) {
 	return 0.0;
 }
 
+fn_export double _imgui_input_double(const char* label, const char* format) {
+	ext_buffer->seek(0);
+	double v = ext_buffer->read_double();
+	double step = ext_buffer->read_double();
+	double step_fast = ext_buffer->read_double();
+	ImGuiInputTextFlags flags = ext_buffer->read_float();
+	bool changed = ImGui::InputDouble(label, &v, step, step_fast, format, flags);
+
+	ext_buffer->seek(0);
+	ext_buffer->write(changed);
+	ext_buffer->write(v);
+	return 0.0;
+}
 
 // Widgets: Color Editor/Picker
 fn_export double _imgui_color_edit3(const char* label) {

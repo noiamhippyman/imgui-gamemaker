@@ -20,6 +20,7 @@ function buffer_write_args(buffer,args) {
 				buffer_poke(buffer,offset,type,v);
 				switch (type) {
 					case buffer_f32:
+					case buffer_f64:
 						offset += buffer_sizeof(type);
 						break;
 					case buffer_string:
@@ -31,6 +32,7 @@ function buffer_write_args(buffer,args) {
 			buffer_poke(buffer,offset,type,val);
 			switch (type) {
 				case buffer_f32:
+				case buffer_f64:
 					offset += buffer_sizeof(type);
 					break;
 				case buffer_string:
@@ -54,6 +56,7 @@ function buffer_return(buffer,expected_return_types) {
 		var val = buffer_peek(buffer,offset,type);
 		switch (type) {
 			case buffer_f32:
+			case buffer_f64:
 				offset += buffer_sizeof(type);
 				break;
 			case buffer_string:
@@ -1062,6 +1065,20 @@ function imgui_input_int4(label,v,step=1,step_fast=100,flags=0) {
 		buffer_f32, // V[1]
 		buffer_f32, // V[2]
 		buffer_f32  // V[3]
+	]);
+}
+
+function imgui_input_double(label,v,step=0,step_fast=0,format="%.6f",flags=0) {
+	buffer_write_args(global.imgui_buffer,[
+		buffer_f64, v,
+		buffer_f64, step,
+		buffer_f64, step_fast,
+		buffer_f32, flags
+	]);
+	_imgui_input_double(label,format);
+	return buffer_return(global.imgui_buffer,[
+		buffer_f32, // Changed
+		buffer_f64  // Value
 	]);
 }
 

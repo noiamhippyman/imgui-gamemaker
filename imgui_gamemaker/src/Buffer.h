@@ -13,6 +13,11 @@ union charfloat {
 	float f;
 };
 
+union chardub {
+	unsigned char c[8];
+	double d;
+};
+
 class Buffer
 {
 public:
@@ -22,9 +27,13 @@ public:
 
 	void seek(unsigned int index);
 
+	void write(int value);
+	void write(bool value);
 	void write(float value);
+	void write(double value);
 	void write(std::string value);
 	float read_float();
+	double read_double();
 	std::string read_string();
 
 	void poke(unsigned int offset, float value);

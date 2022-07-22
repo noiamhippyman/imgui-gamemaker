@@ -22,6 +22,16 @@ void Buffer::seek(unsigned int index)
 }
 
 
+void Buffer::write(int value)
+{
+	write((float)value);
+}
+
+void Buffer::write(bool value)
+{
+	write((float)value);
+}
+
 void Buffer::write(float value)
 {
 	charfloat cf; cf.f = value;
@@ -29,6 +39,15 @@ void Buffer::write(float value)
 		data[data_index + i] = cf.c[i];
 	}
 	data_index += 4;
+}
+
+void Buffer::write(double value)
+{
+	chardub val; val.d = value;
+	for (int i = 0; i < 8; ++i) {
+		data[data_index + i] = val.c[i];
+	}
+	data_index += 8;
 }
 
 void Buffer::write(std::string value)
@@ -50,6 +69,16 @@ float Buffer::read_float()
 	}
 	data_index += 4;
 	return val.f;
+}
+
+double Buffer::read_double()
+{
+	chardub val;
+	for (int i = 0; i < 8; ++i) {
+		val.c[i] = data[data_index + i];
+	}
+	data_index += 8;
+	return val.d;
 }
 
 #include <iostream>

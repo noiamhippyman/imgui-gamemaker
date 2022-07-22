@@ -148,7 +148,27 @@ function imgui_demo_show_demo_window_widgets() {
 			ret = imgui_input_text_with_hint("input text (w/ hint)", "enter text here", basic_input_text_str1);
 			if (ret[0]) basic_input_text_str1 = ret[1];
 			
+			static basic_input_i0 = 123;
+			ret = imgui_input_int("input int", basic_input_i0);
+			if (ret[0]) basic_input_i0 = ret[1];
 			
+			static basic_input_f0 = 0.001;
+			ret = imgui_input_float("input float", basic_input_f0,0.01,1,"%.3f");
+			if (ret[0]) basic_input_f0 = ret[1];
+			
+			static basic_input_d0 = 999999.00000001;
+			ret = imgui_input_double("input double", basic_input_d0,0.01,1,"%.8f");
+			if (ret[0]) basic_input_d0 = ret[1];
+			
+			static basic_input_f1 = 10000000000;
+			ret = imgui_input_float("input scientific", basic_input_f1,0,0,"%e");
+			if (ret[0]) basic_input_f1 = ret[1];
+			imgui_same_line();
+			imgui_help_marker("You can input value using the scientific notation.\n e.g. \"1e+8\" becomes \"100000000\"");
+			
+			static basic_input_vec4a = [0.1,0.2,0.3,0.44];
+			ret = imgui_input_float3("input float3", basic_input_vec4a);
+			if (ret[0]) array_copy(basic_input_vec4a,0,ret,1,3);
 		
 		}
 		

@@ -1312,6 +1312,10 @@
             2,
             2,
           ],"resourceVersion":"1.0","name":"imgui_io_set_config_viewports_no_default_parent","tags":[],"resourceType":"GMExtensionFunction",},
+        {"externalName":"_imgui_input_double","kind":1,"help":"_imgui_input_double(label,format)","hidden":false,"returnType":2,"argCount":0,"args":[
+            1,
+            1,
+          ],"resourceVersion":"1.0","name":"_imgui_input_double","tags":[],"resourceType":"GMExtensionFunction",},
       ],"constants":[],"ProxyFiles":[],"copyToTargets":-1,"order":[
         {"name":"imgui_null","path":"extensions/Ext_ImGui/Ext_ImGui.yy",},
         {"name":"imgui_load_image","path":"extensions/Ext_ImGui/Ext_ImGui.yy",},
@@ -1796,6 +1800,7 @@
         {"name":"imgui_io_set_config_viewports_no_decoration","path":"extensions/Ext_ImGui/Ext_ImGui.yy",},
         {"name":"imgui_io_get_config_viewports_no_default_parent","path":"extensions/Ext_ImGui/Ext_ImGui.yy",},
         {"name":"imgui_io_set_config_viewports_no_default_parent","path":"extensions/Ext_ImGui/Ext_ImGui.yy",},
+        {"name":"_imgui_input_double","path":"extensions/Ext_ImGui/Ext_ImGui.yy",},
       ],"resourceVersion":"1.0","name":"","tags":[],"resourceType":"GMExtensionFile",},
   ],
   "classname": "",
