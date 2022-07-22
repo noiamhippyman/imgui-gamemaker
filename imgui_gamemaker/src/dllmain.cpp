@@ -3797,7 +3797,6 @@ fn_export double imgui_io_set_config_flags(double io, double flags) {
 	return 0.0;
 }
 
-// returns ImVec2
 fn_export double _imgui_io_get_display_size(double io) {
 	ImGuiIO* io_ptr = reinterpret_cast<ImGuiIO*>((int64)io);
 	ImVec2 size = io_ptr->DisplaySize;
@@ -3902,7 +3901,6 @@ fn_export double imgui_io_set_key_repeat_rate(double io, double seconds) {
 	return 0.0;
 }
 
-// returns ImFontAtlas*
 fn_export double imgui_io_get_fonts(double io) {
 	ImGuiIO* io_ptr = reinterpret_cast<ImGuiIO*>((int64)io);
 	ImFontAtlas* fonts = io_ptr->Fonts;

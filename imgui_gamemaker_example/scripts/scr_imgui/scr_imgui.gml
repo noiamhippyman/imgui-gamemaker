@@ -2092,8 +2092,13 @@ function imgui_style_set_color(style,index,color) {
 	_imgui_style_set_color(style);
 }
 
-
-
+function imgui_io_get_display_size(io) {
+	_imgui_io_get_display_size(io);
+	return buffer_return(global.imgui_buffer,[
+		buffer_f32, // width
+		buffer_f32  // height
+	]);
+}
 
 
 
