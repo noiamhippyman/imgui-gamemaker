@@ -19,6 +19,7 @@
 // Global Variables
 Buffer* ext_buffer = nullptr;
 std::map<std::string, ID3D11ShaderResourceView*> ext_loaded_image_map;
+//ImFontConfig ext_font_config;
 
 fn_export void* imgui_null() {
 	return (void*)0;
@@ -3164,11 +3165,82 @@ fn_export double _imgui_drawlist_path_rect(double id) {
 }
 
 
+// ImFontAtlas functions
+
+fn_export double imgui_fonts_add_font_default(double id) {
+	ImFontAtlas* fonts = reinterpret_cast<ImFontAtlas*>((int64)id);
+	ImFont* font = fonts->AddFontDefault();
+	return reinterpret_cast<int64>(font);
+}
+
+fn_export double _imgui_fonts_add_font_from_file_ttf(double id, const char* filename) {
+	ext_buffer->seek(0);
+	ImFontAtlas* fonts = reinterpret_cast<ImFontAtlas*>((int64)id);
+	float size_pixels = ext_buffer->read_float();
+	ImWchar* glyph_ranges = reinterpret_cast<ImWchar*>((int64)ext_buffer->read_float());
+	ImFont* font = fonts->AddFontFromFileTTF(filename, size_pixels, NULL, glyph_ranges);
+	return reinterpret_cast<int64>(font);
+}
+
+fn_export double imgui_fonts_build(double id) {
+	ImFontAtlas* fonts = reinterpret_cast<ImFontAtlas*>((int64)id);
+	return fonts->Build();
+}
+
+fn_export double imgui_fonts_get_glyph_range_default(double id) {
+	ImFontAtlas* fonts = reinterpret_cast<ImFontAtlas*>((int64)id);
+	const ImWchar* glyph_range = fonts->GetGlyphRangesDefault();
+	return reinterpret_cast<int64>(glyph_range);
+}
+
+fn_export double imgui_fonts_get_glyph_range_korean(double id) {
+	ImFontAtlas* fonts = reinterpret_cast<ImFontAtlas*>((int64)id);
+	const ImWchar* glyph_range = fonts->GetGlyphRangesKorean();
+	return reinterpret_cast<int64>(glyph_range);
+}
+
+fn_export double imgui_fonts_get_glyph_range_japanese(double id) {
+	ImFontAtlas* fonts = reinterpret_cast<ImFontAtlas*>((int64)id);
+	const ImWchar* glyph_range = fonts->GetGlyphRangesJapanese();
+	return reinterpret_cast<int64>(glyph_range);
+}
+
+fn_export double imgui_fonts_get_glyph_range_chinese_full(double id) {
+	ImFontAtlas* fonts = reinterpret_cast<ImFontAtlas*>((int64)id);
+	const ImWchar* glyph_range = fonts->GetGlyphRangesChineseFull();
+	return reinterpret_cast<int64>(glyph_range);
+}
+
+fn_export double imgui_fonts_get_glyph_range_chinese_simplified_common(double id) {
+	ImFontAtlas* fonts = reinterpret_cast<ImFontAtlas*>((int64)id);
+	const ImWchar* glyph_range = fonts->GetGlyphRangesChineseSimplifiedCommon();
+	return reinterpret_cast<int64>(glyph_range);
+}
+
+fn_export double imgui_fonts_get_glyph_range_cyrillic(double id) {
+	ImFontAtlas* fonts = reinterpret_cast<ImFontAtlas*>((int64)id);
+	const ImWchar* glyph_range = fonts->GetGlyphRangesCyrillic();
+	return reinterpret_cast<int64>(glyph_range);
+}
+
+fn_export double imgui_fonts_get_glyph_range_thai(double id) {
+	ImFontAtlas* fonts = reinterpret_cast<ImFontAtlas*>((int64)id);
+	const ImWchar* glyph_range = fonts->GetGlyphRangesThai();
+	return reinterpret_cast<int64>(glyph_range);
+}
+
+fn_export double imgui_fonts_get_glyph_range_vietnamese(double id) {
+	ImFontAtlas* fonts = reinterpret_cast<ImFontAtlas*>((int64)id);
+	const ImWchar* glyph_range = fonts->GetGlyphRangesVietnamese();
+	return reinterpret_cast<int64>(glyph_range);
+}
+
+
 
 //-----------------------------------------------------------------------------
 // [SECTION] ImGuiTableSortSpecs/ImGuiTableColumnSortSpecs access
 //-----------------------------------------------------------------------------
-// do I even need this? do a commit first stupid. 
+// do I even need this? 
 
 
 
@@ -3195,7 +3267,6 @@ fn_export double imgui_style_get_disabled_alpha(double style) {
 	return style_ptr->DisabledAlpha;
 }
 
-// returns ImVec2
 fn_export double _imgui_style_get_window_padding(double style) {
 	ImGuiStyle* style_ptr = reinterpret_cast<ImGuiStyle*>((int64)style);
 	ImVec2 padding = style_ptr->WindowPadding;
@@ -3215,7 +3286,6 @@ fn_export double imgui_style_get_window_border_size(double style) {
 	return style_ptr->WindowBorderSize;
 }
 
-// returns ImVec2
 fn_export double _imgui_style_get_window_min_size(double style) {
 	ImGuiStyle* style_ptr = reinterpret_cast<ImGuiStyle*>((int64)style);
 	ImVec2 min_size = style_ptr->WindowMinSize;
@@ -3225,7 +3295,6 @@ fn_export double _imgui_style_get_window_min_size(double style) {
 	return 0.0;
 }
 
-// returns ImVec2
 fn_export double _imgui_style_get_window_title_align(double style) {
 	ImGuiStyle* style_ptr = reinterpret_cast<ImGuiStyle*>((int64)style);
 	ImVec2 title_align = style_ptr->WindowTitleAlign;
@@ -3235,7 +3304,6 @@ fn_export double _imgui_style_get_window_title_align(double style) {
 	return 0.0;
 }
 
-// returns ImGuiDir
 fn_export double imgui_style_get_window_menu_button_position(double style) {
 	ImGuiStyle* style_ptr = reinterpret_cast<ImGuiStyle*>((int64)style);
 	return style_ptr->WindowMenuButtonPosition;
@@ -3261,7 +3329,6 @@ fn_export double imgui_style_get_popup_border_size(double style) {
 	return style_ptr->PopupBorderSize;
 }
 
-// returns ImVec2
 fn_export double _imgui_style_get_frame_padding(double style) {
 	ImGuiStyle* style_ptr = reinterpret_cast<ImGuiStyle*>((int64)style);
 	ImVec2 padding = style_ptr->FramePadding;
@@ -3281,7 +3348,6 @@ fn_export double imgui_style_get_frame_border_size(double style) {
 	return style_ptr->FrameBorderSize;
 }
 
-// returns ImVec2
 fn_export double _imgui_style_get_item_spacing(double style) {
 	ImGuiStyle* style_ptr = reinterpret_cast<ImGuiStyle*>((int64)style);
 	ImVec2 spacing = style_ptr->ItemSpacing;
@@ -3291,7 +3357,6 @@ fn_export double _imgui_style_get_item_spacing(double style) {
 	return 0.0;
 }
 
-// returns ImVec2
 fn_export double _imgui_style_get_item_inner_spacing(double style) {
 	ImGuiStyle* style_ptr = reinterpret_cast<ImGuiStyle*>((int64)style);
 	ImVec2 spacing = style_ptr->ItemInnerSpacing;
@@ -3301,7 +3366,6 @@ fn_export double _imgui_style_get_item_inner_spacing(double style) {
 	return 0.0;
 }
 
-// returns ImVec2
 fn_export double _imgui_style_get_cell_padding(double style) {
 	ImGuiStyle* style_ptr = reinterpret_cast<ImGuiStyle*>((int64)style);
 	ImVec2 padding = style_ptr->CellPadding;
@@ -3361,13 +3425,11 @@ fn_export double imgui_style_get_tab_min_width_for_close_button(double style) {
 	return style_ptr->TabMinWidthForCloseButton;
 }
 
-// returns ImGuiDir
 fn_export double imgui_style_get_color_button_position(double style) {
 	ImGuiStyle* style_ptr = reinterpret_cast<ImGuiStyle*>((int64)style);
 	return style_ptr->ColorButtonPosition;
 }
 
-// returns ImVec2
 fn_export double _imgui_style_get_button_text_align(double style) {
 	ImGuiStyle* style_ptr = reinterpret_cast<ImGuiStyle*>((int64)style);
 	ImVec2 text_align = style_ptr->ButtonTextAlign;
@@ -3377,7 +3439,6 @@ fn_export double _imgui_style_get_button_text_align(double style) {
 	return 0.0;
 }
 
-// returns ImVec2
 fn_export double _imgui_style_get_selectable_text_align(double style) {
 	ImGuiStyle* style_ptr = reinterpret_cast<ImGuiStyle*>((int64)style);
 	ImVec2 text_align = style_ptr->SelectableTextAlign;
@@ -3387,7 +3448,6 @@ fn_export double _imgui_style_get_selectable_text_align(double style) {
 	return 0.0;
 }
 
-// returns ImVec2
 fn_export double _imgui_style_get_display_window_padding(double style) {
 	ImGuiStyle* style_ptr = reinterpret_cast<ImGuiStyle*>((int64)style);
 	ImVec2 padding = style_ptr->DisplayWindowPadding;
@@ -3397,7 +3457,6 @@ fn_export double _imgui_style_get_display_window_padding(double style) {
 	return 0.0;
 }
 
-// returns ImVec2
 fn_export double _imgui_style_get_display_safe_area_padding(double style) {
 	ImGuiStyle* style_ptr = reinterpret_cast<ImGuiStyle*>((int64)style);
 	ImVec2 padding = style_ptr->DisplaySafeAreaPadding;
@@ -3437,7 +3496,7 @@ fn_export double imgui_style_get_circle_tessellation_max_error(double style) {
 	return style_ptr->CircleTessellationMaxError;
 }
 
-fn_export double imgui_style_get_color(double style, double index) {
+fn_export double _imgui_style_get_color(double style, double index) {
 	ImGuiStyle* style_ptr = reinterpret_cast<ImGuiStyle*>((int64)style);
 	ImVec4 color = style_ptr->Colors[(ImGuiCol)index];
 	
@@ -3463,11 +3522,10 @@ fn_export double imgui_style_set_disabled_alpha(double style, double value) {
 	return 0.0;
 }
 
-fn_export double imgui_style_set_window_padding(double style, double pad_x, double pad_y) {
+fn_export double _imgui_style_set_window_padding(double style) {
 	ImGuiStyle* style_ptr = reinterpret_cast<ImGuiStyle*>((int64)style);
-	ImVec2 padding;
-	padding.x = pad_x;
-	padding.y = pad_y;
+	ext_buffer->seek(0);
+	ImVec2 padding(ext_buffer->read_float(), ext_buffer->read_float());
 	style_ptr->WindowPadding = padding;
 	return 0.0;
 }
@@ -3484,20 +3542,18 @@ fn_export double imgui_style_set_window_border_size(double style, double value) 
 	return 0.0;
 }
 
-fn_export double imgui_style_set_window_min_size(double style, double width, double height) {
+fn_export double _imgui_style_set_window_min_size(double style) {
 	ImGuiStyle* style_ptr = reinterpret_cast<ImGuiStyle*>((int64)style);
-	ImVec2 size;
-	size.x = width;
-	size.y = height;
+	ext_buffer->seek(0);
+	ImVec2 size(ext_buffer->read_float(), ext_buffer->read_float());
 	style_ptr->WindowMinSize = size;
 	return 0.0;
 }
 
-fn_export double imgui_style_set_window_title_align(double style, double align_x, double align_y) {
+fn_export double _imgui_style_set_window_title_align(double style) {
 	ImGuiStyle* style_ptr = reinterpret_cast<ImGuiStyle*>((int64)style);
-	ImVec2 align;
-	align.x = align_x;
-	align.y = align_y;
+	ext_buffer->seek(0);
+	ImVec2 align(ext_buffer->read_float(), ext_buffer->read_float());
 	style_ptr->WindowTitleAlign = align;
 	return 0.0;
 }
@@ -3532,11 +3588,10 @@ fn_export double imgui_style_set_popup_border_size(double style, double value) {
 	return 0.0;
 }
 
-fn_export double imgui_style_set_frame_padding(double style, double pad_x, double pad_y) {
+fn_export double _imgui_style_set_frame_padding(double style) {
 	ImGuiStyle* style_ptr = reinterpret_cast<ImGuiStyle*>((int64)style);
-	ImVec2 padding;
-	padding.x = pad_x;
-	padding.y = pad_y;
+	ext_buffer->seek(0);
+	ImVec2 padding(ext_buffer->read_float(), ext_buffer->read_float());
 	style_ptr->FramePadding = padding;
 	return 0.0;
 }
@@ -3553,29 +3608,26 @@ fn_export double imgui_style_set_frame_border_size(double style, double value) {
 	return 0.0;
 }
 
-fn_export double imgui_style_set_item_spacing(double style, double space_x, double space_y) {
+fn_export double _imgui_style_set_item_spacing(double style) {
 	ImGuiStyle* style_ptr = reinterpret_cast<ImGuiStyle*>((int64)style);
-	ImVec2 spacing;
-	spacing.x = space_x;
-	spacing.y = space_y;
+	ext_buffer->seek(0);
+	ImVec2 spacing(ext_buffer->read_float(), ext_buffer->read_float());
 	style_ptr->ItemSpacing = spacing;
 	return 0.0;
 }
 
-fn_export double imgui_style_set_item_inner_spacing(double style, double space_x, double space_y) {
+fn_export double _imgui_style_set_item_inner_spacing(double style) {
 	ImGuiStyle* style_ptr = reinterpret_cast<ImGuiStyle*>((int64)style);
-	ImVec2 spacing;
-	spacing.x = space_x;
-	spacing.y = space_y;
+	ext_buffer->seek(0);
+	ImVec2 spacing(ext_buffer->read_float(), ext_buffer->read_float());
 	style_ptr->ItemInnerSpacing = spacing;
 	return 0.0;
 }
 
-fn_export double imgui_style_set_cell_padding(double style, double pad_x, double pad_y) {
+fn_export double _imgui_style_set_cell_padding(double style) {
 	ImGuiStyle* style_ptr = reinterpret_cast<ImGuiStyle*>((int64)style);
-	ImVec2 padding;
-	padding.x = pad_x;
-	padding.y = pad_y;
+	ext_buffer->seek(0);
+	ImVec2 padding(ext_buffer->read_float(), ext_buffer->read_float());
 	style_ptr->CellPadding = padding;
 	return 0.0;
 }
@@ -3646,38 +3698,34 @@ fn_export double imgui_style_set_color_button_position(double style, double valu
 	return 0.0;
 }
 
-fn_export double imgui_style_set_button_text_align(double style, double align_x, double align_y) {
+fn_export double _imgui_style_set_button_text_align(double style) {
 	ImGuiStyle* style_ptr = reinterpret_cast<ImGuiStyle*>((int64)style);
-	ImVec2 align;
-	align.x = align_x;
-	align.y = align_y;
+	ext_buffer->seek(0);
+	ImVec2 align(ext_buffer->read_float(), ext_buffer->read_float());
 	style_ptr->ButtonTextAlign = align;
 	return 0.0;
 }
 
-fn_export double imgui_style_set_selectable_text_align(double style, double align_x, double align_y) {
+fn_export double _imgui_style_set_selectable_text_align(double style) {
 	ImGuiStyle* style_ptr = reinterpret_cast<ImGuiStyle*>((int64)style);
-	ImVec2 align;
-	align.x = align_x;
-	align.y = align_y;
+	ext_buffer->seek(0);
+	ImVec2 align(ext_buffer->read_float(), ext_buffer->read_float());
 	style_ptr->SelectableTextAlign = align;
 	return 0.0;
 }
 
-fn_export double imgui_style_set_display_window_padding(double style, double pad_x, double pad_y) {
+fn_export double _imgui_style_set_display_window_padding(double style) {
 	ImGuiStyle* style_ptr = reinterpret_cast<ImGuiStyle*>((int64)style);
-	ImVec2 padding;
-	padding.x = pad_x;
-	padding.y = pad_y;
+	ext_buffer->seek(0);
+	ImVec2 padding(ext_buffer->read_float(), ext_buffer->read_float());
 	style_ptr->DisplayWindowPadding = padding;
 	return 0.0;
 }
 
-fn_export double imgui_style_set_display_safe_area_padding(double style, double pad_x, double pad_y) {
+fn_export double _imgui_style_set_display_safe_area_padding(double style) {
 	ImGuiStyle* style_ptr = reinterpret_cast<ImGuiStyle*>((int64)style);
-	ImVec2 padding;
-	padding.x = pad_x;
-	padding.y = pad_y;
+	ext_buffer->seek(0);
+	ImVec2 padding(ext_buffer->read_float(), ext_buffer->read_float());
 	style_ptr->DisplaySafeAreaPadding = padding;
 	return 0.0;
 }
@@ -3718,13 +3766,11 @@ fn_export double imgui_style_set_circle_tessellation_max_error(double style, dou
 	return 0.0;
 }
 
-fn_export double imgui_style_set_color(double style, double index, double r, double g, double b, double a) {
+fn_export double _imgui_style_set_color(double style) {
 	ImGuiStyle* style_ptr = reinterpret_cast<ImGuiStyle*>((int64)style);
-	ImVec4 color;
-	color.x = r;
-	color.y = g;
-	color.z = b;
-	color.w = a;
+	ext_buffer->seek(0);
+	ImGuiCol index = ext_buffer->read_float();
+	ImVec4 color(ext_buffer->read_float(), ext_buffer->read_float(), ext_buffer->read_float(), ext_buffer->read_float());
 	style_ptr->Colors[(ImGuiCol)index] = color;
 	return 0.0;
 }
