@@ -4010,3 +4010,23 @@ fn_export double imgui_io_set_config_viewports_no_default_parent(double io, doub
 	io_ptr->ConfigViewportsNoDefaultParent = enable;
 	return 0.0;
 }
+
+fn_export double imgui_io_get_key_ctrl(double io) {
+	ImGuiIO* io_ptr = reinterpret_cast<ImGuiIO*>((int64)io);
+	return io_ptr->KeyCtrl;
+}
+
+fn_export double imgui_io_get_key_shift(double io) {
+	ImGuiIO* io_ptr = reinterpret_cast<ImGuiIO*>((int64)io);
+	return io_ptr->KeyShift;
+}
+
+fn_export double imgui_io_get_key_alt(double io) {
+	ImGuiIO* io_ptr = reinterpret_cast<ImGuiIO*>((int64)io);
+	return io_ptr->KeyAlt;
+}
+
+fn_export double imgui_io_get_key_super(double io) {
+	ImGuiIO* io_ptr = reinterpret_cast<ImGuiIO*>((int64)io);
+	return io_ptr->KeySuper;
+}

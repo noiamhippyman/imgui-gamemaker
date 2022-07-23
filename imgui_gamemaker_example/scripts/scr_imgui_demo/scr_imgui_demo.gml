@@ -250,6 +250,90 @@ function imgui_demo_show_demo_window_widgets() {
 	}
 	
 	if (imgui_tree_node("Trees")) {
+		
+		if (imgui_tree_node("Basic trees")) {
+			for (var i = 0; i < 5; ++i) {
+				if (i == 0) imgui_set_next_item_open(true,ImGuiCond.Once);
+				if (imgui_tree_node("Child " + string(i))) {
+					imgui_text("blah blah");
+					imgui_same_line();
+					if (imgui_small_button("button")) {}
+					imgui_tree_pop();
+				}
+			}
+			imgui_tree_pop();
+		}
+		
+		if (imgui_tree_node("Advanced, with Selectable nodes")) {
+			imgui_help_marker("This is a more typical looking tree with selectable nodes.\nClick to select, CTRL+Click to toggle, click on arrows or double-click to open.");
+			static trees_adv_base_flags = ImGuiTreeNodeFlags.OpenOnArrow | ImGuiTreeNodeFlags.OpenOnDoubleClick | ImGuiTreeNodeFlags.SpanAvailWidth;
+			static tree_adv_align_label_with_current_x_position = false;
+			static tree_adv_test_drag_and_drop = false;
+			
+			ret = imgui_checkbox_flags("ImGuiTreeNodesFlags.OpenOnArrow", trees_adv_base_flags, ImGuiTreeNodeFlags.OpenOnArrow);
+			if (ret[0]) trees_adv_base_flags = ret[1];
+			ret = imgui_checkbox_flags("ImGuiTreeNodesFlags.OpenOnDoubleClick", trees_adv_base_flags, ImGuiTreeNodeFlags.OpenOnDoubleClick);
+			if (ret[0]) trees_adv_base_flags = ret[1];
+			ret = imgui_checkbox_flags("ImGuiTreeNodesFlags.SpanAvailWidth", trees_adv_base_flags, ImGuiTreeNodeFlags.SpanAvailWidth); imgui_same_line(); imgui_help_marker("Extend hit area to all available width instead of allowing more items to be laid out after the node.");
+			if (ret[0]) trees_adv_base_flags = ret[1];
+			ret = imgui_checkbox_flags("ImGuiTreeNodesFlags.SpanFullWidth", trees_adv_base_flags, ImGuiTreeNodeFlags.SpanFullWidth);
+			if (ret[0]) trees_adv_base_flags = ret[1];
+			
+			ret = imgui_checkbox("Align label with current X position",tree_adv_align_label_with_current_x_position);
+			if (ret[0]) tree_adv_align_label_with_current_x_position = ret[1];
+			ret = imgui_checkbox("Test tree node as a drag source",tree_adv_test_drag_and_drop);
+			if (ret[0]) tree_adv_test_drag_and_drop = ret[1];
+			imgui_text("Hello!");
+			if (tree_adv_align_label_with_current_x_position) imgui_unindent(imgui_get_tree_node_to_label_spacing());
+			
+			static trees_adv_selection_mask = 1<<2;
+			var node_clicked = -1;
+			for (var i = 0; i < 6; ++i) {
+				var node_flags = trees_adv_base_flags;
+				var is_selected = (trees_adv_selection_mask & (1<<i)) != 0
+				if (is_selected) node_flags |= ImGuiTreeNodeFlags.Selected;
+				if (i < 3) {
+					var node_open = imgui_tree_node_ex("Selectable Node " + string(i),node_flags);
+					if (imgui_is_item_clicked() && !imgui_is_item_toggled_open()) node_clicked = i;
+					
+					if (tree_adv_test_drag_and_drop && imgui_begin_drag_drop_source()) {
+						imgui_set_drag_drop_payload("_TREENODE");
+						imgui_text("This is a drag and drop source");
+						imgui_end_drag_drop_source();
+					}
+					
+					if (node_open) {
+						imgui_bullet_text("Blah blah\nBlah Blah");
+						imgui_tree_pop();
+					}
+				} else {
+					node_flags |= ImGuiTreeNodeFlags.Leaf | ImGuiTreeNodeFlags.NoTreePushOnOpen;
+					imgui_tree_node_ex("Selectable Leaf " + string(i),node_flags);
+					if (imgui_is_item_clicked() && !imgui_is_item_toggled_open()) node_clicked = i;
+					if (tree_adv_test_drag_and_drop && imgui_begin_drag_drop_source()) {
+						imgui_set_drag_drop_payload("_TREENODE");
+						imgui_text("This is a drag and drop source");
+						imgui_end_drag_drop_source();
+					}
+				}
+			}
+			
+			if (node_clicked != -1) {
+				var io = imgui_get_io();
+				if (imgui_io_get_key_ctrl(io)) {
+					trees_adv_selection_mask ^= (1 << node_clicked);
+				} else {
+					trees_adv_selection_mask = (1 << node_clicked);
+				}
+			}
+			
+			if (tree_adv_align_label_with_current_x_position) imgui_indent(imgui_get_tree_node_to_label_spacing());
+			
+			imgui_tree_pop();
+		}
+		
+		
+		
 		imgui_tree_pop();
 	}
 	
